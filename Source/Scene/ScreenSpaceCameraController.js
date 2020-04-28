@@ -276,6 +276,7 @@ function ScreenSpaceCameraController(scene) {
   this._rotateMousePosition = new Cartesian2(-1.0, -1.0);
   this._rotateStartPosition = new Cartesian3();
   this._strafeStartPosition = new Cartesian3();
+  this._strafeEndMousePosition = new Cartesian2();
   this._zoomMouseStart = new Cartesian2(-1.0, -1.0);
   this._zoomWorldPosition = new Cartesian3();
   this._useZoomWorldPosition = false;
@@ -381,29 +382,6 @@ function maintainInertia(
         movementState.startPosition,
         movementState.endPosition,
         movementState.endPosition
-      );
-
-      movementState.active = true;
-    } else {
-      movementState.startPosition = Cartesian2.clone(
-        movementState.endPosition,
-        movementState.startPosition
-      );
-
-      movementState.endPosition = Cartesian2.multiplyByScalar(
-        movementState.motion,
-        d,
-        movementState.endPosition
-      );
-      movementState.endPosition = Cartesian2.add(
-        movementState.startPosition,
-        movementState.endPosition,
-        movementState.endPosition
-      );
-
-      movementState.motion = Cartesian2.clone(
-        Cartesian2.ZERO,
-        movementState.motion
       );
     }
 
@@ -1188,6 +1166,23 @@ function getDistanceFromClosestSurface(controller, height) {
   return Math.min(distanceFromUndergroundSurface, distanceFromSurface);
 }
 
+var scratchInertialDelta = new Cartesian2();
+
+function continueStrafing(controller, movement) {
+  // Update the end position continually based on the inertial delta
+  var originalEndPosition = movement.endPosition;
+  var inertialDelta = Cartesian2.subtract(
+    movement.endPosition,
+    movement.startPosition,
+    scratchInertialDelta
+  );
+  var endPosition = controller._strafeEndMousePosition;
+  Cartesian2.add(endPosition, inertialDelta, endPosition);
+  movement.endPosition = endPosition;
+  strafe(controller, movement, controller._strafeStartPosition);
+  movement.endPosition = originalEndPosition;
+}
+
 var translateCVStartRay = new Ray();
 var translateCVEndRay = new Ray();
 var translateCVStartPos = new Cartesian3();
@@ -1213,7 +1208,7 @@ function translateCV(controller, startPosition, movement) {
   }
 
   if (controller._strafing) {
-    strafe(controller, startPosition, movement);
+    continueStrafing(controller, movement);
     return;
   }
 
@@ -1238,13 +1233,11 @@ function translateCV(controller, startPosition, movement) {
   }
 
   if (origin.x > camera.position.z && defined(globePos)) {
+    Cartesian2.clone(startPosition, controller._strafeMousePosition);
+    Cartesian2.clone(startPosition, controller._strafeEndMousePosition);
     Cartesian3.clone(globePos, controller._strafeStartPosition);
     controller._strafing = true;
-    strafe(controller, startPosition, movement);
-    controller._strafeMousePosition = Cartesian2.clone(
-      startPosition,
-      controller._strafeMousePosition
-    );
+    strafe(controller, movement, controller._strafeStartPosition);
     return;
   }
 
@@ -1741,21 +1734,11 @@ var scratchStrafeIntersection = new Cartesian3();
 var scratchStrafeDirection = new Cartesian3();
 var scratchMousePos = new Cartesian3();
 
-function strafe(controller, startPosition, movement) {
+function strafe(controller, movement, strafeStartPosition) {
   var scene = controller._scene;
   var camera = scene.camera;
 
-  var mouseStartPosition = pickGlobe(
-    controller,
-    movement.startPosition,
-    scratchMousePos
-  );
-  if (!defined(mouseStartPosition)) {
-    return;
-  }
-
-  var mousePosition = movement.endPosition;
-  var ray = camera.getPickRay(mousePosition, scratchStrafeRay);
+  var ray = camera.getPickRay(movement.endPosition, scratchStrafeRay);
 
   var direction = Cartesian3.clone(camera.direction, scratchStrafeDirection);
   if (scene.mode === SceneMode.COLUMBUS_VIEW) {
@@ -1763,7 +1746,7 @@ function strafe(controller, startPosition, movement) {
   }
 
   var plane = Plane.fromPointNormal(
-    mouseStartPosition,
+    strafeStartPosition,
     direction,
     scratchStrafePlane
   );
@@ -1776,7 +1759,7 @@ function strafe(controller, startPosition, movement) {
     return;
   }
 
-  direction = Cartesian3.subtract(mouseStartPosition, intersection, direction);
+  direction = Cartesian3.subtract(strafeStartPosition, intersection, direction);
   if (scene.mode === SceneMode.COLUMBUS_VIEW) {
     Cartesian3.fromElements(direction.y, direction.z, direction.x, direction);
   }
@@ -1785,8 +1768,17 @@ function strafe(controller, startPosition, movement) {
 }
 
 var scratchCartographic = new Cartographic();
+var scratchRadii = new Cartesian3();
+var scratchEllipsoid = new Ellipsoid();
+var scratchIntersectionPoint = new Cartesian3();
 
-function getStrafeCenterUnderground(controller, ray, pickedPosition, result) {
+function getRotateStartPositionUnderground(
+  controller,
+  ray,
+  surfaceNormal,
+  pickedPosition,
+  result
+) {
   var ellipsoid = controller._ellipsoid;
   var origin = ray.origin;
 
@@ -1795,27 +1787,57 @@ function getStrafeCenterUnderground(controller, ray, pickedPosition, result) {
     scratchCartographic
   );
   var height = cartographic.height;
-  var distance = Cartesian3.distance(origin, pickedPosition);
 
-  var distanceFromClosestSurface = getDistanceFromClosestSurface(
-    controller,
-    height
+  var finalPosition = result;
+  var magnitude = Cartesian3.magnitude(pickedPosition);
+
+  var heightDelta = controller.undergroundSurfaceHeight;
+  var innerRadii = Cartesian3.fromElements(
+    ellipsoid.radii.x + heightDelta,
+    ellipsoid.radii.y + heightDelta,
+    ellipsoid.radii.z + heightDelta,
+    scratchRadii
   );
 
-  var maximumDistance = CesiumMath.clamp(
-    distanceFromClosestSurface * 5.0,
-    controller._minimumUndergroundPickDistance,
-    controller._maximumUndergroundPickDistance
+  // Use the distance from the underground surface if it is closer
+  var innerEllipsoid = Ellipsoid.fromCartesian3(innerRadii, scratchEllipsoid);
+  var intersection = IntersectionTests.rayEllipsoid(ray, innerEllipsoid);
+  if (defined(intersection)) {
+    if (intersection.start > 0.0) {
+      // Outside ellipsoid
+      var intersectionPoint = Ray.getPoint(
+        ray,
+        intersection.start,
+        scratchIntersectionPoint
+      );
+      var intersectionPointMagnitude = Cartesian3.magnitude(intersectionPoint);
+      if (intersectionPointMagnitude < magnitude) {
+        Cartesian3.clone(intersectionPoint, finalPosition);
+      }
+    }
+  }
+
+  var angle = Math.abs(
+    Cartesian3.dot(surfaceNormal, controller._scene.camera.direction)
   );
+  var distanceWeight = Math.max(angle, 0.2);
+  var distance = Cartesian3.distance(ray.origin, finalPosition);
+  var maximumDistance = controller._maximumUndergroundPickDistance;
+  if (distance > maximumDistance * distanceWeight) {
+    var distanceFromClosestSurface = getDistanceFromClosestSurface(
+      controller,
+      height
+    );
+    var direction = Cartesian3.normalize(ray.origin, scratchIntersectionPoint);
+    var scalar =
+      Cartesian3.magnitude(ray.origin) - distanceFromClosestSurface * angle;
+    Cartesian3.multiplyByScalar(direction, scalar, finalPosition);
+  }
 
-  distance = Math.min(distance, maximumDistance);
-
-  return Ray.getPoint(ray, distance, result);
+  return finalPosition;
 }
 
 var spin3DPick = new Cartesian3();
-var scratchRadii = new Cartesian3();
-var scratchEllipsoid = new Ellipsoid();
 var scratchLookUp = new Cartesian3();
 
 function spin3D(controller, startPosition, movement) {
@@ -1866,8 +1888,7 @@ function spin3D(controller, startPosition, movement) {
     } else if (controller._rotating) {
       rotate3D(controller, startPosition, movement);
     } else if (controller._strafing) {
-      Cartesian3.clone(mousePos, controller._strafeStartPosition);
-      strafe(controller, startPosition, movement);
+      continueStrafing(controller, movement);
     } else {
       magnitude = Cartesian3.magnitude(controller._rotateStartPosition);
       radii = scratchRadii;
@@ -1888,9 +1909,15 @@ function spin3D(controller, startPosition, movement) {
       if (cameraUnderground) {
         ray = camera.getPickRay(movement.startPosition, pickGlobeScratchRay);
         if (Cartesian3.dot(up, ray.direction) > 0.0) {
-          // Facing outward
-          getStrafeCenterUnderground(controller, ray, mousePos, mousePos);
           strafing = true;
+        } else {
+          getRotateStartPositionUnderground(
+            controller,
+            ray,
+            up,
+            mousePos,
+            mousePos
+          );
         }
       } else {
         strafing =
@@ -1899,11 +1926,11 @@ function spin3D(controller, startPosition, movement) {
       }
 
       if (strafing) {
+        Cartesian2.clone(startPosition, controller._strafeEndMousePosition);
         Cartesian3.clone(mousePos, controller._strafeStartPosition);
         controller._strafing = true;
-        strafe(controller, startPosition, movement);
+        strafe(controller, movement, controller._strafeStartPosition);
       } else {
-        // TODO mousePos needs to have a smaller magnitude
         magnitude = Cartesian3.magnitude(mousePos);
         radii = scratchRadii;
         radii.x = radii.y = radii.z = magnitude;
@@ -2319,6 +2346,7 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
   var origin = ray.origin;
 
   var height = ellipsoid.cartesianToCartographic(origin, tilt3DCart).height;
+  var distance = Cartesian3.distance(origin, pickedPosition);
 
   var heightDelta = controller.undergroundSurfaceHeight;
   var innerRadii = Cartesian3.fromElements(
@@ -2327,8 +2355,6 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
     ellipsoid.radii.z + heightDelta,
     scratchRadii
   );
-
-  var distance = Cartesian3.distance(origin, pickedPosition);
 
   // Use the distance from the underground surface if it is closer
   var innerEllipsoid = Ellipsoid.fromCartesian3(innerRadii, scratchEllipsoid);
