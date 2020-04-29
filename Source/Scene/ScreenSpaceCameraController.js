@@ -287,6 +287,7 @@ function ScreenSpaceCameraController(scene) {
   this._zoomingOnVector = false;
   this._rotatingZoom = false;
   this._adjustedHeightForTerrain = false;
+  this._globeHeight = undefined;
 
   var projection = scene.mapProjection;
   this._maxCoord = projection.project(
@@ -304,6 +305,17 @@ function ScreenSpaceCameraController(scene) {
   this._maximumUndergroundPickDistance = 10000.0;
   this._minimumUndergroundPickDistance = 2000.0;
 }
+
+Object.defineProperties(ScreenSpaceCameraController.prototype, {
+  /**
+   * @private
+   */
+  globeHeight: {
+    get: function () {
+      return this._globeHeight;
+    },
+  },
+});
 
 function decay(time, coefficient) {
   if (time < 0) {
@@ -1116,7 +1128,8 @@ var scratchSurfaceNormal = new Cartesian3();
 function getZoomDistanceUnderground(controller, ray, height) {
   var origin = ray.origin;
   var direction = ray.direction;
-  var distanceFromSurface = Math.abs(height); // TODO use actual surface, not ellipsoid
+  var globeHeight = defaultValue(controller._globeHeight, 0.0);
+  var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
     height - controller.undergroundSurfaceHeight
   );
@@ -1159,7 +1172,8 @@ function getZoomDistanceUnderground(controller, ray, height) {
 }
 
 function getDistanceFromClosestSurface(controller, height) {
-  var distanceFromSurface = Math.abs(height); // TODO use actual surface, not ellipsoid
+  var globeHeight = defaultValue(controller._globeHeight, 0.0);
+  var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
     height - controller.undergroundSurfaceHeight
   );
@@ -1908,6 +1922,7 @@ function spin3D(controller, startPosition, movement) {
 
       if (cameraUnderground) {
         ray = camera.getPickRay(movement.startPosition, pickGlobeScratchRay);
+        // TODO : also limit strafing to picked position less than a certain distance
         if (Cartesian3.dot(up, ray.direction) > 0.0) {
           strafing = true;
         } else {
@@ -2745,7 +2760,6 @@ function adjustHeightForTerrain(controller) {
   controller._adjustedHeightForTerrain = true;
 
   var scene = controller._scene;
-  var globe = controller._globe;
   var mode = scene.mode;
 
   if (mode === SceneMode.SCENE2D || mode === SceneMode.MORPHING) {
@@ -2773,9 +2787,9 @@ function adjustHeightForTerrain(controller) {
 
   var heightUpdated = false;
   if (cartographic.height < controller._minimumCollisionTerrainHeight) {
-    var height = globe.getHeight(cartographic);
-    if (defined(height)) {
-      height += controller.minimumZoomDistance;
+    var globeHeight = controller._globeHeight;
+    if (defined(globeHeight)) {
+      var height = globeHeight + controller.minimumZoomDistance;
       if (cartographic.height < height) {
         cartographic.height = height;
         if (mode === SceneMode.SCENE3D) {
@@ -2830,23 +2844,33 @@ var scratchPreviousDirection = new Cartesian3();
  * @private
  */
 ScreenSpaceCameraController.prototype.update = function () {
-  var camera = this._scene.camera;
+  var scene = this._scene;
+  var camera = scene.camera;
+  var globe = scene.globe;
+  var mode = scene.mode;
+
+  var cartographic = camera.positionCartographic;
+  this._globeHeight = undefined;
+  if (defined(globe) && globe.show) {
+    this._globeHeight = globe.getHeight(cartographic);
+  }
+
   if (!Matrix4.equals(camera.transform, Matrix4.IDENTITY)) {
     this._globe = undefined;
     this._ellipsoid = Ellipsoid.UNIT_SPHERE;
   } else {
-    this._globe = this._scene.globe;
+    this._globe = globe;
     this._ellipsoid = defined(this._globe)
       ? this._globe.ellipsoid
-      : this._scene.mapProjection.ellipsoid;
+      : scene.mapProjection.ellipsoid;
   }
 
   this._minimumCollisionTerrainHeight =
-    this.minimumCollisionTerrainHeight * this._scene.terrainExaggeration;
+    this.minimumCollisionTerrainHeight * scene.terrainExaggeration;
   this._minimumPickingTerrainHeight =
-    this.minimumPickingTerrainHeight * this._scene.terrainExaggeration;
+    this.minimumPickingTerrainHeight * scene.terrainExaggeration;
   this._minimumTrackBallHeight =
-    this.minimumTrackBallHeight * this._scene.terrainExaggeration;
+    this.minimumTrackBallHeight * scene.terrainExaggeration;
 
   var radius = this._ellipsoid.maximumRadius;
   this._rotateFactor = 1.0 / radius;
@@ -2862,8 +2886,6 @@ ScreenSpaceCameraController.prototype.update = function () {
     scratchPreviousDirection
   );
 
-  var scene = this._scene;
-  var mode = scene.mode;
   if (mode === SceneMode.SCENE2D) {
     update2D(this);
   } else if (mode === SceneMode.COLUMBUS_VIEW) {

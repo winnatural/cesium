@@ -3765,7 +3765,7 @@ function isCameraUnderground(scene) {
     return false;
   }
 
-  var globeHeight = globe.getHeight(cartographic);
+  var globeHeight = cameraController.globeHeight;
   if (defined(globeHeight) && cartographic.height < globeHeight) {
     return true;
   }
