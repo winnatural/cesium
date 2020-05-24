@@ -39,7 +39,6 @@ import BlendingState from "./BlendingState.js";
 import ClippingPlaneCollection from "./ClippingPlaneCollection.js";
 import DepthFunction from "./DepthFunction.js";
 import GlobeSurfaceTile from "./GlobeSurfaceTile.js";
-import GlobeTranslucency from "./GlobeTranslucency.js";
 import ImageryLayer from "./ImageryLayer.js";
 import ImageryState from "./ImageryState.js";
 import PerInstanceColorAppearance from "./PerInstanceColorAppearance.js";
@@ -106,11 +105,8 @@ function GlobeSurfaceTileProvider(options) {
 
   this.showSkirts = true;
   this.backFaceCulling = true;
-  this.frontFaceAlphaByDistance = undefined;
-  this.backFaceAlphaByDistance = undefined;
-  this.depthTestAgainstTerrain = false;
   this.undergroundColor = undefined;
-  this.undergroundColorByDistance = undefined;
+  this.undergroundColorAlphaByDistance = undefined;
 
   this.materialUniformMap = undefined;
   this._materialUniformMap = undefined;
@@ -465,11 +461,6 @@ GlobeSurfaceTileProvider.prototype.endUpdate = function (frameState) {
     );
   }
 
-  var translucentTexturesLength = GlobeTranslucency.getNumberOfTextureUniforms(
-    this,
-    frameState
-  );
-
   // Add the tile render commands to the command list, sorted by texture count.
   var tilesToRenderByTextureCount = this._tilesToRenderByTextureCount;
   for (
@@ -490,7 +481,7 @@ GlobeSurfaceTileProvider.prototype.endUpdate = function (frameState) {
     ) {
       var tile = tilesToRender[tileIndex];
       var tileBoundingRegion = tile.data.tileBoundingRegion;
-      addDrawCommandsForTile(this, tile, translucentTexturesLength, frameState);
+      addDrawCommandsForTile(this, tile, frameState);
       frameState.minimumTerrainHeight = Math.min(
         frameState.minimumTerrainHeight,
         tileBoundingRegion.minimumHeight
@@ -499,13 +490,13 @@ GlobeSurfaceTileProvider.prototype.endUpdate = function (frameState) {
   }
 };
 
-function pushCommand(tileProvider, command, frameState) {
-  if (frameState.globeTranslucent) {
-    var firstLayer = !command.renderState.blending.enabled;
-    GlobeTranslucency.pushDerivedCommands(
+function pushCommand(command, frameState) {
+  var globeTranslucencyState = frameState.globeTranslucencyState;
+  if (globeTranslucencyState.translucent) {
+    var isBlendCommand = command.renderState.blending.enabled;
+    globeTranslucencyState.pushDerivedCommands(
       command,
-      firstLayer,
-      tileProvider,
+      isBlendCommand,
       frameState
     );
   } else {
@@ -522,7 +513,7 @@ GlobeSurfaceTileProvider.prototype.updateForPick = function (frameState) {
   // Add the tile pick commands from the tiles drawn last frame.
   var drawCommands = this._drawCommands;
   for (var i = 0, length = this._usedDrawCommands; i < length; ++i) {
-    pushCommand(this, drawCommands[i], frameState);
+    pushCommand(drawCommands[i], frameState);
   }
 };
 
@@ -628,6 +619,36 @@ function clipRectangleAntimeridian(tileRectangle, cartographicLimitRectangle) {
   return splitRectangle;
 }
 
+function isUndergroundVisible(tileProvider, frameState) {
+  if (frameState.cameraUnderground) {
+    return true;
+  }
+
+  if (frameState.globeTranslucencyState.translucent) {
+    return true;
+  }
+
+  if (tileProvider.backFaceCulling) {
+    return false;
+  }
+
+  var clippingPlanes = tileProvider._clippingPlanes;
+  if (defined(clippingPlanes) && clippingPlanes.enabled) {
+    return true;
+  }
+
+  if (
+    !Rectangle.equals(
+      tileProvider.cartographicLimitRectangle,
+      Rectangle.MAX_VALUE
+    )
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 /**
  * Determines the visibility of a given tile.  The tile may be fully visible, partially visible, or not
  * visible at all.  Tiles that are renderable and are at least partially visible will be shown by a call
@@ -647,11 +668,9 @@ GlobeSurfaceTileProvider.prototype.computeTileVisibility = function (
   var distance = this.computeDistanceToTile(tile, frameState);
   tile._distance = distance;
 
-  if (
-    frameState.fog.enabled &&
-    !frameState.cameraUnderground &&
-    !frameState.globeTranslucent
-  ) {
+  var undergroundVisible = isUndergroundVisible(this, frameState);
+
+  if (frameState.fog.enabled && !undergroundVisible) {
     if (CesiumMath.fog(distance, frameState.fog.density) >= 1.0) {
       // Tile is completely in fog so return that it is not visible.
       return Visibility.NONE;
@@ -746,8 +765,7 @@ GlobeSurfaceTileProvider.prototype.computeTileVisibility = function (
     frameState.mode === SceneMode.SCENE3D &&
     !ortho3D &&
     defined(occluders) &&
-    !frameState.cameraUnderground &&
-    !frameState.globeTranslucent
+    !undergroundVisible
   ) {
     var occludeePointInScaledSpace = surfaceTile.occludeePointInScaledSpace;
     if (!defined(occludeePointInScaledSpace)) {
@@ -959,6 +977,7 @@ var modifiedModelViewScratch = new Matrix4();
 var modifiedModelViewProjectionScratch = new Matrix4();
 var tileRectangleScratch = new Cartesian4();
 var localizedCartographicLimitRectangleScratch = new Cartesian4();
+var localizedTranslucencyRectangleScratch = new Cartesian4();
 var rtcScratch = new Cartesian3();
 var centerEyeScratch = new Cartesian3();
 var southwestScratch = new Cartesian3();
@@ -1624,11 +1643,14 @@ function createTileUniformMap(frameState, globeSurfaceTileProvider) {
     u_backFaceAlphaByDistance: function () {
       return this.properties.backFaceAlphaByDistance;
     },
+    u_translucencyRectangle: function () {
+      return this.properties.localizedTranslucencyRectangle;
+    },
     u_undergroundColor: function () {
       return this.properties.undergroundColor;
     },
-    u_undergroundColorByDistance: function () {
-      return this.properties.undergroundColorByDistance;
+    u_undergroundColorAlphaByDistance: function () {
+      return this.properties.undergroundColorAlphaByDistance;
     },
 
     // make a separate object so that changes to the properties are seen on
@@ -1677,8 +1699,9 @@ function createTileUniformMap(frameState, globeSurfaceTileProvider) {
 
       frontFaceAlphaByDistance: new Cartesian4(),
       backFaceAlphaByDistance: new Cartesian4(),
+      localizedTranslucencyRectangle: new Cartesian4(),
       undergroundColor: Color.clone(Color.TRANSPARENT),
-      undergroundColorByDistance: new Cartesian4(),
+      undergroundColorAlphaByDistance: new Cartesian4(),
     },
   };
 
@@ -1876,14 +1899,10 @@ var surfaceShaderSetOptionsScratch = {
   colorToAlpha: undefined,
 };
 
-var defaultUndergroundColorByDistance = new NearFarScalar();
+var defaultUndergroundColor = Color.TRANSPARENT;
+var defaultundergroundColorAlphaByDistance = new NearFarScalar();
 
-function addDrawCommandsForTile(
-  tileProvider,
-  tile,
-  translucentTexturesLength,
-  frameState
-) {
+function addDrawCommandsForTile(tileProvider, tile, frameState) {
   var surfaceTile = tile.data;
 
   if (!defined(surfaceTile.vertexArray)) {
@@ -1921,21 +1940,28 @@ function addDrawCommandsForTile(
   }
 
   var cameraUnderground = frameState.cameraUnderground;
-  var translucent = frameState.globeTranslucent;
+
+  var globeTranslucencyState = frameState.globeTranslucencyState;
+  var translucent = globeTranslucencyState.translucent;
+  var frontFaceAlphaByDistance =
+    globeTranslucencyState.frontFaceAlphaByDistance;
+  var backFaceAlphaByDistance = globeTranslucencyState.backFaceAlphaByDistance;
+  var translucencyRectangle = globeTranslucencyState.rectangle;
+
   var undergroundColor = defaultValue(
     tileProvider.undergroundColor,
-    Color.TRANSPARENT
+    defaultUndergroundColor
   );
-  var undergroundColorByDistance = defaultValue(
-    tileProvider.undergroundColorByDistance,
-    defaultUndergroundColorByDistance
+  var undergroundColorAlphaByDistance = defaultValue(
+    tileProvider.undergroundColorAlphaByDistance,
+    defaultundergroundColorAlphaByDistance
   );
   var showUndergroundColor =
-    (cameraUnderground || translucent) &&
+    isUndergroundVisible(tileProvider, frameState) &&
     frameState.mode === SceneMode.SCENE3D &&
     undergroundColor.alpha > 0.0 &&
-    (undergroundColorByDistance.nearValue > 0.0 ||
-      undergroundColorByDistance.farValue > 0.0);
+    (undergroundColorAlphaByDistance.nearValue > 0.0 ||
+      undergroundColorAlphaByDistance.farValue > 0.0);
 
   var showReflectiveOcean =
     tileProvider.hasWaterMask && defined(waterMaskTexture);
@@ -1988,7 +2014,7 @@ function addDrawCommandsForTile(
     --maxTextures;
   }
 
-  maxTextures -= translucentTexturesLength;
+  maxTextures -= globeTranslucencyState.numberOfTextureUniforms;
 
   var mesh = surfaceTile.renderedMesh;
   var rtc = mesh.center;
@@ -2107,8 +2133,6 @@ function addDrawCommandsForTile(
     debugDestroyPrimitive();
   }
 
-  var uniformMap;
-
   var materialUniformMapChanged =
     tileProvider._materialUniformMap !== tileProvider.materialUniformMap;
   if (materialUniformMapChanged) {
@@ -2126,6 +2150,7 @@ function addDrawCommandsForTile(
     var numberOfDayTextures = 0;
 
     var command;
+    var uniformMap;
 
     if (tileProvider._drawCommands.length <= tileProvider._usedDrawCommands) {
       command = new DrawCommand();
@@ -2174,36 +2199,36 @@ function addDrawCommandsForTile(
     uniformMapProperties.zoomedOutOceanSpecularIntensity =
       tileProvider.zoomedOutOceanSpecularIntensity;
 
-    var frontFaceAlphaByDistance = cameraUnderground
-      ? tileProvider.backFaceAlphaByDistance
-      : tileProvider.frontFaceAlphaByDistance;
-    var backFaceAlphaByDistance = cameraUnderground
-      ? tileProvider.frontFaceAlphaByDistance
-      : tileProvider.backFaceAlphaByDistance;
+    var frontFaceAlphaByDistanceFinal = cameraUnderground
+      ? backFaceAlphaByDistance
+      : frontFaceAlphaByDistance;
+    var backFaceAlphaByDistanceFinal = cameraUnderground
+      ? frontFaceAlphaByDistance
+      : backFaceAlphaByDistance;
 
-    if (defined(frontFaceAlphaByDistance)) {
+    if (defined(frontFaceAlphaByDistanceFinal)) {
       Cartesian4.fromElements(
-        frontFaceAlphaByDistance.near,
-        frontFaceAlphaByDistance.nearValue,
-        frontFaceAlphaByDistance.far,
-        frontFaceAlphaByDistance.farValue,
+        frontFaceAlphaByDistanceFinal.near,
+        frontFaceAlphaByDistanceFinal.nearValue,
+        frontFaceAlphaByDistanceFinal.far,
+        frontFaceAlphaByDistanceFinal.farValue,
         uniformMapProperties.frontFaceAlphaByDistance
       );
       Cartesian4.fromElements(
-        backFaceAlphaByDistance.near,
-        backFaceAlphaByDistance.nearValue,
-        backFaceAlphaByDistance.far,
-        backFaceAlphaByDistance.farValue,
+        backFaceAlphaByDistanceFinal.near,
+        backFaceAlphaByDistanceFinal.nearValue,
+        backFaceAlphaByDistanceFinal.far,
+        backFaceAlphaByDistanceFinal.farValue,
         uniformMapProperties.backFaceAlphaByDistance
       );
     }
 
     Cartesian4.fromElements(
-      undergroundColorByDistance.near,
-      undergroundColorByDistance.nearValue,
-      undergroundColorByDistance.far,
-      undergroundColorByDistance.farValue,
-      uniformMapProperties.undergroundColorByDistance
+      undergroundColorAlphaByDistance.near,
+      undergroundColorAlphaByDistance.nearValue,
+      undergroundColorAlphaByDistance.far,
+      undergroundColorAlphaByDistance.farValue,
+      uniformMapProperties.undergroundColorAlphaByDistance
     );
     Color.clone(undergroundColor, uniformMapProperties.undergroundColor);
 
@@ -2234,6 +2259,12 @@ function addDrawCommandsForTile(
       tileProvider.cartographicLimitRectangle
     );
 
+    var localizedTranslucencyRectangle = localizedTranslucencyRectangleScratch;
+    var clippedTranslucencyRectangle = clipRectangleAntimeridian(
+      tile.rectangle,
+      translucencyRectangle
+    );
+
     Cartesian3.fromElements(
       hueShift,
       saturationShift,
@@ -2260,6 +2291,24 @@ function addDrawCommandsForTile(
     Cartesian4.clone(
       localizedCartographicLimitRectangle,
       uniformMapProperties.localizedCartographicLimitRectangle
+    );
+
+    localizedTranslucencyRectangle.x =
+      (clippedTranslucencyRectangle.west - cartographicTileRectangle.west) *
+      inverseTileWidth;
+    localizedTranslucencyRectangle.y =
+      (clippedTranslucencyRectangle.south - cartographicTileRectangle.south) *
+      inverseTileHeight;
+    localizedTranslucencyRectangle.z =
+      (clippedTranslucencyRectangle.east - cartographicTileRectangle.west) *
+      inverseTileWidth;
+    localizedTranslucencyRectangle.w =
+      (clippedTranslucencyRectangle.north - cartographicTileRectangle.south) *
+      inverseTileHeight;
+
+    Cartesian4.clone(
+      localizedTranslucencyRectangle,
+      uniformMapProperties.localizedTranslucencyRectangle
     );
 
     // For performance, use fog in the shader only when the tile is in fog.
@@ -2486,8 +2535,8 @@ function addDrawCommandsForTile(
     surfaceShaderSetOptions.colorCorrect = colorCorrect;
     surfaceShaderSetOptions.highlightFillTile = highlightFillTile;
     surfaceShaderSetOptions.colorToAlpha = applyColorToAlpha;
-    surfaceShaderSetOptions.translucent = translucent;
     surfaceShaderSetOptions.showUndergroundColor = showUndergroundColor;
+    surfaceShaderSetOptions.translucent = translucent;
 
     var count = surfaceTile.renderedMesh.indices.length;
     if (!showSkirts) {
@@ -2556,10 +2605,10 @@ function addDrawCommandsForTile(
     command.dirty = true;
 
     if (translucent) {
-      GlobeTranslucency.updateDerivedCommand(command, frameState);
+      globeTranslucencyState.updateDerivedCommands(command, frameState);
     }
 
-    pushCommand(tileProvider, command, frameState);
+    pushCommand(command, frameState);
 
     renderState = otherPassesRenderState;
     initialColor = otherPassesInitialColor;

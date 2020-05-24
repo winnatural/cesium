@@ -27,6 +27,19 @@
   >
     <style>
       @import url(../templates/bucket.css);
+      #toolbar {
+        background: rgba(42, 42, 42, 0.8);
+        padding: 4px;
+        border-radius: 4px;
+      }
+      #toolbar input {
+        vertical-align: middle;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+      #toolbar .header {
+        font-weight: bold;
+      }
     </style>
     <div id="cesiumContainer" class="fullSize"></div>
     <div id="loadingOverlay"><h1>Loading...</h1></div>
@@ -79,7 +92,7 @@
         var globe = scene.globe;
 
         scene.screenSpaceCameraController.enableCollisionDetection = false;
-        globe.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
+        globe.translucency.frontFaceAlphaByDistance = new Cesium.NearFarScalar(
           400.0,
           0.0,
           800.0,
@@ -245,14 +258,14 @@
         }
 
         function update() {
-          globe.translucencyEnabled = viewModel.translucencyEnabled;
+          globe.translucency.enabled = viewModel.translucencyEnabled;
 
           var alpha = Number(viewModel.alpha);
           alpha = !isNaN(alpha) ? alpha : 1.0;
           alpha = Cesium.Math.clamp(alpha, 0.0, 1.0);
 
-          globe.frontFaceAlphaByDistance.nearValue = alpha;
-          globe.frontFaceAlphaByDistance.farValue = viewModel.fadeByDistance
+          globe.translucency.frontFaceAlphaByDistance.nearValue = alpha;
+          globe.translucency.frontFaceAlphaByDistance.farValue = viewModel.fadeByDistance
             ? 1.0
             : alpha;
 

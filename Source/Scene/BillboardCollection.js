@@ -322,7 +322,9 @@ function BillboardCollection(options) {
         var billboards = this._billboards;
         var length = billboards.length;
         for (var i = 0; i < length; ++i) {
-          billboards[i]._updateClamping();
+          if (defined(billboards[i])) {
+            billboards[i]._updateClamping();
+          }
         }
       },
       this
@@ -783,7 +785,7 @@ function createVAF(
     attributes.push({
       index: attributeLocations.a_batchId,
       componentsPerAttribute: 1,
-      componentDatatyps: ComponentDatatype.FLOAT,
+      componentDatatype: ComponentDatatype.FLOAT,
       bufferUsage: BufferUsage.STATIC_DRAW,
     });
   }
@@ -1437,10 +1439,11 @@ function writeTextureCoordinateBoundsOrLabelTranslate(
   if (billboard.heightReference === HeightReference.CLAMP_TO_GROUND) {
     var scene = billboardCollection._scene;
     var context = frameState.context;
-    var globeTranslucent = frameState.globeTranslucent;
+    var globeTranslucent = frameState.globeTranslucencyState.translucent;
     var depthTestAgainstTerrain =
       defined(scene.globe) && scene.globe.depthTestAgainstTerrain;
 
+    // Only do manual depth test if the globe is opaque and writes depth
     billboardCollection._shaderClampToGround =
       context.depthTexture && !globeTranslucent && depthTestAgainstTerrain;
   }

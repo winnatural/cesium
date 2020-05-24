@@ -2,7 +2,6 @@ import BoundingSphere from "../Core/BoundingSphere.js";
 import buildModuleUrl from "../Core/buildModuleUrl.js";
 import Cartesian3 from "../Core/Cartesian3.js";
 import Cartographic from "../Core/Cartographic.js";
-import Check from "../Core/Check.js";
 import Color from "../Core/Color.js";
 import defaultValue from "../Core/defaultValue.js";
 import defined from "../Core/defined.js";
@@ -24,6 +23,7 @@ import GroundAtmosphere from "../Shaders/GroundAtmosphere.js";
 import when from "../ThirdParty/when.js";
 import GlobeSurfaceShaderSet from "./GlobeSurfaceShaderSet.js";
 import GlobeSurfaceTileProvider from "./GlobeSurfaceTileProvider.js";
+import GlobeTranslucency from "./GlobeTranslucency.js";
 import ImageryLayerCollection from "./ImageryLayerCollection.js";
 import QuadtreePrimitive from "./QuadtreePrimitive.js";
 import SceneMode from "./SceneMode.js";
@@ -63,46 +63,15 @@ function Globe(ellipsoid) {
   this._terrainProvider = terrainProvider;
   this._terrainProviderChanged = new Event();
 
-  this._translucencyEnabled = false;
-  this._frontFaceAlpha = 1.0;
-  this._frontFaceAlphaByDistance = undefined;
-  this._frontFaceAlphaByDistanceFinal = new NearFarScalar(0.0, 1.0, 0.0, 1.0);
-  this._backFaceAlpha = 1.0;
-  this._backFaceAlphaByDistance = undefined;
-  this._backFaceAlphaByDistanceFinal = new NearFarScalar(0.0, 1.0, 0.0, 1.0);
-
-  /**
-   * The color to render the back side of the globe when the camera is underground or the globe is translucent,
-   * blended with the globe color based on the camera's distance.
-   * <br /><br />
-   * To disable underground coloring, set <code>undergroundColor</code> to <code>undefined</code>.
-   *
-   * @type {Color}
-   * @default {@link Color.BLACK}
-   *
-   * @see Globe#undergroundColorByDistance
-   */
-  this.undergroundColor = Color.clone(Color.BLACK);
-
-  /**
-   * Gets or sets the near and far distance for blending {@link Globe#undergroundColor} with the globe color.
-   * The blending amount will interpolate between the {@link NearFarScalar#nearValue} and
-   * {@link NearFarScalar#farValue} while the camera distance falls within the upper and lower bounds
-   * of the specified {@link NearFarScalar#near} and {@link NearFarScalar#far}.
-   * Outside of these ranges the blending amount remains clamped to the nearest bound. If undefined,
-   * the underground color will not be blended with the globe color.
-   *
-   * @type {NearFarScalar}
-   *
-   * @see Globe#undergroundColor
-   *
-   */
-  this.undergroundColorByDistance = new NearFarScalar(
+  this._undergroundColor = Color.clone(Color.BLACK);
+  this._undergroundColorAlphaByDistance = new NearFarScalar(
     ellipsoid.maximumRadius / 1000.0,
     0.0,
     ellipsoid.maximumRadius / 5.0,
     1.0
   );
+
+  this._translucency = new GlobeTranslucency();
 
   makeShadersDirty(this);
 
@@ -515,103 +484,46 @@ Object.defineProperties(Globe.prototype, {
   },
 
   /**
-   * When true, the globe is rendered as a translucent surface.
+   * The color to render the back side of the globe when the camera is underground or the globe is translucent,
+   * blended with the globe color based on the camera's distance.
    * <br /><br />
-   * The alpha is computed by blending {@link Globe#material}, {@link Globe#imageryLayers},
-   * and {@link Globe#baseColor}, all of which may contain translucency, and then multiplying by
-   * {@link Globe#frontFaceAlpha} and {@link Globe#frontFaceAlphaByDistance} for front faces and
-   * {@link Globe#backFaceAlpha} and {@link Globe#backFaceAlphaByDistance} for back faces.
-   * When the camera is underground back faces and front faces are swapped, i.e. back-facing geometry
-   * is considered front facing.
-   * <br /><br />
-   * Translucency is disabled by default.
+   * To disable underground coloring, set <code>undergroundColor</code> to <code>undefined</code>.
    *
    * @memberof Globe.prototype
+   * @type {Color}
+   * @default {@link Color.BLACK}
    *
-   * @type {Boolean}
-   * @default false
-   *
-   * @see Globe#frontFaceAlpha
-   * @see Globe#frontFaceAlphaByDistance
-   * @see Globe#backFaceAlpha
-   * @see Globe#backFaceAlphaByDistance
+   * @see Globe#undergroundColorAlphaByDistance
    */
-  translucencyEnabled: {
+  undergroundColor: {
     get: function () {
-      return this._translucencyEnabled;
+      return this._undergroundColor;
     },
     set: function (value) {
-      //>>includeStart('debug', pragmas.debug);
-      Check.typeOf.bool("translucencyEnabled", value);
-      //>>includeEnd('debug');
-      this._translucencyEnabled = value;
+      this._undergroundColor = Color.clone(value, this._undergroundColor);
     },
   },
 
   /**
-   * A constant translucency to apply to front faces of the globe.
-   * <br /><br />
-   * {@link Globe#translucencyEnabled} must be set to true for this option to take effect.
-   *
-   * @memberof Globe.prototype
-   *
-   * @type {Number}
-   * @default 1.0
-   *
-   * @see Globe#translucencyEnabled
-   * @see Globe#frontFaceAlphaByDistance
-   *
-   * @example
-   * // Set front face translucency to 0.5.
-   * globe.frontFaceAlpha = 0.5;
-   * globe.translucencyEnabled = true;
-   */
-  frontFaceAlpha: {
-    get: function () {
-      return this._frontFaceAlpha;
-    },
-    set: function (value) {
-      //>>includeStart('debug', pragmas.debug);
-      Check.typeOf.number.greaterThanOrEquals("frontFaceAlpha", value, 0.0);
-      Check.typeOf.number.lessThanOrEquals("frontFaceAlpha", value, 1.0);
-      //>>includeEnd('debug');
-      this._frontFaceAlpha = value;
-    },
-  },
-  /**
-   * Gets or sets near and far translucency properties of front faces of the globe based on the distance to the camera.
-   * The translucency will interpolate between the {@link NearFarScalar#nearValue} and
-   * {@link NearFarScalar#farValue} while the camera distance falls within the upper and lower bounds
+   * Gets or sets the near and far distance for blending {@link Globe#undergroundColor} with the globe color.
+   * The alpha will interpolate between the {@link NearFarScalar#nearValue} and
+   * {@link NearFarScalar#farValue} while the camera distance falls within the lower and upper bounds
    * of the specified {@link NearFarScalar#near} and {@link NearFarScalar#far}.
-   * Outside of these ranges the translucency remains clamped to the nearest bound.  If undefined,
-   * frontFaceAlphaByDistance will be disabled.
-   * <br /><br />
-   * {@link Globe#translucencyEnabled} must be set to true for this option to take effect.
+   * Outside of these ranges the alpha remains clamped to the nearest bound. If undefined,
+   * the underground color will not be blended with the globe color.
+   * <br /> <br />
+   * When the camera is above the ellipsoid the distance is computed from the nearest
+   * point on the ellipsoid instead of the camera's position.
    *
    * @memberof Globe.prototype
-   *
    * @type {NearFarScalar}
-   * @default undefined
    *
-   * @see Globe#translucencyEnabled
-   * @see Globe#frontFaceAlpha
+   * @see Globe#undergroundColor
    *
-   * @example
-   * // Example 1.
-   * // Set front face translucency to 0.5 when the
-   * // camera is 1500 meters from the surface and 1.0
-   * // as the camera distance approaches 8.0e6 meters.
-   * globe.frontFaceAlphaByDistance = new Cesium.NearFarScalar(1.5e2, 0.5, 8.0e6, 1.0);
-   * globe.translucencyEnabled = true;
-   *
-   * @example
-   * // Example 2.
-   * // Disable front face translucency by distance
-   * globe.frontFaceAlphaByDistance = undefined;
    */
-  frontFaceAlphaByDistance: {
+  undergroundColorAlphaByDistance: {
     get: function () {
-      return this._frontFaceAlphaByDistance;
+      return this._undergroundColorAlphaByDistance;
     },
     set: function (value) {
       //>>includeStart('debug', pragmas.debug);
@@ -621,145 +533,25 @@ Object.defineProperties(Globe.prototype, {
         );
       }
       //>>includeEnd('debug');
-      this._frontFaceAlphaByDistance = NearFarScalar.clone(
+      this._undergroundColorAlphaByDistance = NearFarScalar.clone(
         value,
-        this._frontFaceAlphaByDistance
+        this._undergroundColorAlphaByDistance
       );
     },
   },
 
   /**
-   * A constant translucency to apply to back faces of the globe.
-   * <br /><br />
-   * {@link Globe#translucencyEnabled} must be set to true for this option to take effect.
+   * Properties for controlling globe translucency.
    *
    * @memberof Globe.prototype
-   *
-   * @type {Number}
-   * @default 1.0
-   *
-   * @see Globe#translucencyEnabled
-   * @see Globe#backFaceAlphaByDistance
-   *
-   * @example
-   * // Set back face translucency to 0.5.
-   * globe.backFaceAlpha = 0.5;
-   * globe.translucencyEnabled = true;
+   * @type {GlobeTranslucency}
    */
-  backFaceAlpha: {
+  translucency: {
     get: function () {
-      return this._backFaceAlpha;
-    },
-    set: function (value) {
-      //>>includeStart('debug', pragmas.debug);
-      Check.typeOf.number.greaterThanOrEquals("backFaceAlpha", value, 0.0);
-      Check.typeOf.number.lessThanOrEquals("backFaceAlpha", value, 1.0);
-      //>>includeEnd('debug');
-      this._backFaceAlpha = value;
-    },
-  },
-  /**
-   * Gets or sets near and far translucency properties of back faces of the globe based on the distance to the camera.
-   * The translucency will interpolate between the {@link NearFarScalar#nearValue} and
-   * {@link NearFarScalar#farValue} while the camera distance falls within the upper and lower bounds
-   * of the specified {@link NearFarScalar#near} and {@link NearFarScalar#far}.
-   * Outside of these ranges the translucency remains clamped to the nearest bound.  If undefined,
-   * backFaceAlphaByDistance will be disabled.
-   * <br /><br />
-   * {@link Globe#translucencyEnabled} must be set to true for this option to take effect.
-   *
-   * @memberof Globe.prototype
-   *
-   * @type {NearFarScalar}
-   * @default undefined
-   *
-   * @see Globe#translucencyEnabled
-   * @see Globe#backFaceAlpha
-   *
-   * @example
-   * // Example 1.
-   * // Set back face translucency to 0.5 when the
-   * // camera is 1500 meters from the surface and 1.0
-   * // as the camera distance approaches 8.0e6 meters.
-   * globe.backFaceAlphaByDistance = new Cesium.NearFarScalar(1.5e2, 0.5, 8.0e6, 1.0);
-   * globe.translucencyEnabled = true;
-   *
-   * @example
-   * // Example 2.
-   * // Disable back face translucency by distance
-   * globe.backFaceAlphaByDistance = undefined;
-   */
-  backFaceAlphaByDistance: {
-    get: function () {
-      return this._backFaceAlphaByDistance;
-    },
-    set: function (value) {
-      //>>includeStart('debug', pragmas.debug);
-      if (defined(value) && value.far < value.near) {
-        throw new DeveloperError(
-          "far distance must be greater than near distance."
-        );
-      }
-      //>>includeEnd('debug');
-      this._backFaceAlphaByDistance = NearFarScalar.clone(
-        value,
-        this._backFaceAlphaByDistance
-      );
+      return this._translucency;
     },
   },
 });
-
-/**
- * @private
- */
-Globe.prototype.getAlphaByDistanceFinal = function (results) {
-  updateFrontFaceAlphaByDistance(this);
-  updateBackFaceAlphaByDistance(this);
-  results[0] = this._frontFaceAlphaByDistanceFinal;
-  results[1] = this._backFaceAlphaByDistanceFinal;
-  return results;
-};
-
-function updateFrontFaceAlphaByDistance(globe) {
-  updateAlphaByDistance(
-    globe._translucencyEnabled,
-    globe._frontFaceAlpha,
-    globe._frontFaceAlphaByDistance,
-    globe._frontFaceAlphaByDistanceFinal
-  );
-}
-
-function updateBackFaceAlphaByDistance(globe) {
-  updateAlphaByDistance(
-    globe._translucencyEnabled,
-    globe._backFaceAlpha,
-    globe._backFaceAlphaByDistance,
-    globe._backFaceAlphaByDistanceFinal
-  );
-}
-
-function updateAlphaByDistance(
-  translucencyEnabled,
-  alpha,
-  alphaByDistance,
-  alphaByDistanceFinal
-) {
-  if (!translucencyEnabled) {
-    alphaByDistanceFinal.nearValue = 1.0;
-    alphaByDistanceFinal.farValue = 1.0;
-    return;
-  }
-
-  if (!defined(alphaByDistance)) {
-    alphaByDistanceFinal.nearValue = alpha;
-    alphaByDistanceFinal.farValue = alpha;
-    return;
-  }
-
-  NearFarScalar.clone(alphaByDistance, alphaByDistanceFinal);
-  alphaByDistanceFinal.nearValue *= alpha;
-  alphaByDistanceFinal.farValue *= alpha;
-}
 
 function makeShadersDirty(globe) {
   var defines = [];
@@ -1166,11 +958,8 @@ Globe.prototype.beginFrame = function (frameState) {
     tileProvider.fillHighlightColor = this.fillHighlightColor;
     tileProvider.showSkirts = this.showSkirts;
     tileProvider.backFaceCulling = this.backFaceCulling;
-    tileProvider.frontFaceAlphaByDistance = this._frontFaceAlphaByDistanceFinal;
-    tileProvider.backFaceAlphaByDistance = this._backFaceAlphaByDistanceFinal;
-    tileProvider.depthTestAgainstTerrain = this.depthTestAgainstTerrain;
-    tileProvider.undergroundColor = this.undergroundColor;
-    tileProvider.undergroundColorByDistance = this.undergroundColorByDistance;
+    tileProvider.undergroundColor = this._undergroundColor;
+    tileProvider.undergroundColorAlphaByDistance = this._undergroundColorAlphaByDistance;
     surface.beginFrame(frameState);
   }
 };
