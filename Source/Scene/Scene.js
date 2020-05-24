@@ -1649,6 +1649,15 @@ Object.defineProperties(Scene.prototype, {
       return 0.9999;
     },
   },
+
+  /**
+   * @private
+   */
+  globeTranslucencyState: {
+    get: function () {
+      return this._globeTranslucencyState;
+    },
+  },
 });
 
 /**

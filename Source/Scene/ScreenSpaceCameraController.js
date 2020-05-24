@@ -20,7 +20,6 @@ import Ray from "../Core/Ray.js";
 import Transforms from "../Core/Transforms.js";
 import CameraEventAggregator from "./CameraEventAggregator.js";
 import CameraEventType from "./CameraEventType.js";
-import GlobeTranslucency from "./GlobeTranslucency.js";
 import MapMode2D from "./MapMode2D.js";
 import SceneMode from "./SceneMode.js";
 import SceneTransforms from "./SceneTransforms.js";
@@ -1080,9 +1079,9 @@ function pickGlobe(controller, mousePosition, result) {
   }
 
   var cameraUnderground = scene.cameraUnderground;
+  var translucent = scene.globeTranslucencyState.translucent;
   var cullBackFaces =
-    !cameraUnderground ||
-    (globe.depthTestAgainstTerrain && !GlobeTranslucency.isTranslucent(globe));
+    !cameraUnderground || (globe.depthTestAgainstTerrain && !translucent);
 
   var depthIntersection;
   if (scene.pickPositionSupported) {
