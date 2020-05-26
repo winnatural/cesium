@@ -536,7 +536,11 @@ function handleZoom(
   rangeWindowRatio = Math.min(rangeWindowRatio, object.maximumMovementRatio);
   var distance = zoomRate * rangeWindowRatio;
 
-  if (object.enableCollisionDetection || object.minimumZoomDistance === 0.0) {
+  if (
+    object.enableCollisionDetection ||
+    object.minimumZoomDistance === 0.0 ||
+    !defined(object._globe)
+  ) {
     if (distance > 0.0 && Math.abs(distanceMeasure - minHeight) < 1.0) {
       return;
     }
@@ -1924,7 +1928,6 @@ function spin3D(controller, startPosition, movement) {
 
       if (cameraUnderground) {
         ray = camera.getPickRay(movement.startPosition, pickGlobeScratchRay);
-        // TODO : also limit strafing to picked position less than a certain distance
         if (Cartesian3.dot(up, ray.direction) > 0.0) {
           strafing = true;
         } else {
@@ -2856,7 +2859,6 @@ ScreenSpaceCameraController.prototype.update = function () {
   if (defined(globe) && globe.show) {
     this._globeHeight = globe.getHeight(cartographic);
   }
-  this._cameraUnderground = this.isCameraUnderground(camera);
 
   if (!Matrix4.equals(camera.transform, Matrix4.IDENTITY)) {
     this._globe = undefined;
@@ -2867,6 +2869,9 @@ ScreenSpaceCameraController.prototype.update = function () {
       ? this._globe.ellipsoid
       : scene.mapProjection.ellipsoid;
   }
+
+  this._cameraUnderground =
+    this.isCameraUnderground(camera) && defined(this._globe);
 
   this._minimumCollisionTerrainHeight =
     this.minimumCollisionTerrainHeight * scene.terrainExaggeration;
