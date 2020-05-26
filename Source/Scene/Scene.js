@@ -3709,7 +3709,11 @@ function isCameraUnderground(scene) {
   var cameraController = scene._screenSpaceCameraController;
   var cartographic = camera.positionCartographic;
 
-  if (!cameraController.onMap() && cartographic.height < 0.0) {
+  if (
+    !cameraController.onMap() &&
+    defined(cartographic) &&
+    cartographic.height < 0.0
+  ) {
     // The camera can go off the map while in Columbus View.
     // Make a best guess as to whether it's underground by checking if its height is less than zero.
     return true;
@@ -3724,17 +3728,7 @@ function isCameraUnderground(scene) {
     return false;
   }
 
-  if (cameraController.adjustedHeightForTerrain()) {
-    // The camera controller already adjusted the camera, no need to call globe.getHeight again
-    return false;
-  }
-
-  var globeHeight = cameraController.globeHeight;
-  if (defined(globeHeight) && cartographic.height < globeHeight) {
-    return true;
-  }
-
-  return false;
+  return cameraController.isCameraUnderground(camera);
 }
 
 /**

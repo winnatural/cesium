@@ -287,6 +287,7 @@ function ScreenSpaceCameraController(scene) {
   this._rotatingZoom = false;
   this._adjustedHeightForTerrain = false;
   this._globeHeight = undefined;
+  this._cameraUnderground = false;
 
   var projection = scene.mapProjection;
   this._maxCoord = projection.project(
@@ -305,16 +306,18 @@ function ScreenSpaceCameraController(scene) {
   this._minimumUndergroundPickDistance = 2000.0;
 }
 
-Object.defineProperties(ScreenSpaceCameraController.prototype, {
-  /**
-   * @private
-   */
-  globeHeight: {
-    get: function () {
-      return this._globeHeight;
-    },
-  },
-});
+/**
+ * @private
+ */
+ScreenSpaceCameraController.prototype.isCameraUnderground = function (camera) {
+  var globeHeight = this._globeHeight;
+  var cartographic = camera.positionCartographic;
+  return (
+    defined(globeHeight) &&
+    defined(cartographic) &&
+    cartographic.height < globeHeight
+  );
+};
 
 function decay(time, coefficient) {
   if (time < 0) {
@@ -664,7 +667,7 @@ function handleZoom(
         scratchCameraPositionNormal
       );
       if (
-        scene.cameraUnderground ||
+        object._cameraUnderground ||
         (camera.positionCartographic.height < 3000.0 &&
           Math.abs(Cartesian3.dot(camera.direction, cameraPositionNormal)) <
             0.6)
@@ -906,7 +909,7 @@ function handleZoom(
     camera.zoomIn(distance);
   }
 
-  if (!scene.cameraUnderground) {
+  if (!object._cameraUnderground) {
     camera.setView(scratchZoomViewOptions);
   }
 }
@@ -1078,10 +1081,10 @@ function pickGlobe(controller, mousePosition, result) {
     return undefined;
   }
 
-  var cameraUnderground = scene.cameraUnderground;
   var translucent = scene.globeTranslucencyState.translucent;
   var cullBackFaces =
-    !cameraUnderground || (globe.depthTestAgainstTerrain && !translucent);
+    !controller._cameraUnderground ||
+    (globe.depthTestAgainstTerrain && !translucent);
 
   var depthIntersection;
   if (scene.pickPositionSupported) {
@@ -1613,7 +1616,7 @@ function zoomCV(controller, startPosition, movement) {
   var camera = scene.camera;
   var canvas = scene.canvas;
 
-  var cameraUnderground = scene.cameraUnderground;
+  var cameraUnderground = controller._cameraUnderground;
 
   var windowPosition;
 
@@ -1856,7 +1859,7 @@ var scratchLookUp = new Cartesian3();
 function spin3D(controller, startPosition, movement) {
   var scene = controller._scene;
   var camera = scene.camera;
-  var cameraUnderground = scene.cameraUnderground;
+  var cameraUnderground = controller._cameraUnderground;
 
   if (!Matrix4.equals(camera.transform, Matrix4.IDENTITY)) {
     rotate3D(controller, startPosition, movement);
@@ -2166,7 +2169,7 @@ function zoom3D(controller, startPosition, movement) {
   var camera = scene.camera;
   var canvas = scene.canvas;
 
-  var cameraUnderground = scene.cameraUnderground;
+  var cameraUnderground = controller._cameraUnderground;
 
   var windowPosition;
 
@@ -2438,7 +2441,7 @@ function tilt3DOnTerrain(controller, startPosition, movement) {
       center = Ray.getPoint(ray, intersection.start, tilt3DCenter);
     }
 
-    if (scene.cameraUnderground) {
+    if (controller._cameraUnderground) {
       if (!defined(ray)) {
         ray = camera.getPickRay(startPosition, tilt3DRay);
       }
@@ -2853,6 +2856,7 @@ ScreenSpaceCameraController.prototype.update = function () {
   if (defined(globe) && globe.show) {
     this._globeHeight = globe.getHeight(cartographic);
   }
+  this._cameraUnderground = this.isCameraUnderground(camera);
 
   if (!Matrix4.equals(camera.transform, Matrix4.IDENTITY)) {
     this._globe = undefined;
@@ -2910,13 +2914,6 @@ ScreenSpaceCameraController.prototype.update = function () {
   }
 
   this._aggregator.reset();
-};
-
-/**
- * @private
- */
-ScreenSpaceCameraController.prototype.adjustedHeightForTerrain = function () {
-  return this._adjustedHeightForTerrain;
 };
 
 /**
