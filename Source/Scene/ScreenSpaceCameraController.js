@@ -2766,13 +2766,18 @@ function adjustHeightForTerrain(controller) {
 
   var scene = controller._scene;
   var mode = scene.mode;
+  var globe = scene.globe;
 
-  if (mode === SceneMode.SCENE2D || mode === SceneMode.MORPHING) {
+  if (
+    !defined(globe) ||
+    mode === SceneMode.SCENE2D ||
+    mode === SceneMode.MORPHING
+  ) {
     return;
   }
 
   var camera = scene.camera;
-  var ellipsoid = controller._ellipsoid;
+  var ellipsoid = globe.ellipsoid;
   var projection = scene.mapProjection;
 
   var transform;
@@ -2904,11 +2909,7 @@ ScreenSpaceCameraController.prototype.update = function () {
     update3D(this);
   }
 
-  if (
-    this.enableCollisionDetection &&
-    !this._adjustedHeightForTerrain &&
-    defined(this._globe)
-  ) {
+  if (this.enableCollisionDetection && !this._adjustedHeightForTerrain) {
     // Adjust the camera height if the camera moved at all (user input or inertia) and an action didn't already adjust the camera height
     var cameraChanged =
       !Cartesian3.equals(previousPosition, camera.positionWC) ||

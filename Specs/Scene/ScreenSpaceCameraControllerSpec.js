@@ -4,6 +4,7 @@ import { combine } from "../../Source/Cesium.js";
 import { Ellipsoid } from "../../Source/Cesium.js";
 import { FeatureDetection } from "../../Source/Cesium.js";
 import { GeographicProjection } from "../../Source/Cesium.js";
+import { GlobeTranslucencyState } from "../../Source/Cesium.js";
 import { IntersectionTests } from "../../Source/Cesium.js";
 import { KeyboardEventModifier } from "../../Source/Cesium.js";
 import { Math as CesiumMath } from "../../Source/Cesium.js";
@@ -34,6 +35,7 @@ describe("Scene/ScreenSpaceCameraController", function () {
     this.mapProjection = new GeographicProjection(ellipsoid);
     this.terrainExaggeration = 1.0;
     this.screenSpaceCameraController = undefined;
+    this.globeTranslucencyState = new GlobeTranslucencyState();
   }
 
   function MockGlobe(ellipsoid) {
@@ -55,6 +57,7 @@ describe("Scene/ScreenSpaceCameraController", function () {
         tilesWaitingForChildren: 0,
       },
     };
+    this.show = true;
   }
   beforeAll(function () {
     usePointerEvents = FeatureDetection.supportsPointerEvents();
