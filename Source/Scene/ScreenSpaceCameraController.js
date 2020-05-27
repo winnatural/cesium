@@ -1843,9 +1843,8 @@ function getStrafeStartPositionUnderground(
     // camera's height from the closest surface (closest surface being either
     // the globe surface or the underground invisible surface)
     distance = getDistanceFromClosestSurface(controller, ray.origin);
-    Ray.getPoint(ray, distance, result);
   }
-  return result;
+  return Ray.getPoint(ray, distance, result);
 }
 
 var spin3DPick = new Cartesian3();
@@ -2363,8 +2362,6 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
     distance = Math.min(distance, distanceFromClosestSurface / 5.0);
   }
 
-  console.log(distance);
-
   return Ray.getPoint(ray, distance, result);
 }
 
@@ -2372,6 +2369,7 @@ function tilt3DOnTerrain(controller, startPosition, movement) {
   var ellipsoid = controller._ellipsoid;
   var scene = controller._scene;
   var camera = scene.camera;
+  var cameraUnderground = controller._cameraUnderground;
 
   var center;
   var ray;
@@ -2472,7 +2470,11 @@ function tilt3DOnTerrain(controller, startPosition, movement) {
   camera._setTransform(verticalTransform);
 
   if (dot < 0.0) {
-    if (movement.startPosition.y > movement.endPosition.y) {
+    var movementDelta = movement.startPosition.y - movement.endPosition.y;
+    if (
+      (cameraUnderground && movementDelta < 0.0) ||
+      (!cameraUnderground && movementDelta > 0.0)
+    ) {
       constrainedAxis = undefined;
     }
 
