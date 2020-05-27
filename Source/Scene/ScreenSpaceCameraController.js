@@ -277,7 +277,6 @@ function ScreenSpaceCameraController(scene) {
   this._zoomingOnVector = false;
   this._rotatingZoom = false;
   this._adjustedHeightForTerrain = false;
-  this._globeHeight = undefined;
   this._cameraUnderground = false;
 
   var projection = scene.mapProjection;
@@ -306,19 +305,6 @@ function ScreenSpaceCameraController(scene) {
    */
   this._undergroundSurfaceHeight = -20000.0;
 }
-
-/**
- * @private
- */
-ScreenSpaceCameraController.prototype.isCameraUnderground = function (camera) {
-  var globeHeight = this._globeHeight;
-  var cartographic = camera.positionCartographic;
-  return (
-    defined(globeHeight) &&
-    defined(cartographic) &&
-    cartographic.height < globeHeight
-  );
-};
 
 function decay(time, coefficient) {
   if (time < 0) {
@@ -1135,7 +1121,7 @@ var scratchSurfaceNormal = new Cartesian3();
 function getZoomDistanceUnderground(controller, ray, height) {
   var origin = ray.origin;
   var direction = ray.direction;
-  var globeHeight = defaultValue(controller._globeHeight, 0.0);
+  var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
     height - controller._undergroundSurfaceHeight
@@ -1203,7 +1189,7 @@ function getHeight(controller) {
 
 function getDistanceFromClosestSurface(controller) {
   var height = getHeight(controller);
-  var globeHeight = defaultValue(controller._globeHeight, 0.0);
+  var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
     height - controller._undergroundSurfaceHeight
@@ -2816,7 +2802,7 @@ function adjustHeightForTerrain(controller) {
 
   var heightUpdated = false;
   if (cartographic.height < controller._minimumCollisionTerrainHeight) {
-    var globeHeight = controller._globeHeight;
+    var globeHeight = controller._scene.globeHeight;
     if (defined(globeHeight)) {
       var height = globeHeight + controller.minimumZoomDistance;
       if (cartographic.height < height) {
@@ -2878,12 +2864,6 @@ ScreenSpaceCameraController.prototype.update = function () {
   var globe = scene.globe;
   var mode = scene.mode;
 
-  var cartographic = camera.positionCartographic;
-  this._globeHeight = undefined;
-  if (defined(globe) && globe.show) {
-    this._globeHeight = globe.getHeight(cartographic);
-  }
-
   if (!Matrix4.equals(camera.transform, Matrix4.IDENTITY)) {
     this._globe = undefined;
     this._ellipsoid = Ellipsoid.UNIT_SPHERE;
@@ -2894,8 +2874,7 @@ ScreenSpaceCameraController.prototype.update = function () {
       : scene.mapProjection.ellipsoid;
   }
 
-  this._cameraUnderground =
-    this.isCameraUnderground(camera) && defined(this._globe);
+  this._cameraUnderground = scene.cameraUnderground && defined(this._globe);
 
   this._minimumCollisionTerrainHeight =
     this.minimumCollisionTerrainHeight * scene.terrainExaggeration;
