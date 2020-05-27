@@ -239,15 +239,6 @@ function ScreenSpaceCameraController(scene) {
   this._minimumTrackBallHeight = this.minimumTrackBallHeight;
 
   /**
-   * The height of an invisible surface that the camera uses for underground navigation.
-   * For best results the height should be set just below the height of underground entities in the scene.
-   * Note that the camera can still zoom below this height if {@link minimumZoomDistance} is greater than 0.0.
-   * @type {Number}
-   * @default -20000.0
-   */
-  this.undergroundSurfaceHeight = -20000.0;
-
-  /**
    * Enables or disables camera collision detection with terrain.
    * @type {Boolean}
    * @default true
@@ -302,8 +293,18 @@ function ScreenSpaceCameraController(scene) {
   this._minimumRotateRate = 1.0 / 5000.0;
   this._minimumZoomRate = 20.0;
   this._maximumZoomRate = 5906376272000.0; // distance from the Sun to Pluto in meters.
-  this._maximumUndergroundPickDistance = 10000.0;
   this._minimumUndergroundPickDistance = 2000.0;
+  this._maximumUndergroundPickDistance = 10000.0;
+
+  /**
+   * The height of an invisible surface that the camera uses for underground navigation.
+   * For best results the height should be set just below the height of underground entities in the scene.
+   * Note that the camera can still zoom below this height if {@link minimumZoomDistance} is greater than 0.0.
+   * @type {Number}
+   * @default -20000.0
+   * @private
+   */
+  this._undergroundSurfaceHeight = -20000.0;
 }
 
 /**
@@ -539,7 +540,7 @@ function handleZoom(
   if (
     object.enableCollisionDetection ||
     object.minimumZoomDistance === 0.0 ||
-    !defined(object._globe)
+    !defined(object._globe) // look-at mode
   ) {
     if (distance > 0.0 && Math.abs(distanceMeasure - minHeight) < 1.0) {
       return;
@@ -1137,7 +1138,7 @@ function getZoomDistanceUnderground(controller, ray, height) {
   var globeHeight = defaultValue(controller._globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
-    height - controller.undergroundSurfaceHeight
+    height - controller._undergroundSurfaceHeight
   );
 
   // Geocentric normal is accurate enough for these purposes
@@ -1205,7 +1206,7 @@ function getDistanceFromClosestSurface(controller) {
   var globeHeight = defaultValue(controller._globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
-    height - controller.undergroundSurfaceHeight
+    height - controller._undergroundSurfaceHeight
   );
   return Math.min(distanceFromUndergroundSurface, distanceFromSurface);
 }
@@ -1483,7 +1484,7 @@ function rotateCVOnTerrain(controller, startPosition, movement) {
       Cartesian3.add(position, center, center);
     }
 
-    if (controller._cameraUnderground) {
+    if (cameraUnderground) {
       if (!defined(ray)) {
         ray = camera.getPickRay(startPosition, rotateCVWindowRay);
       }
@@ -1854,7 +1855,7 @@ function getClosestPickDistance(controller, ray, pickedPosition) {
   }
 
   var ellipsoid = controller._ellipsoid;
-  var heightDelta = controller.undergroundSurfaceHeight;
+  var heightDelta = controller._undergroundSurfaceHeight;
   var innerRadii = Cartesian3.fromElements(
     ellipsoid.radii.x + heightDelta,
     ellipsoid.radii.y + heightDelta,
@@ -2412,9 +2413,9 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
 
   var distance = getClosestPickDistance(controller, ray, pickedPosition);
   if (distance > maximumDistance) {
-    // If the distance is too far away use closest surface as the distance
+    // If the distance is too far away use closest surface as the distance.
     // The further away away camera is from the closest surface the wider
-    // radius the camera will use to tilt around
+    // radius the camera will use to tilt around.
     distance = Math.min(distance, distanceFromClosestSurface / 5.0);
   }
 
