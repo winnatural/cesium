@@ -39,7 +39,7 @@ import ClippingPlane from "./ClippingPlane.js";
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] The 4x4 transformation matrix specifying an additional transform relative to the clipping planes original coordinate system.
  * @param {Boolean} [options.unionClippingRegions=false] If true, a region will be clipped if it is on the outside of any plane in the collection. Otherwise, a region will only be clipped if it is on the outside of every plane.
  * @param {Color} [options.edgeColor=Color.WHITE] The color applied to highlight the edge along which an object is clipped.
- * @param {Number} [options.edgeWidth=0.0] The width, in pixels, of the highlight applied to the edge along which an object is clipped.
+ * @param {number} [options.edgeWidth=0.0] The width, in pixels, of the highlight applied to the edge along which an object is clipped.
  *
  * @demo {@link https://sandcastle.cesium.com/?src=3D%20Tiles%20Clipping%20Planes.html|Clipping 3D Tiles and glTF models.}
  * @demo {@link https://sandcastle.cesium.com/?src=Terrain%20Clipping%20Planes.html|Clipping the Globe.}
@@ -99,7 +99,7 @@ function ClippingPlaneCollection(options) {
   /**
    * The width, in pixels, of the highlight applied to the edge along which an object is clipped.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.edgeWidth = defaultValue(options.edgeWidth, 0.0);
@@ -160,7 +160,7 @@ Object.defineProperties(ClippingPlaneCollection.prototype, {
    * in the collection.
    *
    * @memberof ClippingPlaneCollection.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -246,7 +246,7 @@ Object.defineProperties(ClippingPlaneCollection.prototype, {
    * Used for checking if shader regeneration is necessary.
    *
    * @memberof ClippingPlaneCollection.prototype
-   * @returns {Number} A Number that describes the ClippingPlaneCollection's state.
+   * @returns {number} A Number that describes the ClippingPlaneCollection's state.
    * @readonly
    * @private
    */
@@ -300,7 +300,7 @@ ClippingPlaneCollection.prototype.add = function (plane) {
  * {@link ClippingPlaneCollection#length} to iterate over all the planes
  * in the collection.
  *
- * @param {Number} index The zero-based index of the plane.
+ * @param {number} index The zero-based index of the plane.
  * @returns {ClippingPlane} The ClippingPlane at the specified index.
  *
  * @see ClippingPlaneCollection#length

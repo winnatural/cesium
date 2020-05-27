@@ -24,8 +24,8 @@ var defaultCredit = new Credit(
  * @param {String} [options.url='https://a.tile.openstreetmap.org'] The OpenStreetMap server url.
  * @param {String} [options.fileExtension='png'] The file extension for images on the server.
  * @param {Rectangle} [options.rectangle=Rectangle.MAX_VALUE] The rectangle of the layer.
- * @param {Number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.
- * @param {Number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
+ * @param {number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.
+ * @param {number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
  * @param {Ellipsoid} [options.ellipsoid] The ellipsoid.  If not specified, the WGS84 ellipsoid is used.
  * @param {Credit|String} [options.credit='MapQuest, Open Street Map and contributors, CC-BY-SA'] A credit for the data source, which is displayed on the canvas.
  * @returns {UrlTemplateImageryProvider} The imagery provider.

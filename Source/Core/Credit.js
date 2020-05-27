@@ -58,7 +58,7 @@ Object.defineProperties(Credit.prototype, {
 
   /**
    * @memberof Credit.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @private

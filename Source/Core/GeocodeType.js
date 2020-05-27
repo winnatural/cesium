@@ -1,13 +1,13 @@
 /**
  * The type of geocoding to be performed by a {@link GeocoderService}.
- * @enum {Number}
+ * @enum {number}
  * @see Geocoder
  */
 var GeocodeType = {
   /**
    * Perform a search where the input is considered complete.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   SEARCH: 0,
@@ -16,7 +16,7 @@ var GeocodeType = {
    * Perform an auto-complete using partial input, typically
    * reserved for providing possible results as a user is typing.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   AUTOCOMPLETE: 1,

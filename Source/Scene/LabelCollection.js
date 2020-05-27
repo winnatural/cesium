@@ -696,7 +696,7 @@ Object.defineProperties(LabelCollection.prototype, {
    * {@link LabelCollection#get} to iterate over all the labels
    * in the collection.
    * @memberof LabelCollection.prototype
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -848,7 +848,7 @@ LabelCollection.prototype.contains = function (label) {
  * {@link LabelCollection#length} to iterate over all the labels
  * in the collection.
  *
- * @param {Number} index The zero-based index of the billboard.
+ * @param {number} index The zero-based index of the billboard.
  *
  * @returns {Label} The label at the specified index.
  *

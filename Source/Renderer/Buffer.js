@@ -79,7 +79,7 @@ function Buffer(options) {
  * @param {Object} options An object containing the following properties:
  * @param {Context} options.context The context in which to create the buffer
  * @param {ArrayBufferView} [options.typedArray] A typed array containing the data to copy to the buffer.
- * @param {Number} [options.sizeInBytes] A <code>Number</code> defining the size of the buffer in bytes. Required if options.typedArray is not given.
+ * @param {number} [options.sizeInBytes] A <code>Number</code> defining the size of the buffer in bytes. Required if options.typedArray is not given.
  * @param {BufferUsage} options.usage Specifies the expected usage pattern of the buffer. On some GL implementations, this can significantly affect performance. See {@link BufferUsage}.
  * @returns {VertexBuffer} The vertex buffer, ready to be attached to a vertex array.
  *
@@ -134,7 +134,7 @@ Buffer.createVertexBuffer = function (options) {
  * @param {Object} options An object containing the following properties:
  * @param {Context} options.context The context in which to create the buffer
  * @param {ArrayBufferView} [options.typedArray] A typed array containing the data to copy to the buffer.
- * @param {Number} [options.sizeInBytes] A <code>Number</code> defining the size of the buffer in bytes. Required if options.typedArray is not given.
+ * @param {number} [options.sizeInBytes] A <code>Number</code> defining the size of the buffer in bytes. Required if options.typedArray is not given.
  * @param {BufferUsage} options.usage Specifies the expected usage pattern of the buffer. On some GL implementations, this can significantly affect performance. See {@link BufferUsage}.
  * @param {IndexDatatype} options.indexDatatype The datatype of indices in the buffer.
  * @returns {IndexBuffer} The index buffer, ready to be attached to a vertex array.

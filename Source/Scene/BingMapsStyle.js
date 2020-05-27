@@ -1,7 +1,7 @@
 /**
  * The types of imagery provided by Bing Maps.
  *
- * @enum {Number}
+ * @enum {number}
  *
  * @see BingMapsImageryProvider
  */

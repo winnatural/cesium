@@ -7,12 +7,12 @@ import PointCloudEyeDomeLighting from "./PointCloudEyeDomeLighting.js";
  *
  * @param {Object} [options] Object with the following properties:
  * @param {Boolean} [options.attenuation=false] Perform point attenuation based on geometric error.
- * @param {Number} [options.geometricErrorScale=1.0] Scale to be applied to each tile's geometric error.
- * @param {Number} [options.maximumAttenuation] Maximum attenuation in pixels. Defaults to the Cesium3DTileset's maximumScreenSpaceError.
- * @param {Number} [options.baseResolution] Average base resolution for the dataset in meters. Substitute for Geometric Error when not available.
+ * @param {number} [options.geometricErrorScale=1.0] Scale to be applied to each tile's geometric error.
+ * @param {number} [options.maximumAttenuation] Maximum attenuation in pixels. Defaults to the Cesium3DTileset's maximumScreenSpaceError.
+ * @param {number} [options.baseResolution] Average base resolution for the dataset in meters. Substitute for Geometric Error when not available.
  * @param {Boolean} [options.eyeDomeLighting=true] When true, use eye dome lighting when drawing with point attenuation.
- * @param {Number} [options.eyeDomeLightingStrength=1.0] Increasing this value increases contrast on slopes and edges.
- * @param {Number} [options.eyeDomeLightingRadius=1.0] Increase the thickness of contours from eye dome lighting.
+ * @param {number} [options.eyeDomeLightingStrength=1.0] Increasing this value increases contrast on slopes and edges.
+ * @param {number} [options.eyeDomeLightingRadius=1.0] Increase the thickness of contours from eye dome lighting.
  * @param {Boolean} [options.backFaceCulling=false] Determines whether back-facing points are hidden. This option works only if data has normals included.
  * @param {Boolean} [options.normalShading=true] Determines whether a point cloud that contains normals is shaded by the scene's light source.
  *
@@ -31,7 +31,7 @@ function PointCloudShading(options) {
 
   /**
    * Scale to be applied to the geometric error before computing attenuation.
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.geometricErrorScale = defaultValue(
@@ -41,7 +41,7 @@ function PointCloudShading(options) {
 
   /**
    * Maximum point attenuation in pixels. If undefined, the Cesium3DTileset's maximumScreenSpaceError will be used.
-   * @type {Number}
+   * @type {number}
    */
   this.maximumAttenuation = pointCloudShading.maximumAttenuation;
 
@@ -49,7 +49,7 @@ function PointCloudShading(options) {
    * Average base resolution for the dataset in meters.
    * Used in place of geometric error when geometric error is 0.
    * If undefined, an approximation will be computed for each tile that has geometric error of 0.
-   * @type {Number}
+   * @type {number}
    */
   this.baseResolution = pointCloudShading.baseResolution;
 
@@ -65,7 +65,7 @@ function PointCloudShading(options) {
 
   /**
    * Eye dome lighting strength (apparent contrast)
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.eyeDomeLightingStrength = defaultValue(
@@ -75,7 +75,7 @@ function PointCloudShading(options) {
 
   /**
    * Thickness of contours from eye dome lighting
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.eyeDomeLightingRadius = defaultValue(

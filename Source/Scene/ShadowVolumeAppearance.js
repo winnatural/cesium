@@ -671,10 +671,10 @@ var encodeScratch = new EncodedCartesian3();
  * @private
  *
  * @param {Rectangle} boundingRectangle Rectangle object that the points will approximately bound
- * @param {Number[]} textureCoordinateRotationPoints Points in the computed texture coordinate system for remapping texture coordinates
+ * @param {number[]} textureCoordinateRotationPoints Points in the computed texture coordinate system for remapping texture coordinates
  * @param {Ellipsoid} ellipsoid Ellipsoid for converting Rectangle points to world coordinates
  * @param {MapProjection} projection The MapProjection used for 2D and Columbus View.
- * @param {Number} [height=0] The maximum height for the shadow volume.
+ * @param {number} [height=0] The maximum height for the shadow volume.
  * @returns {Object} An attributes dictionary containing planar texture coordinate attributes.
  */
 ShadowVolumeAppearance.getPlanarTextureCoordinateAttributes = function (
@@ -789,7 +789,7 @@ var sphericalScratch = new Cartesian2();
  * @private
  *
  * @param {Rectangle} boundingRectangle Rectangle object that the spherical extents will approximately bound
- * @param {Number[]} textureCoordinateRotationPoints Points in the computed texture coordinate system for remapping texture coordinates
+ * @param {number[]} textureCoordinateRotationPoints Points in the computed texture coordinate system for remapping texture coordinates
  * @param {Ellipsoid} ellipsoid Ellipsoid for converting Rectangle points to world coordinates
  * @param {MapProjection} projection The MapProjection used for 2D and Columbus View.
  * @returns {Object} An attributes dictionary containing spherical texture coordinate attributes.
@@ -925,7 +925,7 @@ ShadowVolumeAppearance.shouldUseSphericalCoordinates = function (rectangle) {
  * Texture coordinates for ground primitives are computed either using spherical coordinates for large areas or
  * using distance from planes for small areas.
  *
- * @type {Number}
+ * @type {number}
  * @constant
  * @private
  */

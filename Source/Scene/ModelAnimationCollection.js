@@ -57,7 +57,7 @@ Object.defineProperties(ModelAnimationCollection.prototype, {
    *
    * @memberof ModelAnimationCollection.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -85,12 +85,12 @@ function add(collection, index, options) {
  *
  * @param {Object} options Object with the following properties:
  * @param {String} [options.name] The glTF animation name that identifies the animation. Must be defined if <code>options.index</code> is <code>undefined</code>.
- * @param {Number} [options.index] The glTF animation index that identifies the animation. Must be defined if <code>options.name</code> is <code>undefined</code>.
+ * @param {number} [options.index] The glTF animation index that identifies the animation. Must be defined if <code>options.name</code> is <code>undefined</code>.
  * @param {JulianDate} [options.startTime] The scene time to start playing the animation.  When this is <code>undefined</code>, the animation starts at the next frame.
- * @param {Number} [options.delay=0.0] The delay, in seconds, from <code>startTime</code> to start playing.
+ * @param {number} [options.delay=0.0] The delay, in seconds, from <code>startTime</code> to start playing.
  * @param {JulianDate} [options.stopTime] The scene time to stop playing the animation.  When this is <code>undefined</code>, the animation is played for its full duration.
  * @param {Boolean} [options.removeOnStop=false] When <code>true</code>, the animation is removed after it stops playing.
- * @param {Number} [options.multiplier=1.0] Values greater than <code>1.0</code> increase the speed that the animation is played relative to the scene clock speed; values less than <code>1.0</code> decrease the speed.
+ * @param {number} [options.multiplier=1.0] Values greater than <code>1.0</code> increase the speed that the animation is played relative to the scene clock speed; values less than <code>1.0</code> decrease the speed.
  * @param {Boolean} [options.reverse=false] When <code>true</code>, the animation is played in reverse.
  * @param {ModelAnimationLoop} [options.loop=ModelAnimationLoop.NONE] Determines if and how the animation is looped.
  * @returns {ModelAnimation} The animation that was added to the collection.
@@ -198,10 +198,10 @@ ModelAnimationCollection.prototype.add = function (options) {
  *
  * @param {Object} [options] Object with the following properties:
  * @param {JulianDate} [options.startTime] The scene time to start playing the animations.  When this is <code>undefined</code>, the animations starts at the next frame.
- * @param {Number} [options.delay=0.0] The delay, in seconds, from <code>startTime</code> to start playing.
+ * @param {number} [options.delay=0.0] The delay, in seconds, from <code>startTime</code> to start playing.
  * @param {JulianDate} [options.stopTime] The scene time to stop playing the animations.  When this is <code>undefined</code>, the animations are played for its full duration.
  * @param {Boolean} [options.removeOnStop=false] When <code>true</code>, the animations are removed after they stop playing.
- * @param {Number} [options.multiplier=1.0] Values greater than <code>1.0</code> increase the speed that the animations play relative to the scene clock speed; values less than <code>1.0</code> decrease the speed.
+ * @param {number} [options.multiplier=1.0] Values greater than <code>1.0</code> increase the speed that the animations play relative to the scene clock speed; values less than <code>1.0</code> decrease the speed.
  * @param {Boolean} [options.reverse=false] When <code>true</code>, the animations are played in reverse.
  * @param {ModelAnimationLoop} [options.loop=ModelAnimationLoop.NONE] Determines if and how the animations are looped.
  * @returns {ModelAnimation[]} An array of {@link ModelAnimation} objects, one for each animation added to the collection.  If there are no glTF animations, the array is empty.
@@ -312,7 +312,7 @@ ModelAnimationCollection.prototype.contains = function (animation) {
  * it to the left, changing their indices.  This function is commonly used to iterate over
  * all the animations in the collection.
  *
- * @param {Number} index The zero-based index of the animation.
+ * @param {number} index The zero-based index of the animation.
  * @returns {ModelAnimation} The animation at the specified index.
  *
  * @example

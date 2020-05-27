@@ -54,8 +54,8 @@ Object.defineProperties(CubeMapFace.prototype, {
  * Copies texels from the source to the cubemap's face.
  *
  * @param {Object} source The source ImageData, HTMLImageElement, HTMLCanvasElement, HTMLVideoElement, or an object with a width, height, and typed array as shown in the example.
- * @param {Number} [xOffset=0] An offset in the x direction in the cubemap where copying begins.
- * @param {Number} [yOffset=0] An offset in the y direction in the cubemap where copying begins.
+ * @param {number} [xOffset=0] An offset in the x direction in the cubemap where copying begins.
+ * @param {number} [yOffset=0] An offset in the y direction in the cubemap where copying begins.
  *
  * @exception {DeveloperError} xOffset must be greater than or equal to zero.
  * @exception {DeveloperError} yOffset must be greater than or equal to zero.
@@ -243,12 +243,12 @@ CubeMapFace.prototype.copyFrom = function (source, xOffset, yOffset) {
 /**
  * Copies texels from the framebuffer to the cubemap's face.
  *
- * @param {Number} [xOffset=0] An offset in the x direction in the cubemap where copying begins.
- * @param {Number} [yOffset=0] An offset in the y direction in the cubemap where copying begins.
- * @param {Number} [framebufferXOffset=0] An offset in the x direction in the framebuffer where copying begins from.
- * @param {Number} [framebufferYOffset=0] An offset in the y direction in the framebuffer where copying begins from.
- * @param {Number} [width=CubeMap's width] The width of the subimage to copy.
- * @param {Number} [height=CubeMap's height] The height of the subimage to copy.
+ * @param {number} [xOffset=0] An offset in the x direction in the cubemap where copying begins.
+ * @param {number} [yOffset=0] An offset in the y direction in the cubemap where copying begins.
+ * @param {number} [framebufferXOffset=0] An offset in the x direction in the framebuffer where copying begins from.
+ * @param {number} [framebufferYOffset=0] An offset in the y direction in the framebuffer where copying begins from.
+ * @param {number} [width=CubeMap's width] The width of the subimage to copy.
+ * @param {number} [height=CubeMap's height] The height of the subimage to copy.
  *
  * @exception {DeveloperError} Cannot call copyFromFramebuffer when the texture pixel data type is FLOAT.
  * @exception {DeveloperError} Cannot call copyFromFramebuffer when the texture pixel data type is HALF_FLOAT.

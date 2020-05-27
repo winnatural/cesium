@@ -6,8 +6,8 @@ import FeatureDetection from "./FeatureDetection.js";
  * Create a shallow copy of an array from begin to end.
  *
  * @param {Array} array The array to fill.
- * @param {Number} [begin=0] The index to start at.
- * @param {Number} [end=array.length] The index to end at which is not included.
+ * @param {number} [begin=0] The index to start at.
+ * @param {number} [end=array.length] The index to end at which is not included.
  *
  * @returns {Array} The resulting array.
  * @private

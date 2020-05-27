@@ -396,7 +396,7 @@ Object.defineProperties(ClassificationModel.prototype, {
    *
    * @memberof ClassificationModel.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default Axis.Y
    * @readonly
    *

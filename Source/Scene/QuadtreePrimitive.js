@@ -32,10 +32,10 @@ import TileSelectionResult from "./TileSelectionResult.js";
  *
  * @param {QuadtreeTileProvider} options.tileProvider The tile provider that loads, renders, and estimates
  *        the distance to individual tiles.
- * @param {Number} [options.maximumScreenSpaceError=2] The maximum screen-space error, in pixels, that is allowed.
+ * @param {number} [options.maximumScreenSpaceError=2] The maximum screen-space error, in pixels, that is allowed.
  *        A higher maximum error will render fewer tiles and improve performance, while a lower
  *        value will improve visual quality.
- * @param {Number} [options.tileCacheSize=100] The maximum number of tiles that will be retained in the tile cache.
+ * @param {number} [options.tileCacheSize=100] The maximum number of tiles that will be retained in the tile cache.
  *        Note that tiles will never be unloaded if they were used for rendering the last
  *        frame, so the actual number of resident tiles may be higher.  The value of
  *        this property will not affect visual quality.
@@ -105,7 +105,7 @@ function QuadtreePrimitive(options) {
    * Gets or sets the maximum screen-space error, in pixels, that is allowed.
    * A higher maximum error will render fewer tiles and improve performance, while a lower
    * value will improve visual quality.
-   * @type {Number}
+   * @type {number}
    * @default 2
    */
   this.maximumScreenSpaceError = defaultValue(
@@ -118,7 +118,7 @@ function QuadtreePrimitive(options) {
    * Note that tiles will never be unloaded if they were used for rendering the last
    * frame, so the actual number of resident tiles may be higher.  The value of
    * this property will not affect visual quality.
-   * @type {Number}
+   * @type {number}
    * @default 100
    */
   this.tileCacheSize = defaultValue(options.tileCacheSize, 100);
@@ -131,7 +131,7 @@ function QuadtreePrimitive(options) {
    * tile level to be loaded successively, significantly increasing load time. Setting it to a large
    * number (e.g. 1000) will minimize the number of tiles that are loaded but tend to make
    * detail appear all at once after a long wait.
-   * @type {Number}
+   * @type {number}
    * @default 20
    */
   this.loadingDescendantLimit = 20;

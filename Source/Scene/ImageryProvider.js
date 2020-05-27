@@ -35,7 +35,7 @@ function ImageryProvider() {
    * The default alpha blending value of this provider, with 0.0 representing fully transparent and
    * 1.0 representing fully opaque.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultAlpha = undefined;
@@ -44,7 +44,7 @@ function ImageryProvider() {
    * The default brightness of this provider.  1.0 uses the unmodified imagery color.  Less than 1.0
    * makes the imagery darker while greater than 1.0 makes it brighter.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultBrightness = undefined;
@@ -53,7 +53,7 @@ function ImageryProvider() {
    * The default contrast of this provider.  1.0 uses the unmodified imagery color.  Less than 1.0 reduces
    * the contrast while greater than 1.0 increases it.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultContrast = undefined;
@@ -61,7 +61,7 @@ function ImageryProvider() {
   /**
    * The default hue of this provider in radians. 0.0 uses the unmodified imagery color.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultHue = undefined;
@@ -70,7 +70,7 @@ function ImageryProvider() {
    * The default saturation of this provider. 1.0 uses the unmodified imagery color. Less than 1.0 reduces the
    * saturation while greater than 1.0 increases it.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultSaturation = undefined;
@@ -78,7 +78,7 @@ function ImageryProvider() {
   /**
    * The default gamma correction to apply to this provider.  1.0 uses the unmodified imagery color.
    *
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   this.defaultGamma = undefined;
@@ -138,7 +138,7 @@ Object.defineProperties(ImageryProvider.prototype, {
    * Gets the width of each tile, in pixels.  This function should
    * not be called before {@link ImageryProvider#ready} returns true.
    * @memberof ImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileWidth: {
@@ -149,7 +149,7 @@ Object.defineProperties(ImageryProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link ImageryProvider#ready} returns true.
    * @memberof ImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileHeight: {
@@ -160,7 +160,7 @@ Object.defineProperties(ImageryProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested.  This function should
    * not be called before {@link ImageryProvider#ready} returns true.
    * @memberof ImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumLevel: {
@@ -175,7 +175,7 @@ Object.defineProperties(ImageryProvider.prototype, {
    * provider with more than a few tiles at the minimum level will lead to
    * rendering problems.
    * @memberof ImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   minimumLevel: {
@@ -259,9 +259,9 @@ Object.defineProperties(ImageryProvider.prototype, {
  * Gets the credits to be displayed when a given tile is displayed.
  * @function
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -274,9 +274,9 @@ ImageryProvider.prototype.getTileCredits =
  * not be called before {@link ImageryProvider#ready} returns true.
  * @function
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -294,11 +294,11 @@ ImageryProvider.prototype.requestImage = DeveloperError.throwInstantiationError;
  *
  * @function
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
- * @param {Number} longitude The longitude at which to pick features.
- * @param {Number} latitude  The latitude at which to pick features.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
+ * @param {number} longitude The longitude at which to pick features.
+ * @param {number} latitude  The latitude at which to pick features.
  * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
  *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
  *                   instances.  The array may be empty if no features are found at the given location.

@@ -122,7 +122,7 @@ Object.defineProperties(Cesium3DTilePointFeature.prototype, {
    *
    * @memberof Cesium3DTilePointFeature.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   pointSize: {
     get: function () {
@@ -162,7 +162,7 @@ Object.defineProperties(Cesium3DTilePointFeature.prototype, {
    *
    * @memberof Cesium3DTilePointFeature.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   pointOutlineWidth: {
     get: function () {
@@ -221,7 +221,7 @@ Object.defineProperties(Cesium3DTilePointFeature.prototype, {
    *
    * @memberof Cesium3DTilePointFeature.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   labelOutlineWidth: {
     get: function () {
@@ -403,7 +403,7 @@ Object.defineProperties(Cesium3DTilePointFeature.prototype, {
    *
    * @memberof Cesium3DTilePointFeature.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   heightOffset: {
     get: function () {
@@ -494,7 +494,7 @@ Object.defineProperties(Cesium3DTilePointFeature.prototype, {
    *
    * @memberof Cesium3DTilePointFeature.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   disableDepthTestDistance: {
     get: function () {

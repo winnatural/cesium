@@ -118,7 +118,7 @@ function Cesium3DTile(tileset, baseResource, header, parent) {
    * The error, in meters, introduced if this tile is rendered and its children are not.
    * This is used to compute screen space error, i.e., the error measured in pixels.
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   this.geometricError = header.geometricError;
@@ -277,7 +277,7 @@ function Cesium3DTile(tileset, baseResource, header, parent) {
   /**
    * The time in seconds after the tile's content is ready when the content expires and new content is requested.
    *
-   * @type {Number}
+   * @type {number}
    */
   this.expireDuration = expireDuration;
 
@@ -291,7 +291,7 @@ function Cesium3DTile(tileset, baseResource, header, parent) {
   /**
    * The time when a style was last applied to this tile.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @private
    */
@@ -1139,8 +1139,8 @@ function getContentBoundingVolume(tile, frameState) {
  * Determines whether the tile's bounding volume intersects the culling volume.
  *
  * @param {FrameState} frameState The frame state.
- * @param {Number} parentVisibilityPlaneMask The parent's plane mask to speed up the visibility check.
- * @returns {Number} A plane mask as described above in {@link CullingVolume#computeVisibilityWithPlaneMask}.
+ * @param {number} parentVisibilityPlaneMask The parent's plane mask to speed up the visibility check.
+ * @returns {number} A plane mask as described above in {@link CullingVolume#computeVisibilityWithPlaneMask}.
  *
  * @private
  */
@@ -1217,7 +1217,7 @@ Cesium3DTile.prototype.contentVisibility = function (frameState) {
  * Computes the (potentially approximate) distance from the closest point of the tile's bounding volume to the camera.
  *
  * @param {FrameState} frameState The frame state.
- * @returns {Number} The distance, in meters, or zero if the camera is inside the bounding volume.
+ * @returns {number} The distance, in meters, or zero if the camera is inside the bounding volume.
  *
  * @private
  */
@@ -1232,7 +1232,7 @@ var scratchToTileCenter = new Cartesian3();
  * Computes the distance from the center of the tile's bounding volume to the camera's plane defined by its position and view direction.
  *
  * @param {FrameState} frameState The frame state.
- * @returns {Number} The distance, in meters.
+ * @returns {number} The distance, in meters.
  *
  * @private
  */

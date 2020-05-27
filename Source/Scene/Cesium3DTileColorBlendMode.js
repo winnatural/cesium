@@ -22,13 +22,13 @@
  * }
  * </code></pre>
  *
- * @enum {Number}
+ * @enum {number}
  */
 var Cesium3DTileColorBlendMode = {
   /**
    * Multiplies the source color by the feature color.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   HIGHLIGHT: 0,
@@ -36,7 +36,7 @@ var Cesium3DTileColorBlendMode = {
   /**
    * Replaces the source color with the feature color.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   REPLACE: 1,
@@ -44,7 +44,7 @@ var Cesium3DTileColorBlendMode = {
   /**
    * Blends the source color and feature color together.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   MIX: 2,

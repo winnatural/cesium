@@ -9,7 +9,7 @@ import createCommand from "../createCommand.js";
  * @constructor
  *
  * @param {Scene} scene The scene instance to use.
- * @param {Number} [duration] The duration of the camera flight in seconds.
+ * @param {number} [duration] The duration of the camera flight in seconds.
  */
 function HomeButtonViewModel(scene, duration) {
   //>>includeStart('debug', pragmas.debug);

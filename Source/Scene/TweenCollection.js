@@ -86,7 +86,7 @@ Object.defineProperties(Tween.prototype, {
    * The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
    * @memberof Tween.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   duration: {
@@ -99,7 +99,7 @@ Object.defineProperties(Tween.prototype, {
    * The delay, in seconds, before the tween starts animating.
    * @memberof Tween.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   delay: {
@@ -184,7 +184,7 @@ Object.defineProperties(TweenCollection.prototype, {
    * The number of tweens in the collection.
    * @memberof TweenCollection.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -201,8 +201,8 @@ Object.defineProperties(TweenCollection.prototype, {
  * @param {Object} [options] Object with the following properties:
  * @param {Object} options.startObject An object with properties for initial values of the tween.  The properties of this object are changed during the tween's animation.
  * @param {Object} options.stopObject An object with properties for the final values of the tween.
- * @param {Number} options.duration The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
- * @param {Number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
+ * @param {number} options.duration The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
+ * @param {number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
  * @param {EasingFunction} [options.easingFunction=EasingFunction.LINEAR_NONE] Determines the curve for animtion.
  * @param {TweenCollection.TweenUpdateCallback} [options.update] The callback to call at each animation update (usually tied to the a rendered frame).
  * @param {TweenCollection.TweenCompleteCallback} [options.complete] The callback to call when the tween finishes animating.
@@ -279,10 +279,10 @@ TweenCollection.prototype.add = function (options) {
  * @param {Object} [options] Object with the following properties:
  * @param {Object} options.object The object containing the property to animate.
  * @param {String} options.property The name of the property to animate.
- * @param {Number} options.startValue The initial value.
- * @param {Number} options.stopValue The final value.
- * @param {Number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
- * @param {Number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
+ * @param {number} options.startValue The initial value.
+ * @param {number} options.stopValue The final value.
+ * @param {number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
+ * @param {number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
  * @param {EasingFunction} [options.easingFunction=EasingFunction.LINEAR_NONE] Determines the curve for animtion.
  * @param {TweenCollection.TweenUpdateCallback} [options.update] The callback to call at each animation update (usually tied to the a rendered frame).
  * @param {TweenCollection.TweenCompleteCallback} [options.complete] The callback to call when the tween finishes animating.
@@ -345,10 +345,10 @@ TweenCollection.prototype.addProperty = function (options) {
  *
  * @param {Object} [options] Object with the following properties:
  * @param {Material} options.material The material to animate.
- * @param {Number} [options.startValue=0.0] The initial alpha value.
- * @param {Number} [options.stopValue=1.0] The final alpha value.
- * @param {Number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
- * @param {Number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
+ * @param {number} [options.startValue=0.0] The initial alpha value.
+ * @param {number} [options.stopValue=1.0] The final alpha value.
+ * @param {number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
+ * @param {number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
  * @param {EasingFunction} [options.easingFunction=EasingFunction.LINEAR_NONE] Determines the curve for animtion.
  * @param {TweenCollection.TweenUpdateCallback} [options.update] The callback to call at each animation update (usually tied to the a rendered frame).
  * @param {TweenCollection.TweenCompleteCallback} [options.complete] The callback to call when the tween finishes animating.
@@ -418,10 +418,10 @@ TweenCollection.prototype.addAlpha = function (options) {
  *
  * @param {Object} [options] Object with the following properties:
  * @param {Material} options.material The material to animate.
- * @param {Number} options.startValue The initial alpha value.
- * @param {Number} options.stopValue The final alpha value.
- * @param {Number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
- * @param {Number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
+ * @param {number} options.startValue The initial alpha value.
+ * @param {number} options.stopValue The final alpha value.
+ * @param {number} [options.duration=3.0] The duration, in seconds, for the tween.  The tween is automatically removed from the collection when it stops.
+ * @param {number} [options.delay=0.0] The delay, in seconds, before the tween starts animating.
  * @param {EasingFunction} [options.easingFunction=EasingFunction.LINEAR_NONE] Determines the curve for animtion.
  * @param {TweenCollection.TweenUpdateCallback} [options.update] The callback to call at each animation update (usually tied to the a rendered frame).
  * @param {TweenCollection.TweenCancelledCallback} [options.cancel] The callback to call if the tween is canceled either because {@link Tween#cancelTween} was called or because the tween was removed from the collection.
@@ -521,7 +521,7 @@ TweenCollection.prototype.contains = function (tween) {
  * it to the left, changing their indices.  This function is commonly used to iterate over
  * all the tween in the collection.
  *
- * @param {Number} index The zero-based index of the tween.
+ * @param {number} index The zero-based index of the tween.
  * @returns {Tween} The tween at the specified index.
  *
  * @example
@@ -546,7 +546,7 @@ TweenCollection.prototype.get = function (index) {
  * Updates the tweens in the collection to be at the provide time.  When a tween finishes, it is removed
  * from the collection.
  *
- * @param {Number} [time=getTimestamp()] The time in seconds.  By default tweens are synced to the system clock.
+ * @param {number} [time=getTimestamp()] The time in seconds.  By default tweens are synced to the system clock.
  */
 TweenCollection.prototype.update = function (time) {
   var tweens = this._tweens;

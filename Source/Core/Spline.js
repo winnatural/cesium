@@ -19,7 +19,7 @@ import CesiumMath from "./Math.js";
 function Spline() {
   /**
    * An array of times for the control points.
-   * @type {Number[]}
+   * @type {number[]}
    * @default undefined
    */
   this.times = undefined;
@@ -38,7 +38,7 @@ function Spline() {
  * Evaluates the curve at a given time.
  * @function
  *
- * @param {Number} time The time at which to evaluate the curve.
+ * @param {number} time The time at which to evaluate the curve.
  * @param {Cartesian3|Quaternion|Number[]} [result] The object onto which to store the result.
  * @returns {Cartesian3|Quaternion|Number[]} The modified result parameter or a new instance of the point on the curve at the given time.
  *
@@ -52,9 +52,9 @@ Spline.prototype.evaluate = DeveloperError.throwInstantiationError;
  * Finds an index <code>i</code> in <code>times</code> such that the parameter
  * <code>time</code> is in the interval <code>[times[i], times[i + 1]]</code>.
  *
- * @param {Number} time The time.
- * @param {Number} startIndex The index from which to start the search.
- * @returns {Number} The index for the element at the start of the interval.
+ * @param {number} time The time.
+ * @param {number} startIndex The index from which to start the search.
+ * @returns {number} The index for the element at the start of the interval.
  *
  * @exception {DeveloperError} time must be in the range <code>[t<sub>0</sub>, t<sub>n</sub>]</code>, where <code>t<sub>0</sub></code>
  *                             is the first element in the array <code>times</code> and <code>t<sub>n</sub></code> is the last element
@@ -117,8 +117,8 @@ Spline.prototype.findTimeInterval = function (time, startIndex) {
  * Wraps the given time to the period covered by the spline.
  * @function
  *
- * @param {Number} time The time.
- * @return {Number} The time, wrapped around the animation period.
+ * @param {number} time The time.
+ * @return {number} The time, wrapped around the animation period.
  */
 Spline.prototype.wrapTime = function (time) {
   //>>includeStart('debug', pragmas.debug);
@@ -145,8 +145,8 @@ Spline.prototype.wrapTime = function (time) {
  * Clamps the given time to the period covered by the spline.
  * @function
  *
- * @param {Number} time The time.
- * @return {Number} The time, clamped to the animation period.
+ * @param {number} time The time.
+ * @return {number} The time, clamped to the animation period.
  */
 Spline.prototype.clampTime = function (time) {
   //>>includeStart('debug', pragmas.debug);

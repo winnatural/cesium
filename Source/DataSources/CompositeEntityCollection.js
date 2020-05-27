@@ -193,7 +193,7 @@ Object.defineProperties(CompositeEntityCollection.prototype, {
  * Adds a collection to the composite.
  *
  * @param {EntityCollection} collection the collection to add.
- * @param {Number} [index] the index to add the collection at.  If omitted, the collection will
+ * @param {number} [index] the index to add the collection at.  If omitted, the collection will
  *                         added on top of all existing collections.
  *
  * @exception {DeveloperError} index, if supplied, must be greater than or equal to zero and less than or equal to the number of collections.
@@ -277,7 +277,7 @@ CompositeEntityCollection.prototype.contains = function (entity) {
  * Determines the index of a given collection in the composite.
  *
  * @param {EntityCollection} collection The collection to find the index of.
- * @returns {Number} The index of the collection in the composite, or -1 if the collection does not exist in the composite.
+ * @returns {number} The index of the collection in the composite, or -1 if the collection does not exist in the composite.
  */
 CompositeEntityCollection.prototype.indexOfCollection = function (collection) {
   return this._collections.indexOf(collection);
@@ -286,7 +286,7 @@ CompositeEntityCollection.prototype.indexOfCollection = function (collection) {
 /**
  * Gets a collection by index from the composite.
  *
- * @param {Number} index the index to retrieve.
+ * @param {number} index the index to retrieve.
  */
 CompositeEntityCollection.prototype.getCollection = function (index) {
   //>>includeStart('debug', pragmas.debug);

@@ -172,7 +172,7 @@ function CesiumInspectorViewModel(scene, performanceContainer) {
 
   /**
    * Gets or sets the index of the depth frustum to display.  This property is observable.
-   * @type {Number}
+   * @type {number}
    * @default 1
    */
   this.depthFrustum = 1;

@@ -18,9 +18,9 @@ var imageSmoothingEnabledName;
  * @param {Boolean} [options.stroke=false] Whether to stroke the text.
  * @param {Color} [options.fillColor=Color.WHITE] The fill color.
  * @param {Color} [options.strokeColor=Color.BLACK] The stroke color.
- * @param {Number} [options.strokeWidth=1] The stroke width.
+ * @param {number} [options.strokeWidth=1] The stroke width.
  * @param {Color} [options.backgroundColor=Color.TRANSPARENT] The background color of the canvas.
- * @param {Number} [options.padding=0] The pixel size of the padding to add around the text.
+ * @param {number} [options.padding=0] The pixel size of the padding to add around the text.
  * @returns {HTMLCanvasElement} A new canvas with the given text drawn into it.  The dimensions object
  *                   from measureText will also be added to the returned canvas. If text is
  *                   blank, returns undefined.

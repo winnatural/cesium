@@ -266,7 +266,7 @@ Object.defineProperties(SampledProperty.prototype, {
   /**
    * Gets the degree of interpolation to perform when retrieving a value.
    * @memberof SampledProperty.prototype
-   * @type {Number}
+   * @type {number}
    * @default 1
    */
   interpolationDegree: {
@@ -307,7 +307,7 @@ Object.defineProperties(SampledProperty.prototype, {
    * Gets or sets the amount of time to extrapolate forward before
    * the property becomes undefined.  A value of 0 will extrapolate forever.
    * @memberof SampledProperty.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   forwardExtrapolationDuration: {
@@ -343,7 +343,7 @@ Object.defineProperties(SampledProperty.prototype, {
    * Gets or sets the amount of time to extrapolate backward
    * before the property becomes undefined.  A value of 0 will extrapolate forever.
    * @memberof SampledProperty.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   backwardExtrapolationDuration: {
@@ -537,7 +537,7 @@ SampledProperty.prototype.getValue = function (time, result) {
  *
  * @param {Object} [options] Object with the following properties:
  * @param {InterpolationAlgorithm} [options.interpolationAlgorithm] The new interpolation algorithm.  If undefined, the existing property will be unchanged.
- * @param {Number} [options.interpolationDegree] The new interpolation degree.  If undefined, the existing property will be unchanged.
+ * @param {number} [options.interpolationDegree] The new interpolation degree.  If undefined, the existing property will be unchanged.
  */
 SampledProperty.prototype.setInterpolationOptions = function (options) {
   if (!defined(options)) {
@@ -676,7 +676,7 @@ SampledProperty.prototype.addSamples = function (
  * Adds samples as a single packed array where each new sample is represented as a date,
  * followed by the packed representation of the corresponding value and derivatives.
  *
- * @param {Number[]} packedSamples The array of packed samples.
+ * @param {number[]} packedSamples The array of packed samples.
  * @param {JulianDate} [epoch] If any of the dates in packedSamples are numbers, they are considered an offset from this epoch, in seconds.
  */
 SampledProperty.prototype.addSamplesPackedArray = function (

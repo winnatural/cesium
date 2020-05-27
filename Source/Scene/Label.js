@@ -446,7 +446,7 @@ Object.defineProperties(Label.prototype, {
   /**
    * Gets or sets the outline width of this label.
    * @memberof Label.prototype
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    * @see {@link http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#fill-and-stroke-styles|HTML canvas 2D context fill and stroke styles}
    */
@@ -934,7 +934,7 @@ Object.defineProperties(Label.prototype, {
    * and <code>2.0</code>.
    * </div>
    * @memberof Label.prototype
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   scale: {
@@ -972,7 +972,7 @@ Object.defineProperties(Label.prototype, {
    * Gets the total scale of the label, which is the label's scale multiplied by the computed relative size
    * of the desired font compared to the generated glyph size.
    * @memberof Label.prototype
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   totalScale: {
@@ -1024,7 +1024,7 @@ Object.defineProperties(Label.prototype, {
    * Gets or sets the distance from the camera at which to disable the depth test to, for example, prevent clipping against terrain.
    * When set to zero, the depth test is always applied. When set to Number.POSITIVE_INFINITY, the depth test is never applied.
    * @memberof Label.prototype
-   * @type {Number}
+   * @type {number}
    */
   disableDepthTestDistance: {
     get: function () {

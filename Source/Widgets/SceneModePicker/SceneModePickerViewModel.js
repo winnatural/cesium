@@ -13,7 +13,7 @@ import createCommand from "../createCommand.js";
  * @constructor
  *
  * @param {Scene} scene The Scene to morph
- * @param {Number} [duration=2.0] The duration of scene morph animations, in seconds
+ * @param {number} [duration=2.0] The duration of scene morph animations, in seconds
  */
 function SceneModePickerViewModel(scene, duration) {
   //>>includeStart('debug', pragmas.debug);
@@ -130,7 +130,7 @@ Object.defineProperties(SceneModePickerViewModel.prototype, {
    * Gets or sets the the duration of scene mode transition animations in seconds.
    * A value of zero causes the scene to instantly change modes.
    * @memberof SceneModePickerViewModel.prototype
-   * @type {Number}
+   * @type {number}
    */
   duration: {
     get: function () {

@@ -190,9 +190,9 @@ var uriToGuid = {};
  * @param {Resource|String} [options.basePath=''] The base path that paths in the glTF JSON are relative to.
  * @param {Boolean} [options.show=true] Determines if the model primitive will be shown.
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] The 4x4 transformation matrix that transforms the model from model to world coordinates.
- * @param {Number} [options.scale=1.0] A uniform scale applied to this model.
- * @param {Number} [options.minimumPixelSize=0.0] The approximate minimum pixel size of the model regardless of zoom.
- * @param {Number} [options.maximumScale] The maximum scale size of a model. An upper limit for minimumPixelSize.
+ * @param {number} [options.scale=1.0] A uniform scale applied to this model.
+ * @param {number} [options.minimumPixelSize=0.0] The approximate minimum pixel size of the model regardless of zoom.
+ * @param {number} [options.maximumScale] The maximum scale size of a model. An upper limit for minimumPixelSize.
  * @param {Object} [options.id] A user-defined object to return when the model is picked with {@link Scene#pick}.
  * @param {Boolean} [options.allowPicking=true] When <code>true</code>, each glTF mesh and primitive is pickable with {@link Scene#pick}.
  * @param {Boolean} [options.incrementallyLoadTextures=true] Determine if textures may continue to stream in after the model is loaded.
@@ -206,14 +206,14 @@ var uriToGuid = {};
  * @param {DistanceDisplayCondition} [options.distanceDisplayCondition] The condition specifying at what distance from the camera that this model will be displayed.
  * @param {Color} [options.color=Color.WHITE] A color that blends with the model's rendered color.
  * @param {ColorBlendMode} [options.colorBlendMode=ColorBlendMode.HIGHLIGHT] Defines how the color blends with the model.
- * @param {Number} [options.colorBlendAmount=0.5] Value used to determine the color strength when the <code>colorBlendMode</code> is <code>MIX</code>. A value of 0.0 results in the model's rendered color while a value of 1.0 results in a solid color, with any value in-between resulting in a mix of the two.
+ * @param {number} [options.colorBlendAmount=0.5] Value used to determine the color strength when the <code>colorBlendMode</code> is <code>MIX</code>. A value of 0.0 results in the model's rendered color while a value of 1.0 results in a solid color, with any value in-between resulting in a mix of the two.
  * @param {Color} [options.silhouetteColor=Color.RED] The silhouette color. If more than 256 models have silhouettes enabled, there is a small chance that overlapping models will have minor artifacts.
- * @param {Number} [options.silhouetteSize=0.0] The size of the silhouette in pixels.
+ * @param {number} [options.silhouetteSize=0.0] The size of the silhouette in pixels.
  * @param {ClippingPlaneCollection} [options.clippingPlanes] The {@link ClippingPlaneCollection} used to selectively disable rendering the model.
  * @param {Boolean} [options.dequantizeInShader=true] Determines if a {@link https://github.com/google/draco|Draco} encoded model is dequantized on the GPU. This decreases total memory usage for encoded models.
  * @param {Cartesian2} [options.imageBasedLightingFactor=Cartesian2(1.0, 1.0)] Scales diffuse and specular image-based lighting from the earth, sky, atmosphere and star skybox.
  * @param {Cartesian3} [options.lightColor] The light color when shading the model. When <code>undefined</code> the scene's light color is used instead.
- * @param {Number} [options.luminanceAtZenith=0.2] The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
+ * @param {number} [options.luminanceAtZenith=0.2] The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
  * @param {Cartesian3[]} [options.sphericalHarmonicCoefficients] The third order spherical harmonic coefficients used for the diffuse color of image-based lighting.
  * @param {String} [options.specularEnvironmentMaps] A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.
@@ -310,7 +310,7 @@ function Model(options) {
   /**
    * The size of the silhouette in pixels.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default 0.0
    */
@@ -341,7 +341,7 @@ function Model(options) {
    * Values greater than <code>1.0</code> increase the size of the model; values
    * less than <code>1.0</code> decrease.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default 1.0
    */
@@ -353,7 +353,7 @@ function Model(options) {
    * This can be used to ensure that a model is visible even when the viewer
    * zooms out.  When <code>0.0</code>, no minimum size is enforced.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default 0.0
    */
@@ -365,7 +365,7 @@ function Model(options) {
    * an upper limit to the {@link Model#minimumPixelSize}, ensuring that the model
    * is never an unreasonable scale.
    *
-   * @type {Number}
+   * @type {number}
    */
   this.maximumScale = options.maximumScale;
   this._maximumScale = this.maximumScale;
@@ -476,7 +476,7 @@ function Model(options) {
    * A value of 0.0 results in the model's rendered color while a value of 1.0 results in a solid color, with
    * any value in-between resulting in a mix of the two.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default 0.5
    */
@@ -894,7 +894,7 @@ Object.defineProperties(Model.prototype, {
    *
    * @memberof Model.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   pendingTextureLoads: {
@@ -970,7 +970,7 @@ Object.defineProperties(Model.prototype, {
    *
    * @memberof Model.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default Axis.Y
    * @readonly
    *
@@ -989,7 +989,7 @@ Object.defineProperties(Model.prototype, {
    *
    * @memberof Model.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default Axis.Z
    * @readonly
    *
@@ -1180,7 +1180,7 @@ Object.defineProperties(Model.prototype, {
    * @memberof Model.prototype
    *
    * @demo {@link https://sandcastle.cesium.com/index.html?src=Image-Based Lighting.html|Sandcastle Image Based Lighting Demo}
-   * @type {Number}
+   * @type {number}
    * @default 0.2
    */
   luminanceAtZenith: {
@@ -1349,9 +1349,9 @@ function containsGltfMagic(uint8Array) {
  * @param {Resource|String} [options.basePath] The base path that paths in the glTF JSON are relative to.
  * @param {Boolean} [options.show=true] Determines if the model primitive will be shown.
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] The 4x4 transformation matrix that transforms the model from model to world coordinates.
- * @param {Number} [options.scale=1.0] A uniform scale applied to this model.
- * @param {Number} [options.minimumPixelSize=0.0] The approximate minimum pixel size of the model regardless of zoom.
- * @param {Number} [options.maximumScale] The maximum scale for the model.
+ * @param {number} [options.scale=1.0] A uniform scale applied to this model.
+ * @param {number} [options.minimumPixelSize=0.0] The approximate minimum pixel size of the model regardless of zoom.
+ * @param {number} [options.maximumScale] The maximum scale for the model.
  * @param {Object} [options.id] A user-defined object to return when the model is picked with {@link Scene#pick}.
  * @param {Boolean} [options.allowPicking=true] When <code>true</code>, each glTF mesh and primitive is pickable with {@link Scene#pick}.
  * @param {Boolean} [options.incrementallyLoadTextures=true] Determine if textures may continue to stream in after the model is loaded.
@@ -1365,9 +1365,9 @@ function containsGltfMagic(uint8Array) {
  * @param {DistanceDisplayCondition} [options.distanceDisplayCondition] The condition specifying at what distance from the camera that this model will be displayed.
  * @param {Color} [options.color=Color.WHITE] A color that blends with the model's rendered color.
  * @param {ColorBlendMode} [options.colorBlendMode=ColorBlendMode.HIGHLIGHT] Defines how the color blends with the model.
- * @param {Number} [options.colorBlendAmount=0.5] Value used to determine the color strength when the <code>colorBlendMode</code> is <code>MIX</code>. A value of 0.0 results in the model's rendered color while a value of 1.0 results in a solid color, with any value in-between resulting in a mix of the two.
+ * @param {number} [options.colorBlendAmount=0.5] Value used to determine the color strength when the <code>colorBlendMode</code> is <code>MIX</code>. A value of 0.0 results in the model's rendered color while a value of 1.0 results in a solid color, with any value in-between resulting in a mix of the two.
  * @param {Color} [options.silhouetteColor=Color.RED] The silhouette color. If more than 256 models have silhouettes enabled, there is a small chance that overlapping models will have minor artifacts.
- * @param {Number} [options.silhouetteSize=0.0] The size of the silhouette in pixels.
+ * @param {number} [options.silhouetteSize=0.0] The size of the silhouette in pixels.
  * @param {ClippingPlaneCollection} [options.clippingPlanes] The {@link ClippingPlaneCollection} used to selectively disable rendering the model.
  * @param {Boolean} [options.dequantizeInShader=true] Determines if a {@link https://github.com/google/draco|Draco} encoded model is dequantized on the GPU. This decreases total memory usage for encoded models.
  * @param {Credit|String} [options.credit] A credit for the model, which is displayed on the canvas.
@@ -1562,7 +1562,7 @@ Model.prototype.getMaterial = function (name) {
  * Model.applyArticulations() to cause the node matrices to be recalculated.
  *
  * @param {String} articulationStageKey The name of the articulation, a space, and the name of the stage.
- * @param {Number} value The numeric value of this stage of the articulation.
+ * @param {number} value The numeric value of this stage of the articulation.
  *
  * @exception {DeveloperError} The model is not loaded.  Use Model.readyPromise or wait for Model.ready to be true.
  *

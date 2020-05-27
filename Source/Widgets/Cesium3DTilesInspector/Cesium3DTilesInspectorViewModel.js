@@ -690,7 +690,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the maximum screen space error.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 16
    */
   this.maximumScreenSpaceError = 16;
@@ -713,7 +713,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the dynamic screen space error density.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.00278
    */
   this.dynamicScreenSpaceErrorDensity = 0.00278;
@@ -723,7 +723,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
    * This allows the slider to be exponential because values tend to be closer to 0 than 1.
    * This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.00278
    */
   this.dynamicScreenSpaceErrorDensitySliderValue = undefined;
@@ -754,7 +754,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the dynamic screen space error factor.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 4.0
    */
   this.dynamicScreenSpaceErrorFactor = 4.0;
@@ -816,7 +816,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the geometric error scale.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.geometricErrorScale = 1.0;
@@ -840,7 +840,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the maximum attenuation.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   this.maximumAttenuation = 0;
@@ -864,7 +864,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the base resolution.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   this.baseResolution = 0;
@@ -907,7 +907,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the eye dome lighting strength.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.eyeDomeLightingStrength = 1.0;
@@ -930,7 +930,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   /**
    * Gets or sets the eye dome lighting radius.  This property is observable.
    *
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.eyeDomeLightingRadius = 1.0;
@@ -980,7 +980,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   });
   /**
    * Gets or sets the multiplier defining the minimum screen space error to skip. This property is observable.
-   * @type {Number}
+   * @type {number}
    * @default 16
    */
   this.skipScreenSpaceErrorFactor = 16;
@@ -1002,7 +1002,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   });
   /**
    * Gets or sets the screen space error that must be reached before skipping levels of detail. This property is observable.
-   * @type {Number}
+   * @type {number}
    * @default 1024
    */
   this.baseScreenSpaceError = 1024;
@@ -1024,7 +1024,7 @@ function Cesium3DTilesInspectorViewModel(scene, performanceContainer) {
   });
   /**
    * Gets or sets the constant defining the minimum number of levels to skip when loading tiles. This property is observable.
-   * @type {Number}
+   * @type {number}
    * @default 1
    */
   this.skipLevels = 1;

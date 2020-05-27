@@ -607,7 +607,7 @@ Object.defineProperties(Billboard.prototype, {
    * and <code>2.0</code>.
    * </div>
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    */
   scale: {
     get: function () {
@@ -676,7 +676,7 @@ Object.defineProperties(Billboard.prototype, {
   /**
    * Gets or sets the rotation angle in radians.
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    */
   rotation: {
     get: function () {
@@ -739,7 +739,7 @@ Object.defineProperties(Billboard.prototype, {
   /**
    * Gets or sets a width for the billboard. If undefined, the image width will be used.
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    */
   width: {
     get: function () {
@@ -756,7 +756,7 @@ Object.defineProperties(Billboard.prototype, {
   /**
    * Gets or sets a height for the billboard. If undefined, the image height will be used.
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    */
   height: {
     get: function () {
@@ -823,7 +823,7 @@ Object.defineProperties(Billboard.prototype, {
    * Gets or sets the distance from the camera at which to disable the depth test to, for example, prevent clipping against terrain.
    * When set to zero, the depth test is always applied. When set to Number.POSITIVE_INFINITY, the depth test is never applied.
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    */
   disableDepthTestDistance: {
     get: function () {
@@ -1013,7 +1013,7 @@ Object.defineProperties(Billboard.prototype, {
   /**
    * The outline width of this Billboard in pixels.  Effective only for SDF billboards like Label glyphs.
    * @memberof Billboard.prototype
-   * @type {Number}
+   * @type {number}
    * @private
    */
   outlineWidth: {

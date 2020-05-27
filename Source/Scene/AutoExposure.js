@@ -50,7 +50,7 @@ function AutoExposure() {
   /**
    * The minimum value used to clamp the luminance.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.1
    */
   this.minimumLuminance = 0.1;
@@ -58,7 +58,7 @@ function AutoExposure() {
   /**
    * The maximum value used to clamp the luminance.
    *
-   * @type {Number}
+   * @type {number}
    * @default 10.0
    */
   this.maximumLuminance = 10.0;

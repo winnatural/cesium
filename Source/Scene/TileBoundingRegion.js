@@ -24,8 +24,8 @@ import SceneMode from "./SceneMode.js";
  *
  * @param {Object} options Object with the following properties:
  * @param {Rectangle} options.rectangle The rectangle specifying the longitude and latitude range of the region.
- * @param {Number} [options.minimumHeight=0.0] The minimum height of the region.
- * @param {Number} [options.maximumHeight=0.0] The maximum height of the region.
+ * @param {number} [options.minimumHeight=0.0] The minimum height of the region.
+ * @param {number} [options.maximumHeight=0.0] The maximum height of the region.
  * @param {Ellipsoid} [options.ellipsoid=Cesium.Ellipsoid.WGS84] The ellipsoid.
  * @param {Boolean} [options.computeBoundingVolumes=true] True to compute the {@link TileBoundingRegion#boundingVolume} and
  *                  {@link TileBoundingVolume#boundingSphere}. If false, these properties will be undefined.
@@ -296,7 +296,7 @@ var vectorScratch = new Cartesian3();
  * Gets the distance from the camera to the closest point on the tile.  This is used for level of detail selection.
  *
  * @param {FrameState} frameState The state information of the current rendering frame.
- * @returns {Number} The distance from the camera to the closest point on the tile, in meters.
+ * @returns {number} The distance from the camera to the closest point on the tile, in meters.
  */
 TileBoundingRegion.prototype.distanceToCamera = function (frameState) {
   //>>includeStart('debug', pragmas.debug);

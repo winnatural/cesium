@@ -63,7 +63,7 @@ function FrustumOutlineGeometry(options) {
 
   /**
    * The number of elements used to pack the object into an array.
-   * @type {Number}
+   * @type {number}
    */
   this.packedLength =
     2 + frustumPackedLength + Cartesian3.packedLength + Quaternion.packedLength;
@@ -73,10 +73,10 @@ function FrustumOutlineGeometry(options) {
  * Stores the provided instance into the provided array.
  *
  * @param {FrustumOutlineGeometry} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 FrustumOutlineGeometry.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -116,8 +116,8 @@ var scratchPackorigin = new Cartesian3();
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {FrustumOutlineGeometry} [result] The object into which to store the result.
  */
 FrustumOutlineGeometry.unpack = function (array, startingIndex, result) {

@@ -338,7 +338,7 @@ Object.defineProperties(BillboardCollection.prototype, {
    * {@link BillboardCollection#get} to iterate over all the billboards
    * in the collection.
    * @memberof BillboardCollection.prototype
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -582,7 +582,7 @@ BillboardCollection.prototype.contains = function (billboard) {
  * {@link BillboardCollection#length} to iterate over all the billboards
  * in the collection.
  *
- * @param {Number} index The zero-based index of the billboard.
+ * @param {number} index The zero-based index of the billboard.
  * @returns {Billboard} The billboard at the specified index.
  *
  * @performance Expected constant time.  If billboards were removed from the collection and

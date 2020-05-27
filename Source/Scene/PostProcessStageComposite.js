@@ -193,7 +193,7 @@ Object.defineProperties(PostProcessStageComposite.prototype, {
    * The number of post-process stages in this composite.
    *
    * @memberof PostProcessStageComposite.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -245,7 +245,7 @@ PostProcessStageComposite.prototype._isSupported = function (context) {
 /**
  * Gets the post-process stage at <code>index</code>
  *
- * @param {Number} index The index of the post-process stage or composite.
+ * @param {number} index The index of the post-process stage or composite.
  * @return {PostProcessStage|PostProcessStageComposite} The post-process stage or composite at index.
  *
  * @exception {DeveloperError} index must be greater than or equal to 0.

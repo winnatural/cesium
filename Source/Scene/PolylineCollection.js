@@ -191,7 +191,7 @@ Object.defineProperties(PolylineCollection.prototype, {
    * {@link PolylineCollection#get} to iterate over all the polylines
    * in the collection.
    * @memberof PolylineCollection.prototype
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -326,7 +326,7 @@ PolylineCollection.prototype.contains = function (polyline) {
  * {@link PolylineCollection#length} to iterate over all the polylines
  * in the collection.
  *
- * @param {Number} index The zero-based index of the polyline.
+ * @param {number} index The zero-based index of the polyline.
  * @returns {Polyline} The polyline at the specified index.
  *
  * @performance If polylines were removed from the collection and

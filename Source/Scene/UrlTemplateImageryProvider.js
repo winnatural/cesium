@@ -108,10 +108,10 @@ var pickFeaturesTags = combine(tags, {
  *                          If this parameter is a single string, each character in the string is a subdomain.  If it is
  *                          an array, each element in the array is a subdomain.
  * @param {Credit|String} [options.credit=''] A credit for the data source, which is displayed on the canvas.
- * @param {Number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.  Take care when specifying
+ * @param {number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.  Take care when specifying
  *                 this that the number of tiles at the minimum level is small, such as four or less.  A larger number is likely
  *                 to result in rendering problems.
- * @param {Number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
+ * @param {number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
  * @param {Rectangle} [options.rectangle=Rectangle.MAX_VALUE] The rectangle, in radians, covered by the image.
  * @param {TilingScheme} [options.tilingScheme=WebMercatorTilingScheme] The tiling scheme specifying how the ellipsoidal
  * surface is broken into tiles.  If this parameter is not provided, a {@link WebMercatorTilingScheme}
@@ -119,8 +119,8 @@ var pickFeaturesTags = combine(tags, {
  * @param {Ellipsoid} [options.ellipsoid] The ellipsoid.  If the tilingScheme is specified,
  *                    this parameter is ignored and the tiling scheme's ellipsoid is used instead. If neither
  *                    parameter is specified, the WGS84 ellipsoid is used.
- * @param {Number} [options.tileWidth=256] Pixel width of image tiles.
- * @param {Number} [options.tileHeight=256] Pixel height of image tiles.
+ * @param {number} [options.tileWidth=256] Pixel width of image tiles.
+ * @param {number} [options.tileHeight=256] Pixel height of image tiles.
  * @param {Boolean} [options.hasAlphaChannel=true] true if the images provided by this imagery provider
  *                  include an alpha channel; otherwise, false.  If this property is false, an alpha channel, if
  *                  present, will be ignored.  If this property is true, any images without an alpha channel will
@@ -322,7 +322,7 @@ Object.defineProperties(UrlTemplateImageryProvider.prototype, {
    * Gets the width of each tile, in pixels. This function should
    * not be called before {@link UrlTemplateImageryProvider#ready} returns true.
    * @memberof UrlTemplateImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    * @default 256
    */
@@ -343,7 +343,7 @@ Object.defineProperties(UrlTemplateImageryProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link UrlTemplateImageryProvider#ready} returns true.
    * @memberof UrlTemplateImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    * @default 256
    */
@@ -364,7 +364,7 @@ Object.defineProperties(UrlTemplateImageryProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested, or undefined if there is no limit.
    * This function should not be called before {@link UrlTemplateImageryProvider#ready} returns true.
    * @memberof UrlTemplateImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    * @default undefined
    */
@@ -385,7 +385,7 @@ Object.defineProperties(UrlTemplateImageryProvider.prototype, {
    * Gets the minimum level-of-detail that can be requested.  This function should
    * not be called before {@link UrlTemplateImageryProvider#ready} returns true.
    * @memberof UrlTemplateImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    * @default 0
    */
@@ -634,9 +634,9 @@ UrlTemplateImageryProvider.prototype.reinitialize = function (options) {
 /**
  * Gets the credits to be displayed when a given tile is displayed.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -656,9 +656,9 @@ UrlTemplateImageryProvider.prototype.getTileCredits = function (x, y, level) {
  * Requests the image for a given tile.  This function should
  * not be called before {@link UrlTemplateImageryProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -688,11 +688,11 @@ UrlTemplateImageryProvider.prototype.requestImage = function (
  * Asynchronously determines what features, if any, are located at a given longitude and latitude within
  * a tile.  This function should not be called before {@link ImageryProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
- * @param {Number} longitude The longitude at which to pick features.
- * @param {Number} latitude  The latitude at which to pick features.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
+ * @param {number} longitude The longitude at which to pick features.
+ * @param {number} latitude  The latitude at which to pick features.
  * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
  *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
  *                   instances.  The array may be empty if no features are found at the given location.

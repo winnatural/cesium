@@ -1,7 +1,7 @@
 /**
  * The direction to display an ImageryLayer relative to the {@link Scene#imagerySplitPosition}.
  *
- * @enum {Number}
+ * @enum {number}
  *
  * @see ImageryLayer#splitDirection
  */
@@ -9,7 +9,7 @@ var ImagerySplitDirection = {
   /**
    * Display the ImageryLayer to the left of the {@link Scene#imagerySplitPosition}.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   LEFT: -1.0,
@@ -17,7 +17,7 @@ var ImagerySplitDirection = {
   /**
    *  Always display the ImageryLayer.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   NONE: 0.0,
@@ -25,7 +25,7 @@ var ImagerySplitDirection = {
   /**
    * Display the ImageryLayer to the right of the {@link Scene#imagerySplitPosition}.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   RIGHT: 1.0,

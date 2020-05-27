@@ -545,7 +545,7 @@ Object.defineProperties(Context.prototype, {
   /**
    * The number of stencil bits per pixel in the default bound framebuffer.  The minimum is eight bits.
    * @memberof Context.prototype
-   * @type {Number}
+   * @type {number}
    * @see {@link https://www.khronos.org/opengles/sdk/docs/man/xhtml/glGet.xml|glGet} with <code>STENCIL_BITS</code>.
    */
   stencilBits: {
@@ -923,7 +923,7 @@ Object.defineProperties(Context.prototype, {
   /**
    * The drawingBufferHeight of the underlying GL context.
    * @memberof Context.prototype
-   * @type {Number}
+   * @type {number}
    * @see {@link https://www.khronos.org/registry/webgl/specs/1.0/#DOM-WebGLRenderingContext-drawingBufferHeight|drawingBufferHeight}
    */
   drawingBufferHeight: {
@@ -935,7 +935,7 @@ Object.defineProperties(Context.prototype, {
   /**
    * The drawingBufferWidth of the underlying GL context.
    * @memberof Context.prototype
-   * @type {Number}
+   * @type {number}
    * @see {@link https://www.khronos.org/registry/webgl/specs/1.0/#DOM-WebGLRenderingContext-drawingBufferWidth|drawingBufferWidth}
    */
   drawingBufferWidth: {

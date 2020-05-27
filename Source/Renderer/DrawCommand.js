@@ -206,7 +206,7 @@ Object.defineProperties(DrawCommand.prototype, {
    * The number of vertices to draw in the vertex array.
    *
    * @memberof DrawCommand.prototype
-   * @type {Number}
+   * @type {number}
    * @default undefined
    */
   count: {
@@ -225,7 +225,7 @@ Object.defineProperties(DrawCommand.prototype, {
    * The offset to start drawing in the vertex array.
    *
    * @memberof DrawCommand.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   offset: {
@@ -244,7 +244,7 @@ Object.defineProperties(DrawCommand.prototype, {
    * The number of instances to draw.
    *
    * @memberof DrawCommand.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   instanceCount: {

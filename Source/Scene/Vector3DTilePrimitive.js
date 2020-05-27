@@ -156,7 +156,7 @@ Object.defineProperties(Vector3DTilePrimitive.prototype, {
    *
    * @memberof Vector3DTilePrimitive.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   trianglesLength: {
@@ -170,7 +170,7 @@ Object.defineProperties(Vector3DTilePrimitive.prototype, {
    *
    * @memberof Vector3DTilePrimitive.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   geometryByteLength: {
@@ -1059,7 +1059,7 @@ Vector3DTilePrimitive.prototype.applyStyle = function (style, features) {
  * Call when updating the color of a mesh with batchId changes color. The meshes will need to be re-batched
  * on the next update.
  *
- * @param {Number} batchId The batch id of the meshes whose color has changed.
+ * @param {number} batchId The batch id of the meshes whose color has changed.
  * @param {Color} color The new polygon color.
  */
 Vector3DTilePrimitive.prototype.updateCommands = function (batchId, color) {

@@ -60,7 +60,7 @@ Object.defineProperties(ImageryLayerCollection.prototype, {
   /**
    * Gets the number of layers in this collection.
    * @memberof ImageryLayerCollection.prototype
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -73,7 +73,7 @@ Object.defineProperties(ImageryLayerCollection.prototype, {
  * Adds a layer to the collection.
  *
  * @param {ImageryLayer} layer the layer to add.
- * @param {Number} [index] the index to add the layer at.  If omitted, the layer will
+ * @param {number} [index] the index to add the layer at.  If omitted, the layer will
  *                         be added on top of all existing layers.
  *
  * @exception {DeveloperError} index, if supplied, must be greater than or equal to zero and less than or equal to the number of the layers.
@@ -111,7 +111,7 @@ ImageryLayerCollection.prototype.add = function (layer, index) {
  * Creates a new layer using the given ImageryProvider and adds it to the collection.
  *
  * @param {ImageryProvider} imageryProvider the imagery provider to create a new layer for.
- * @param {Number} [index] the index to add the layer at.  If omitted, the layer will
+ * @param {number} [index] the index to add the layer at.  If omitted, the layer will
  *                         added on top of all existing layers.
  * @returns {ImageryLayer} The newly created layer.
  */
@@ -196,7 +196,7 @@ ImageryLayerCollection.prototype.contains = function (layer) {
  *
  * @param {ImageryLayer} layer The layer to find the index of.
  *
- * @returns {Number} The index of the layer in the collection, or -1 if the layer does not exist in the collection.
+ * @returns {number} The index of the layer in the collection, or -1 if the layer does not exist in the collection.
  */
 ImageryLayerCollection.prototype.indexOf = function (layer) {
   return this._layers.indexOf(layer);
@@ -205,7 +205,7 @@ ImageryLayerCollection.prototype.indexOf = function (layer) {
 /**
  * Gets a layer by index from the collection.
  *
- * @param {Number} index the index to retrieve.
+ * @param {number} index the index to retrieve.
  *
  * @returns {ImageryLayer} The imagery layer at the given index.
  */

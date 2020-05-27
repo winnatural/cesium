@@ -74,7 +74,7 @@ function ClockViewModel(clock) {
    * Gets or sets the clock multiplier.
    * See {@link Clock#multiplier}.
    * This property is observable.
-   * @type {Number}
+   * @type {number}
    */
   this.multiplier = knockout.observable(clock.multiplier);
   this.multiplier.subscribe(function (value) {

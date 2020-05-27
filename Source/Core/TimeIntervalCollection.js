@@ -102,7 +102,7 @@ Object.defineProperties(TimeIntervalCollection.prototype, {
   /**
    * Gets the number of intervals in the collection.
    * @memberof TimeIntervalCollection.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -156,7 +156,7 @@ TimeIntervalCollection.prototype.equals = function (right, dataComparer) {
 /**
  * Gets the interval at the specified index.
  *
- * @param {Number} index The index of the interval to retrieve.
+ * @param {number} index The index of the interval to retrieve.
  * @returns {TimeInterval|undefined} The interval at the specified index, or <code>undefined</code> if no interval exists as that index.
  */
 TimeIntervalCollection.prototype.get = function (index) {
@@ -219,7 +219,7 @@ var indexOfScratch = new TimeInterval();
  * Finds and returns the index of the interval in the collection that contains the specified date.
  *
  * @param {JulianDate} date The date to search for.
- * @returns {Number} The index of the interval that contains the specified date, if no such interval exists,
+ * @returns {number} The index of the interval that contains the specified date, if no such interval exists,
  * it returns a negative number which is the bitwise complement of the index of the next interval that
  * starts after the date, or if no interval starts after the specified date, the bitwise complement of
  * the length of the collection.

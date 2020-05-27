@@ -76,7 +76,7 @@ Object.defineProperties(PrimitiveCollection.prototype, {
    *
    * @memberof PrimitiveCollection.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -90,7 +90,7 @@ Object.defineProperties(PrimitiveCollection.prototype, {
  * Adds a primitive to the collection.
  *
  * @param {Object} primitive The primitive to add.
- * @param {Number} [index] the index to add the layer at.  If omitted, the primitive will
+ * @param {number} [index] the index to add the layer at.  If omitted, the primitive will
  *                         added at the bottom  of all existing primitives.
  * @returns {Object} The primitive added to the collection.
  *
@@ -335,7 +335,7 @@ PrimitiveCollection.prototype.lowerToBottom = function (primitive) {
 /**
  * Returns the primitive in the collection at the specified index.
  *
- * @param {Number} index The zero-based index of the primitive to return.
+ * @param {number} index The zero-based index of the primitive to return.
  * @returns {Object} The primitive at the <code>index</code>.
  *
  * @exception {DeveloperError} This object was destroyed, i.e., destroy() was called.

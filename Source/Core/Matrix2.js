@@ -9,10 +9,10 @@ import defined from "./defined.js";
  * @alias Matrix2
  * @constructor
  *
- * @param {Number} [column0Row0=0.0] The value for column 0, row 0.
- * @param {Number} [column1Row0=0.0] The value for column 1, row 0.
- * @param {Number} [column0Row1=0.0] The value for column 0, row 1.
- * @param {Number} [column1Row1=0.0] The value for column 1, row 1.
+ * @param {number} [column0Row0=0.0] The value for column 0, row 0.
+ * @param {number} [column1Row0=0.0] The value for column 1, row 0.
+ * @param {number} [column0Row1=0.0] The value for column 0, row 1.
+ * @param {number} [column1Row1=0.0] The value for column 1, row 1.
  *
  * @see Matrix2.fromColumnMajorArray
  * @see Matrix2.fromRowMajorArray
@@ -30,7 +30,7 @@ function Matrix2(column0Row0, column1Row0, column0Row1, column1Row1) {
 
 /**
  * The number of elements used to pack the object into an array.
- * @type {Number}
+ * @type {number}
  */
 Matrix2.packedLength = 4;
 
@@ -38,10 +38,10 @@ Matrix2.packedLength = 4;
  * Stores the provided instance into the provided array.
  *
  * @param {Matrix2} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 Matrix2.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -62,8 +62,8 @@ Matrix2.pack = function (value, array, startingIndex) {
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {Matrix2} [result] The object into which to store the result.
  * @returns {Matrix2} The modified result parameter or a new Matrix2 instance if one was not provided.
  */
@@ -109,8 +109,8 @@ Matrix2.clone = function (matrix, result) {
 /**
  * Creates a Matrix2 from 4 consecutive elements in an array.
  *
- * @param {Number[]} array The array whose 4 consecutive elements correspond to the positions of the matrix.  Assumes column-major order.
- * @param {Number} [startingIndex=0] The offset into the array of the first element, which corresponds to first column first row position in the matrix.
+ * @param {number[]} array The array whose 4 consecutive elements correspond to the positions of the matrix.  Assumes column-major order.
+ * @param {number} [startingIndex=0] The offset into the array of the first element, which corresponds to first column first row position in the matrix.
  * @param {Matrix2} [result] The object onto which to store the result.
  * @returns {Matrix2} The modified result parameter or a new Matrix2 instance if one was not provided.
  *
@@ -147,7 +147,7 @@ Matrix2.fromArray = function (array, startingIndex, result) {
 /**
  * Creates a Matrix2 instance from a column-major order array.
  *
- * @param {Number[]} values The column-major order array.
+ * @param {number[]} values The column-major order array.
  * @param {Matrix2} [result] The object in which the result will be stored, if undefined a new instance will be created.
  * @returns {Matrix2} The modified result parameter, or a new Matrix2 instance if one was not provided.
  */
@@ -163,7 +163,7 @@ Matrix2.fromColumnMajorArray = function (values, result) {
  * Creates a Matrix2 instance from a row-major order array.
  * The resulting matrix will be in column-major order.
  *
- * @param {Number[]} values The row-major order array.
+ * @param {number[]} values The row-major order array.
  * @param {Matrix2} [result] The object in which the result will be stored, if undefined a new instance will be created.
  * @returns {Matrix2} The modified result parameter, or a new Matrix2 instance if one was not provided.
  */
@@ -214,7 +214,7 @@ Matrix2.fromScale = function (scale, result) {
 /**
  * Computes a Matrix2 instance representing a uniform scale.
  *
- * @param {Number} scale The uniform scale factor.
+ * @param {number} scale The uniform scale factor.
  * @param {Matrix2} [result] The object in which the result will be stored, if undefined a new instance will be created.
  * @returns {Matrix2} The modified result parameter, or a new Matrix2 instance if one was not provided.
  *
@@ -243,7 +243,7 @@ Matrix2.fromUniformScale = function (scale, result) {
 /**
  * Creates a rotation matrix.
  *
- * @param {Number} angle The angle, in radians, of the rotation.  Positive angles are counterclockwise.
+ * @param {number} angle The angle, in radians, of the rotation.  Positive angles are counterclockwise.
  * @param {Matrix2} [result] The object in which the result will be stored, if undefined a new instance will be created.
  * @returns {Matrix2} The modified result parameter, or a new Matrix2 instance if one was not provided.
  *
@@ -276,8 +276,8 @@ Matrix2.fromRotation = function (angle, result) {
  * The array will be in column-major order.
  *
  * @param {Matrix2} matrix The matrix to use..
- * @param {Number[]} [result] The Array onto which to store the result.
- * @returns {Number[]} The modified Array parameter or a new Array instance if one was not provided.
+ * @param {number[]} [result] The Array onto which to store the result.
+ * @returns {number[]} The modified Array parameter or a new Array instance if one was not provided.
  */
 Matrix2.toArray = function (matrix, result) {
   //>>includeStart('debug', pragmas.debug);
@@ -297,9 +297,9 @@ Matrix2.toArray = function (matrix, result) {
 /**
  * Computes the array index of the element at the provided row and column.
  *
- * @param {Number} row The zero-based index of the row.
- * @param {Number} column The zero-based index of the column.
- * @returns {Number} The index of the element at the provided row and column.
+ * @param {number} row The zero-based index of the row.
+ * @param {number} column The zero-based index of the column.
+ * @returns {number} The index of the element at the provided row and column.
  *
  * @exception {DeveloperError} row must be 0 or 1.
  * @exception {DeveloperError} column must be 0 or 1.
@@ -326,7 +326,7 @@ Matrix2.getElementIndex = function (column, row) {
  * Retrieves a copy of the matrix column at the provided index as a Cartesian2 instance.
  *
  * @param {Matrix2} matrix The matrix to use.
- * @param {Number} index The zero-based index of the column to retrieve.
+ * @param {number} index The zero-based index of the column to retrieve.
  * @param {Cartesian2} result The object onto which to store the result.
  * @returns {Cartesian2} The modified result parameter.
  *
@@ -355,7 +355,7 @@ Matrix2.getColumn = function (matrix, index, result) {
  * Computes a new matrix that replaces the specified column in the provided matrix with the provided Cartesian2 instance.
  *
  * @param {Matrix2} matrix The matrix to use.
- * @param {Number} index The zero-based index of the column to set.
+ * @param {number} index The zero-based index of the column to set.
  * @param {Cartesian2} cartesian The Cartesian whose values will be assigned to the specified column.
  * @param {Cartesian2} result The object onto which to store the result.
  * @returns {Matrix2} The modified result parameter.
@@ -384,7 +384,7 @@ Matrix2.setColumn = function (matrix, index, cartesian, result) {
  * Retrieves a copy of the matrix row at the provided index as a Cartesian2 instance.
  *
  * @param {Matrix2} matrix The matrix to use.
- * @param {Number} index The zero-based index of the row to retrieve.
+ * @param {number} index The zero-based index of the row to retrieve.
  * @param {Cartesian2} result The object onto which to store the result.
  * @returns {Cartesian2} The modified result parameter.
  *
@@ -412,7 +412,7 @@ Matrix2.getRow = function (matrix, index, result) {
  * Computes a new matrix that replaces the specified row in the provided matrix with the provided Cartesian2 instance.
  *
  * @param {Matrix2} matrix The matrix to use.
- * @param {Number} index The zero-based index of the row to set.
+ * @param {number} index The zero-based index of the row to set.
  * @param {Cartesian2} cartesian The Cartesian whose values will be assigned to the specified row.
  * @param {Matrix2} result The object onto which to store the result.
  * @returns {Matrix2} The modified result parameter.
@@ -467,7 +467,7 @@ var scratchScale = new Cartesian2();
  * The maximum scale is the maximum length of the column vectors.
  *
  * @param {Matrix2} matrix The matrix.
- * @returns {Number} The maximum scale.
+ * @returns {number} The maximum scale.
  */
 Matrix2.getMaximumScale = function (matrix) {
   Matrix2.getScale(matrix, scratchScale);
@@ -572,7 +572,7 @@ Matrix2.multiplyByVector = function (matrix, cartesian, result) {
  * Computes the product of a matrix and a scalar.
  *
  * @param {Matrix2} matrix The matrix.
- * @param {Number} scalar The number to multiply by.
+ * @param {number} scalar The number to multiply by.
  * @param {Matrix2} result The object onto which to store the result.
  * @returns {Matrix2} The modified result parameter.
  */
@@ -725,7 +725,7 @@ Matrix2.equalsArray = function (matrix, array, offset) {
  *
  * @param {Matrix2} [left] The first matrix.
  * @param {Matrix2} [right] The second matrix.
- * @param {Number} [epsilon=0] The epsilon to use for equality testing.
+ * @param {number} [epsilon=0] The epsilon to use for equality testing.
  * @returns {Boolean} <code>true</code> if left and right are within the provided epsilon, <code>false</code> otherwise.
  */
 Matrix2.equalsEpsilon = function (left, right, epsilon) {
@@ -760,7 +760,7 @@ Matrix2.ZERO = Object.freeze(new Matrix2(0.0, 0.0, 0.0, 0.0));
 /**
  * The index into Matrix2 for column 0, row 0.
  *
- * @type {Number}
+ * @type {number}
  * @constant
  *
  * @example
@@ -772,7 +772,7 @@ Matrix2.COLUMN0ROW0 = 0;
 /**
  * The index into Matrix2 for column 0, row 1.
  *
- * @type {Number}
+ * @type {number}
  * @constant
  *
  * @example
@@ -784,7 +784,7 @@ Matrix2.COLUMN0ROW1 = 1;
 /**
  * The index into Matrix2 for column 1, row 0.
  *
- * @type {Number}
+ * @type {number}
  * @constant
  *
  * @example
@@ -796,7 +796,7 @@ Matrix2.COLUMN1ROW0 = 2;
 /**
  * The index into Matrix2 for column 1, row 1.
  *
- * @type {Number}
+ * @type {number}
  * @constant
  *
  * @example
@@ -810,7 +810,7 @@ Object.defineProperties(Matrix2.prototype, {
    * Gets the number of items in the collection.
    * @memberof Matrix2.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -846,7 +846,7 @@ Matrix2.prototype.equals = function (right) {
  * <code>false</code> otherwise.
  *
  * @param {Matrix2} [right] The right hand side matrix.
- * @param {Number} [epsilon=0] The epsilon to use for equality testing.
+ * @param {number} [epsilon=0] The epsilon to use for equality testing.
  * @returns {Boolean} <code>true</code> if they are within the provided epsilon, <code>false</code> otherwise.
  */
 Matrix2.prototype.equalsEpsilon = function (right, epsilon) {

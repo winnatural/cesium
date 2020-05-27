@@ -58,9 +58,9 @@ import ImageryProvider from "./ImageryProvider.js";
  *                    this parameter is ignored and the tiling scheme's ellipsoid is used instead. If neither
  *                    parameter is specified, the WGS84 ellipsoid is used.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.  This parameter is ignored when accessing a tiled server.
- * @param {Number} [options.tileWidth=256] The width of each tile in pixels.  This parameter is ignored when accessing a tiled server.
- * @param {Number} [options.tileHeight=256] The height of each tile in pixels.  This parameter is ignored when accessing a tiled server.
- * @param {Number} [options.maximumLevel] The maximum tile level to request, or undefined if there is no maximum.  This parameter is ignored when accessing
+ * @param {number} [options.tileWidth=256] The width of each tile in pixels.  This parameter is ignored when accessing a tiled server.
+ * @param {number} [options.tileHeight=256] The height of each tile in pixels.  This parameter is ignored when accessing a tiled server.
+ * @param {number} [options.maximumLevel] The maximum tile level to request, or undefined if there is no maximum.  This parameter is ignored when accessing
  *                                        a tiled server.
  *
  * @see BingMapsImageryProvider
@@ -407,7 +407,7 @@ Object.defineProperties(ArcGisMapServerImageryProvider.prototype, {
    * Gets the width of each tile, in pixels. This function should
    * not be called before {@link ArcGisMapServerImageryProvider#ready} returns true.
    * @memberof ArcGisMapServerImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileWidth: {
@@ -428,7 +428,7 @@ Object.defineProperties(ArcGisMapServerImageryProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link ArcGisMapServerImageryProvider#ready} returns true.
    * @memberof ArcGisMapServerImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileHeight: {
@@ -449,7 +449,7 @@ Object.defineProperties(ArcGisMapServerImageryProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested.  This function should
    * not be called before {@link ArcGisMapServerImageryProvider#ready} returns true.
    * @memberof ArcGisMapServerImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumLevel: {
@@ -470,7 +470,7 @@ Object.defineProperties(ArcGisMapServerImageryProvider.prototype, {
    * Gets the minimum level-of-detail that can be requested.  This function should
    * not be called before {@link ArcGisMapServerImageryProvider#ready} returns true.
    * @memberof ArcGisMapServerImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   minimumLevel: {
@@ -654,9 +654,9 @@ Object.defineProperties(ArcGisMapServerImageryProvider.prototype, {
 /**
  * Gets the credits to be displayed when a given tile is displayed.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -673,9 +673,9 @@ ArcGisMapServerImageryProvider.prototype.getTileCredits = function (
  * Requests the image for a given tile.  This function should
  * not be called before {@link ArcGisMapServerImageryProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -709,11 +709,11 @@ ArcGisMapServerImageryProvider.prototype.requestImage = function (
      * Asynchronously determines what features, if any, are located at a given longitude and latitude within
      * a tile.  This function should not be called before {@link ImageryProvider#ready} returns true.
      *
-     * @param {Number} x The tile X coordinate.
-     * @param {Number} y The tile Y coordinate.
-     * @param {Number} level The tile level.
-     * @param {Number} longitude The longitude at which to pick features.
-     * @param {Number} latitude  The latitude at which to pick features.
+     * @param {number} x The tile X coordinate.
+     * @param {number} y The tile Y coordinate.
+     * @param {number} level The tile level.
+     * @param {number} longitude The longitude at which to pick features.
+     * @param {number} latitude  The latitude at which to pick features.
      * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
      *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
      *                   instances.  The array may be empty if no features are found at the given location.

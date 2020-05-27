@@ -51,7 +51,7 @@ function RequestScheduler() {}
 
 /**
  * The maximum number of simultaneous active requests. Un-throttled requests do not observe this limit.
- * @type {Number}
+ * @type {number}
  * @default 50
  */
 RequestScheduler.maximumRequests = 50;
@@ -59,7 +59,7 @@ RequestScheduler.maximumRequests = 50;
 /**
  * The maximum number of simultaneous active requests per server. Un-throttled requests or servers specifically
  * listed in {@link requestsByServer} do not observe this limit.
- * @type {Number}
+ * @type {number}
  * @default 6
  */
 RequestScheduler.maximumRequestsPerServer = 6;
@@ -125,7 +125,7 @@ Object.defineProperties(RequestScheduler, {
    *
    * @memberof RequestScheduler
    *
-   * @type {Number}
+   * @type {number}
    * @default 20
    * @private
    */

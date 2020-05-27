@@ -22,7 +22,7 @@ function ClearCommand(options) {
   /**
    * The value to clear the depth buffer to.  When <code>undefined</code>, the depth buffer is not cleared.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default undefined
    */
@@ -31,7 +31,7 @@ function ClearCommand(options) {
   /**
    * The value to clear the stencil buffer to.  When <code>undefined</code>, the stencil buffer is not cleared.
    *
-   * @type {Number}
+   * @type {number}
    *
    * @default undefined
    */

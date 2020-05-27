@@ -81,7 +81,7 @@ Object.defineProperties(DataSourceClock.prototype, {
    * Gets or sets the desired clock multiplier.
    * See {@link Clock#multiplier}.
    * @memberof DataSourceClock.prototype
-   * @type {Number}
+   * @type {number}
    */
   multiplier: createRawPropertyDescriptor("multiplier"),
 });

@@ -7,8 +7,8 @@ import defined from "./defined.js";
  *
  * @param {Array} array The array to fill.
  * @param {*} value The value to fill the array with.
- * @param {Number} [start=0] The index to start filling at.
- * @param {Number} [end=array.length] The index to end stop at.
+ * @param {number} [start=0] The index to start filling at.
+ * @param {number} [end=array.length] The index to end stop at.
  *
  * @returns {Array} The resulting array.
  * @private

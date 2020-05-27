@@ -7,7 +7,7 @@ import parseResponseHeaders from "./parseResponseHeaders.js";
  * @constructor
  * @alias RequestErrorEvent
  *
- * @param {Number} [statusCode] The HTTP error status code, such as 404.
+ * @param {number} [statusCode] The HTTP error status code, such as 404.
  * @param {Object} [response] The response included along with the error.
  * @param {String|Object} [responseHeaders] The response headers, represented either as an object literal or as a
  *                        string in the format returned by XMLHttpRequest's getAllResponseHeaders() function.
@@ -17,7 +17,7 @@ function RequestErrorEvent(statusCode, response, responseHeaders) {
    * The HTTP error status code, such as 404.  If the error does not have a particular
    * HTTP code, this property will be undefined.
    *
-   * @type {Number}
+   * @type {number}
    */
   this.statusCode = statusCode;
 

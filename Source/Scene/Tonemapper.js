@@ -1,14 +1,14 @@
 /**
  * A tonemapping algorithm when rendering with high dynamic range.
  *
- * @enum {Number}
+ * @enum {number}
  * @private
  */
 var Tonemapper = {
   /**
    * Use the Reinhard tonemapping operator.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   REINHARD: 0,
@@ -16,7 +16,7 @@ var Tonemapper = {
   /**
    * Use the modified Reinhard tonemapping operator.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   MODIFIED_REINHARD: 1,
@@ -24,7 +24,7 @@ var Tonemapper = {
   /**
    * Use the Filmic tonemapping operator.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   FILMIC: 2,
@@ -32,7 +32,7 @@ var Tonemapper = {
   /**
    * Use the ACES tonemapping operator.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   ACES: 3,

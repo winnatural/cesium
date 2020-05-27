@@ -27,7 +27,7 @@ function UniformState() {
    */
   this.globeDepthTexture = undefined;
   /**
-   * @type {Number}
+   * @type {number}
    */
   this.gamma = undefined;
 
@@ -640,7 +640,7 @@ Object.defineProperties(UniformState.prototype, {
    * The far plane's distance from the near plane, plus 1.0.
    *
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   farDepthFromNearPlusOne: {
     get: function () {
@@ -652,7 +652,7 @@ Object.defineProperties(UniformState.prototype, {
    * The log2 of {@link UniformState#farDepthFromNearPlusOne}.
    *
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   log2FarDepthFromNearPlusOne: {
     get: function () {
@@ -664,7 +664,7 @@ Object.defineProperties(UniformState.prototype, {
    * 1.0 divided by {@link UniformState#log2FarDepthFromNearPlusOne}.
    *
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   oneOverLog2FarDepthFromNearPlusOne: {
     get: function () {
@@ -675,7 +675,7 @@ Object.defineProperties(UniformState.prototype, {
   /**
    * The height in meters of the eye (camera) above or below the ellipsoid.
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   eyeHeight: {
     get: function () {
@@ -846,7 +846,7 @@ Object.defineProperties(UniformState.prototype, {
    * Gets the scaling factor for transforming from the canvas
    * pixel space to canvas coordinate space.
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   pixelRatio: {
     get: function () {
@@ -857,7 +857,7 @@ Object.defineProperties(UniformState.prototype, {
   /**
    * A scalar used to mix a color with the fog color based on the distance to the camera.
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   fogDensity: {
     get: function () {
@@ -868,7 +868,7 @@ Object.defineProperties(UniformState.prototype, {
   /**
    * A scalar that represents the geometric tolerance per meter
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   geometricToleranceOverMeter: {
     get: function () {
@@ -955,7 +955,7 @@ Object.defineProperties(UniformState.prototype, {
   /**
    * The maximum level-of-detail of the specular environment map atlas of the scene.
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   specularEnvironmentMapsMaximumLOD: {
     get: function () {
@@ -965,7 +965,7 @@ Object.defineProperties(UniformState.prototype, {
 
   /**
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   imagerySplitPosition: {
     get: function () {
@@ -979,7 +979,7 @@ Object.defineProperties(UniformState.prototype, {
    * be applied. When less than zero, the depth test should never be applied.
    *
    * @memberof UniformState.prototype
-   * @type {Number}
+   * @type {number}
    */
   minimumDisableDepthTestDistance: {
     get: function () {

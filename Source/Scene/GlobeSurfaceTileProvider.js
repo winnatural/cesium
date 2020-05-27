@@ -528,8 +528,8 @@ GlobeSurfaceTileProvider.prototype.cancelReprojections = function () {
  * Gets the maximum geometric error allowed in a tile at a given level, in meters.  This function should not be
  * called before {@link GlobeSurfaceTileProvider#ready} returns true.
  *
- * @param {Number} level The tile level for which to get the maximum geometric error.
- * @returns {Number} The maximum geometric error in meters.
+ * @param {number} level The tile level for which to get the maximum geometric error.
+ * @returns {number} The maximum geometric error in meters.
  */
 GlobeSurfaceTileProvider.prototype.getLevelMaximumGeometricError = function (
   level
@@ -940,7 +940,7 @@ var tileDirectionScratch = new Cartesian3();
  * Determines the priority for loading this tile. Lower priority values load sooner.
  * @param {QuadtreeTile} tile The tile.
  * @param {FrameState} frameState The frame state.
- * @returns {Number} The load priority value.
+ * @returns {number} The load priority value.
  */
 GlobeSurfaceTileProvider.prototype.computeTileLoadPriority = function (
   tile,
@@ -1089,7 +1089,7 @@ function computeOccludeePoint(
  * @param {QuadtreeTile} tile The tile instance.
  * @param {FrameState} frameState The state information of the current rendering frame.
  *
- * @returns {Number} The distance from the camera to the closest point on the tile, in meters.
+ * @returns {number} The distance from the camera to the closest point on the tile, in meters.
  */
 GlobeSurfaceTileProvider.prototype.computeDistanceToTile = function (
   tile,

@@ -22,7 +22,7 @@ Object.defineProperties(DataSourceCollection.prototype, {
   /**
    * Gets the number of data sources in this collection.
    * @memberof DataSourceCollection.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -159,7 +159,7 @@ DataSourceCollection.prototype.contains = function (dataSource) {
  * Determines the index of a given data source in the collection.
  *
  * @param {DataSource} dataSource The data source to find the index of.
- * @returns {Number} The index of the data source in the collection, or -1 if the data source does not exist in the collection.
+ * @returns {number} The index of the data source in the collection, or -1 if the data source does not exist in the collection.
  */
 DataSourceCollection.prototype.indexOf = function (dataSource) {
   return this._dataSources.indexOf(dataSource);
@@ -168,7 +168,7 @@ DataSourceCollection.prototype.indexOf = function (dataSource) {
 /**
  * Gets a data source by index from the collection.
  *
- * @param {Number} index the index to retrieve.
+ * @param {number} index the index to retrieve.
  * @returns {DataSource} The data source at the specified index.
  */
 DataSourceCollection.prototype.get = function (index) {

@@ -25,8 +25,8 @@ import Primitive from "./Primitive.js";
  * @constructor
  *
  * @param {Object} [options] Object with the following properties:
- * @param {Number} [options.length=10000000.0] The length of the axes in meters.
- * @param {Number} [options.width=2.0] The width of the axes in pixels.
+ * @param {number} [options.length=10000000.0] The length of the axes in meters.
+ * @param {number} [options.width=2.0] The width of the axes in pixels.
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] The 4x4 matrix that defines the reference frame, i.e., origin plus axes, to visualize.
  * @param {Boolean} [options.show=true] Determines if this primitive will be shown.
  * @param {Object} [options.id] A user-defined object to return when the instance is picked with {@link Scene#pick}
@@ -44,7 +44,7 @@ function DebugModelMatrixPrimitive(options) {
   /**
    * The length of the axes in meters.
    *
-   * @type {Number}
+   * @type {number}
    * @default 10000000.0
    */
   this.length = defaultValue(options.length, 10000000.0);
@@ -53,7 +53,7 @@ function DebugModelMatrixPrimitive(options) {
   /**
    * The width of the axes in pixels.
    *
-   * @type {Number}
+   * @type {number}
    * @default 2.0
    */
   this.width = defaultValue(options.width, 2.0);

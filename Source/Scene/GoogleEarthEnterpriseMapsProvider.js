@@ -34,7 +34,7 @@ import ImageryProvider from "./ImageryProvider.js";
  *
  * @param {Object} options Object with the following properties:
  * @param {Resource|String} options.url The url of the Google Earth server hosting the imagery.
- * @param {Number} options.channel The channel (id) to be used when requesting data from the server.
+ * @param {number} options.channel The channel (id) to be used when requesting data from the server.
  *        The channel number can be found by looking at the json file located at:
  *        earth.localdomain/default_map/query?request=Json&vars=geeServerDefs The /default_map path may
  *        differ depending on your Google Earth Enterprise server configuration. Look for the "id" that
@@ -53,7 +53,7 @@ import ImageryProvider from "./ImageryProvider.js";
  *          ]
  *        }
  * @param {String} [options.path="/default_map"] The path of the Google Earth server hosting the imagery.
- * @param {Number} [options.maximumLevel] The maximum level-of-detail supported by the Google Earth
+ * @param {number} [options.maximumLevel] The maximum level-of-detail supported by the Google Earth
  *        Enterprise server, or undefined if there is no limit.
  * @param {TileDiscardPolicy} [options.tileDiscardPolicy] The policy that determines if a tile
  *        is invalid and should be discarded. To ensure that no tiles are discarded, construct and pass
@@ -121,7 +121,7 @@ function GoogleEarthEnterpriseMapsProvider(options) {
    * By default, this is set to 1.9.  Changing this value after creating an {@link ImageryLayer} for this provider will have
    * no effect.  Instead, set the layer's {@link ImageryLayer#gamma} property.
    *
-   * @type {Number}
+   * @type {number}
    * @default 1.9
    */
   this.defaultGamma = 1.9;
@@ -305,7 +305,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
   /**
    * Gets the imagery channel (id) currently being used.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   channel: {
@@ -318,7 +318,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
    * Gets the width of each tile, in pixels. This function should
    * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileWidth: {
@@ -339,7 +339,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileHeight: {
@@ -360,7 +360,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested.  This function should
    * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumLevel: {
@@ -381,7 +381,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
    * Gets the minimum level-of-detail that can be requested.  This function should
    * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   minimumLevel: {
@@ -423,7 +423,7 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
    * Gets the version of the data used by this provider.  This function should
    * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
    * @memberof GoogleEarthEnterpriseMapsProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   version: {
@@ -575,9 +575,9 @@ Object.defineProperties(GoogleEarthEnterpriseMapsProvider.prototype, {
 /**
  * Gets the credits to be displayed when a given tile is displayed.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -594,9 +594,9 @@ GoogleEarthEnterpriseMapsProvider.prototype.getTileCredits = function (
  * Requests the image for a given tile.  This function should
  * not be called before {@link GoogleEarthEnterpriseMapsProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -639,11 +639,11 @@ GoogleEarthEnterpriseMapsProvider.prototype.requestImage = function (
  * Picking features is not currently supported by this imagery provider, so this function simply returns
  * undefined.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
- * @param {Number} longitude The longitude at which to pick features.
- * @param {Number} latitude  The latitude at which to pick features.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
+ * @param {number} longitude The longitude at which to pick features.
+ * @param {number} latitude  The latitude at which to pick features.
  * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
  *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
  *                   instances.  The array may be empty if no features are found at the given location.

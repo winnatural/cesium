@@ -10,10 +10,10 @@ import DeveloperError from "./DeveloperError.js";
  * @alias ColorGeometryInstanceAttribute
  * @constructor
  *
- * @param {Number} [red=1.0] The red component.
- * @param {Number} [green=1.0] The green component.
- * @param {Number} [blue=1.0] The blue component.
- * @param {Number} [alpha=1.0] The alpha component.
+ * @param {number} [red=1.0] The red component.
+ * @param {number} [green=1.0] The green component.
+ * @param {number} [blue=1.0] The blue component.
+ * @param {number} [alpha=1.0] The alpha component.
  *
  *
  * @example
@@ -76,7 +76,7 @@ Object.defineProperties(ColorGeometryInstanceAttribute.prototype, {
    *
    * @memberof ColorGeometryInstanceAttribute.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @default 4

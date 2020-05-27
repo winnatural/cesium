@@ -102,17 +102,17 @@ import TileImagery from "./TileImagery.js";
  *                                     are <code>TextureMagnificationFilter.LINEAR</code> and
  *                                     <code>TextureMagnificationFilter.NEAREST</code>.
  * @param {Boolean} [options.show=true] True if the layer is shown; otherwise, false.
- * @param {Number} [options.maximumAnisotropy=maximum supported] The maximum anisotropy level to use
+ * @param {number} [options.maximumAnisotropy=maximum supported] The maximum anisotropy level to use
  *        for texture filtering.  If this parameter is not specified, the maximum anisotropy supported
  *        by the WebGL stack will be used.  Larger values make the imagery look better in horizon
  *        views.
- * @param {Number} [options.minimumTerrainLevel] The minimum terrain level-of-detail at which to show this imagery layer,
+ * @param {number} [options.minimumTerrainLevel] The minimum terrain level-of-detail at which to show this imagery layer,
  *                 or undefined to show it at all levels.  Level zero is the least-detailed level.
- * @param {Number} [options.maximumTerrainLevel] The maximum terrain level-of-detail at which to show this imagery layer,
+ * @param {number} [options.maximumTerrainLevel] The maximum terrain level-of-detail at which to show this imagery layer,
  *                 or undefined to show it at all levels.  Level zero is the least-detailed level.
  * @param {Rectangle} [options.cutoutRectangle] Cartographic rectangle for cutting out a portion of this ImageryLayer.
  * @param {Color} [options.colorToAlpha] Color to be used as alpha.
- * @param {Number} [options.colorToAlphaThreshold=0.004] Threshold for color-to-alpha.
+ * @param {number} [options.colorToAlphaThreshold=0.004] Threshold for color-to-alpha.
  */
 function ImageryLayer(imageryProvider, options) {
   this._imageryProvider = imageryProvider;
@@ -123,7 +123,7 @@ function ImageryLayer(imageryProvider, options) {
    * The alpha blending value of this layer, with 0.0 representing fully transparent and
    * 1.0 representing fully opaque.
    *
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   this.alpha = defaultValue(
@@ -135,7 +135,7 @@ function ImageryLayer(imageryProvider, options) {
    * The brightness of this layer.  1.0 uses the unmodified imagery color.  Less than 1.0
    * makes the imagery darker while greater than 1.0 makes it brighter.
    *
-   * @type {Number}
+   * @type {number}
    * @default {@link ImageryLayer.DEFAULT_BRIGHTNESS}
    */
   this.brightness = defaultValue(
@@ -150,7 +150,7 @@ function ImageryLayer(imageryProvider, options) {
    * The contrast of this layer.  1.0 uses the unmodified imagery color.  Less than 1.0 reduces
    * the contrast while greater than 1.0 increases it.
    *
-   * @type {Number}
+   * @type {number}
    * @default {@link ImageryLayer.DEFAULT_CONTRAST}
    */
   this.contrast = defaultValue(
@@ -161,7 +161,7 @@ function ImageryLayer(imageryProvider, options) {
   /**
    * The hue of this layer in radians. 0.0 uses the unmodified imagery color.
    *
-   * @type {Number}
+   * @type {number}
    * @default {@link ImageryLayer.DEFAULT_HUE}
    */
   this.hue = defaultValue(
@@ -173,7 +173,7 @@ function ImageryLayer(imageryProvider, options) {
    * The saturation of this layer. 1.0 uses the unmodified imagery color. Less than 1.0 reduces the
    * saturation while greater than 1.0 increases it.
    *
-   * @type {Number}
+   * @type {number}
    * @default {@link ImageryLayer.DEFAULT_SATURATION}
    */
   this.saturation = defaultValue(
@@ -187,7 +187,7 @@ function ImageryLayer(imageryProvider, options) {
   /**
    * The gamma correction to apply to this layer.  1.0 uses the unmodified imagery color.
    *
-   * @type {Number}
+   * @type {number}
    * @default {@link ImageryLayer.DEFAULT_GAMMA}
    */
   this.gamma = defaultValue(
@@ -292,7 +292,7 @@ function ImageryLayer(imageryProvider, options) {
   /**
    * Normalized (0-1) threshold for color-to-alpha.
    *
-   * @type {Number}
+   * @type {number}
    */
   this.colorToAlphaThreshold = defaultValue(
     options.colorToAlphaThreshold,
@@ -330,35 +330,35 @@ Object.defineProperties(ImageryLayer.prototype, {
 /**
  * This value is used as the default brightness for the imagery layer if one is not provided during construction
  * or by the imagery provider. This value does not modify the brightness of the imagery.
- * @type {Number}
+ * @type {number}
  * @default 1.0
  */
 ImageryLayer.DEFAULT_BRIGHTNESS = 1.0;
 /**
  * This value is used as the default contrast for the imagery layer if one is not provided during construction
  * or by the imagery provider. This value does not modify the contrast of the imagery.
- * @type {Number}
+ * @type {number}
  * @default 1.0
  */
 ImageryLayer.DEFAULT_CONTRAST = 1.0;
 /**
  * This value is used as the default hue for the imagery layer if one is not provided during construction
  * or by the imagery provider. This value does not modify the hue of the imagery.
- * @type {Number}
+ * @type {number}
  * @default 0.0
  */
 ImageryLayer.DEFAULT_HUE = 0.0;
 /**
  * This value is used as the default saturation for the imagery layer if one is not provided during construction
  * or by the imagery provider. This value does not modify the saturation of the imagery.
- * @type {Number}
+ * @type {number}
  * @default 1.0
  */
 ImageryLayer.DEFAULT_SATURATION = 1.0;
 /**
  * This value is used as the default gamma for the imagery layer if one is not provided during construction
  * or by the imagery provider. This value does not modify the gamma of the imagery.
- * @type {Number}
+ * @type {number}
  * @default 1.0
  */
 ImageryLayer.DEFAULT_GAMMA = 1.0;
@@ -390,7 +390,7 @@ ImageryLayer.DEFAULT_MAGNIFICATION_FILTER = TextureMagnificationFilter.LINEAR;
 /**
  * This value is used as the default threshold for color-to-alpha if one is not provided
  * during construction or by the imagery provider.
- * @type {Number}
+ * @type {number}
  * @default 0.004
  */
 ImageryLayer.DEFAULT_APPLY_COLOR_TO_ALPHA_THRESHOLD = 0.004;
@@ -477,7 +477,7 @@ ImageryLayer.prototype.getViewableRectangle = function () {
  *
  * @param {Tile} tile The terrain tile.
  * @param {TerrainProvider} terrainProvider The terrain provider associated with the terrain tile.
- * @param {Number} insertionPoint The position to insert new skeletons before in the tile's imagery list.
+ * @param {number} insertionPoint The position to insert new skeletons before in the tile's imagery list.
  * @returns {Boolean} true if this layer overlaps any portion of the terrain tile; otherwise, false.
  */
 ImageryLayer.prototype._createTileImagerySkeletons = function (
@@ -1464,9 +1464,9 @@ function reprojectToGeographic(command, context, texture, rectangle) {
  * Gets the level with the specified world coordinate spacing between texels, or less.
  *
  * @param {ImageryLayer} layer The imagery layer to use.
- * @param {Number} texelSpacing The texel spacing for which to find a corresponding level.
- * @param {Number} latitudeClosestToEquator The latitude closest to the equator that we're concerned with.
- * @returns {Number} The level with the specified texel spacing or less.
+ * @param {number} texelSpacing The texel spacing for which to find a corresponding level.
+ * @param {number} latitudeClosestToEquator The latitude closest to the equator that we're concerned with.
+ * @returns {number} The level with the specified texel spacing or less.
  * @private
  */
 function getLevelWithMaximumTexelSpacing(

@@ -79,7 +79,7 @@ var scratchQVec = new Cartesian3();
  * @param {Cartesian3} p2 The third vertex of the triangle.
  * @param {Boolean} [cullBackFaces=false] If <code>true</code>, will only compute an intersection with the front face of the triangle
  *                  and return undefined for intersections with the back face.
- * @returns {Number} The intersection as a parametric distance along the ray, or undefined if there is no intersection.
+ * @returns {number} The intersection as a parametric distance along the ray, or undefined if there is no intersection.
  */
 IntersectionTests.rayTriangleParametric = function (
   ray,

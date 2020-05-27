@@ -106,9 +106,9 @@ Object.defineProperties(TimeDynamicImagery.prototype, {
 /**
  * Gets the tile from the cache if its available.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  *
  * @returns {Promise.<HTMLImageElement>|undefined} A promise for the image that will resolve when the image is available, or
@@ -135,9 +135,9 @@ TimeDynamicImagery.prototype.getFromCache = function (x, y, level, request) {
  * Checks if the next interval is approaching and will start preload the tile if necessary. Otherwise it will
  * just add the tile to a list to preload when we approach the next interval.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  */
 TimeDynamicImagery.prototype.checkApproachingInterval = function (

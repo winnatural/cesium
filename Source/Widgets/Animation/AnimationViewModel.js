@@ -182,7 +182,7 @@ function AnimationViewModel(clockViewModel) {
 
   /**
    * Gets or sets the current shuttle ring angle.  This property is observable.
-   * @type {Number}
+   * @type {number}
    */
   this.shuttleRingAngle = undefined;
   knockout.defineProperty(this, "shuttleRingAngle", {
@@ -395,7 +395,7 @@ AnimationViewModel.defaultDateFormatter = function (date, viewModel) {
 
 /**
  * Gets or sets the default array of known clock multipliers associated with new instances of the shuttle ring.
- * @type {Number[]}
+ * @type {number[]}
  */
 AnimationViewModel.defaultTicks = [
   //
@@ -460,7 +460,7 @@ AnimationViewModel.defaultTimeFormatter = function (date, viewModel) {
 /**
  * Gets a copy of the array of positive known clock multipliers to associate with the shuttle ring.
  *
- * @returns {Number[]} The array of known clock multipliers associated with the shuttle ring.
+ * @returns {number[]} The array of known clock multipliers associated with the shuttle ring.
  */
 AnimationViewModel.prototype.getShuttleRingTicks = function () {
   return this._sortedFilteredPositiveTicks.slice(0);
@@ -473,7 +473,7 @@ AnimationViewModel.prototype.getShuttleRingTicks = function () {
  * to when a single click is made.  The values need not be in order, as they will be sorted
  * automatically, and duplicate values will be removed.
  *
- * @param {Number[]} positiveTicks The list of known positive clock multipliers to associate with the shuttle ring.
+ * @param {number[]} positiveTicks The list of known positive clock multipliers to associate with the shuttle ring.
  */
 AnimationViewModel.prototype.setShuttleRingTicks = function (positiveTicks) {
   //>>includeStart('debug', pragmas.debug);

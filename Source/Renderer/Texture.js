@@ -409,10 +409,10 @@ Texture.create = function (options) {
  * @param {Object} options Object with the following properties:
  * @param {Context} options.context The context in which the Texture gets created.
  * @param {PixelFormat} [options.pixelFormat=PixelFormat.RGB] The texture's internal pixel format.
- * @param {Number} [options.framebufferXOffset=0] An offset in the x direction in the framebuffer where copying begins from.
- * @param {Number} [options.framebufferYOffset=0] An offset in the y direction in the framebuffer where copying begins from.
- * @param {Number} [options.width=canvas.clientWidth] The width of the texture in texels.
- * @param {Number} [options.height=canvas.clientHeight] The height of the texture in texels.
+ * @param {number} [options.framebufferXOffset=0] An offset in the x direction in the framebuffer where copying begins from.
+ * @param {number} [options.framebufferYOffset=0] An offset in the y direction in the framebuffer where copying begins from.
+ * @param {number} [options.width=canvas.clientWidth] The width of the texture in texels.
+ * @param {number} [options.height=canvas.clientHeight] The height of the texture in texels.
  * @param {Framebuffer} [options.framebuffer=defaultFramebuffer] The framebuffer from which to create the texture.  If this
  *        parameter is not specified, the default framebuffer is used.
  * @returns {Texture} A texture with contents from the framebuffer.
@@ -638,8 +638,8 @@ Object.defineProperties(Texture.prototype, {
  *
  * @param {Object} source The source {@link ImageData}, {@link HTMLImageElement}, {@link HTMLCanvasElement}, or {@link HTMLVideoElement},
  *                        or an object with width, height, and arrayBufferView properties.
- * @param {Number} [xOffset=0] The offset in the x direction within the texture to copy into.
- * @param {Number} [yOffset=0] The offset in the y direction within the texture to copy into.
+ * @param {number} [xOffset=0] The offset in the x direction within the texture to copy into.
+ * @param {number} [yOffset=0] The offset in the y direction within the texture to copy into.
  *
  * @exception {DeveloperError} Cannot call copyFrom when the texture pixel format is DEPTH_COMPONENT or DEPTH_STENCIL.
  * @exception {DeveloperError} Cannot call copyFrom with a compressed texture pixel format.
@@ -835,12 +835,12 @@ Texture.prototype.copyFrom = function (source, xOffset, yOffset) {
 };
 
 /**
- * @param {Number} [xOffset=0] The offset in the x direction within the texture to copy into.
- * @param {Number} [yOffset=0] The offset in the y direction within the texture to copy into.
- * @param {Number} [framebufferXOffset=0] optional
- * @param {Number} [framebufferYOffset=0] optional
- * @param {Number} [width=width] optional
- * @param {Number} [height=height] optional
+ * @param {number} [xOffset=0] The offset in the x direction within the texture to copy into.
+ * @param {number} [yOffset=0] The offset in the y direction within the texture to copy into.
+ * @param {number} [framebufferXOffset=0] optional
+ * @param {number} [framebufferYOffset=0] optional
+ * @param {number} [width=width] optional
+ * @param {number} [height=height] optional
  *
  * @exception {DeveloperError} Cannot call copyFromFramebuffer when the texture pixel format is DEPTH_COMPONENT or DEPTH_STENCIL.
  * @exception {DeveloperError} Cannot call copyFromFramebuffer when the texture pixel data type is FLOAT.

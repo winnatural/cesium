@@ -63,11 +63,11 @@ import ShadowMapShader from "./ShadowMapShader.js";
  * @param {Boolean} [options.isPointLight=false] Whether the light source is a point light. Point light shadows do not use cascades.
  * @param {Boolean} [options.pointLightRadius=100.0] Radius of the point light.
  * @param {Boolean} [options.cascadesEnabled=true] Use multiple shadow maps to cover different partitions of the view frustum.
- * @param {Number} [options.numberOfCascades=4] The number of cascades to use for the shadow map. Supported values are one and four.
- * @param {Number} [options.maximumDistance=5000.0] The maximum distance used for generating cascaded shadows. Lower values improve shadow quality.
- * @param {Number} [options.size=2048] The width and height, in pixels, of each shadow map.
+ * @param {number} [options.numberOfCascades=4] The number of cascades to use for the shadow map. Supported values are one and four.
+ * @param {number} [options.maximumDistance=5000.0] The maximum distance used for generating cascaded shadows. Lower values improve shadow quality.
+ * @param {number} [options.size=2048] The width and height, in pixels, of each shadow map.
  * @param {Boolean} [options.softShadows=false] Whether percentage-closer-filtering is enabled for producing softer shadows.
- * @param {Number} [options.darkness=0.3] The shadow darkness.
+ * @param {number} [options.darkness=0.3] The shadow darkness.
  * @param {Boolean} [options.normalOffset=true] Whether a normal bias is applied to shadows.
  *
  * @exception {DeveloperError} Only one or four cascades are supported.
@@ -111,7 +111,7 @@ function ShadowMap(options) {
   /**
    * Determines the darkness of the shadows.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.3
    */
   this.darkness = defaultValue(options.darkness, 0.3);
@@ -120,7 +120,7 @@ function ShadowMap(options) {
   /**
    * Determines the maximum distance of the shadow map. Only applicable for cascaded shadows. Larger distances may result in lower quality shadows.
    *
-   * @type {Number}
+   * @type {number}
    * @default 5000.0
    */
   this.maximumDistance = defaultValue(options.maximumDistance, 5000.0);
@@ -398,7 +398,7 @@ Object.defineProperties(ShadowMap.prototype, {
    * The width and height, in pixels, of each shadow map.
    *
    * @memberof ShadowMap.prototype
-   * @type {Number}
+   * @type {number}
    * @default 2048
    */
   size: {

@@ -25,7 +25,7 @@ import Primitive from "./Primitive.js";
  *
  * @param {Object} options Object with the following properties:
  * @param {Camera} options.camera The camera.
- * @param {Number[]} [options.frustumSplits] Distances to the near and far planes of the camera frustums. This overrides the camera's frustum near and far values.
+ * @param {number[]} [options.frustumSplits] Distances to the near and far planes of the camera frustums. This overrides the camera's frustum near and far values.
  * @param {Color} [options.color=Color.CYAN] The color of the debug outline.
  * @param {Boolean} [options.updateOnChange=true] Whether the primitive updates when the underlying camera changes.
  * @param {Boolean} [options.show=true] Determines if this primitive will be shown.

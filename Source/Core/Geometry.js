@@ -174,7 +174,7 @@ function Geometry(options) {
  * respect to the number of attributes in a vertex, not the number of vertices.
  *
  * @param {Geometry} geometry The geometry.
- * @returns {Number} The number of vertices in the geometry.
+ * @returns {number} The number of vertices in the geometry.
  *
  * @example
  * var numVertices = Cesium.Geometry.computeNumberOfVertices(geometry);
@@ -244,10 +244,10 @@ var rotation2DScratch = new Matrix2();
  * as an intermediary instead of local ENU, which is more accurate for large-area rectangles.
  *
  * @param {Cartesian3[]} positions Array of positions outlining the geometry
- * @param {Number} stRotation Texture coordinate rotation.
+ * @param {number} stRotation Texture coordinate rotation.
  * @param {Ellipsoid} ellipsoid Ellipsoid for projecting and generating local vectors.
  * @param {Rectangle} boundingRectangle Bounding rectangle around the positions.
- * @returns {Number[]} An array of 6 numbers specifying [minimum point, u extent, v extent] as points in the "cartographic" system.
+ * @returns {number[]} An array of 6 numbers specifying [minimum point, u extent, v extent] as points in the "cartographic" system.
  * @private
  */
 Geometry._textureCoordinateRotationPoints = function (

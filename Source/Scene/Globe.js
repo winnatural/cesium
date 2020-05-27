@@ -92,7 +92,7 @@ function Globe(ellipsoid) {
    * The maximum screen-space error used to drive level-of-detail refinement.  Higher
    * values will provide better performance but lower visual quality.
    *
-   * @type {Number}
+   * @type {number}
    * @default 2
    */
   this.maximumScreenSpaceError = 2;
@@ -103,7 +103,7 @@ function Globe(ellipsoid) {
    * this frame.  A larger number will consume more memory but will show detail faster
    * when, for example, zooming out and then back in.
    *
-   * @type {Number}
+   * @type {number}
    * @default 100
    */
   this.tileCacheSize = 100;
@@ -116,7 +116,7 @@ function Globe(ellipsoid) {
    * tile level to be loaded successively, significantly increasing load time. Setting it to a large
    * number (e.g. 1000) will minimize the number of tiles that are loaded but tend to make
    * detail appear all at once after a long wait.
-   * @type {Number}
+   * @type {number}
    * @default 20
    */
   this.loadingDescendantLimit = 20;
@@ -191,7 +191,7 @@ function Globe(ellipsoid) {
    * The distance where everything becomes lit. This only takes effect
    * when <code>enableLighting</code> or <code>showGroundAtmosphere</code> is <code>true</code>.
    *
-   * @type {Number}
+   * @type {number}
    * @default 10000000.0
    */
   this.lightingFadeOutDistance = 1.0e7;
@@ -200,7 +200,7 @@ function Globe(ellipsoid) {
    * The distance where lighting resumes. This only takes effect
    * when <code>enableLighting</code> or <code>showGroundAtmosphere</code> is <code>true</code>.
    *
-   * @type {Number}
+   * @type {number}
    * @default 20000000.0
    */
   this.lightingFadeInDistance = 2.0e7;
@@ -210,7 +210,7 @@ function Globe(ellipsoid) {
    * This only takes effect when <code>showGroundAtmosphere</code>, <code>enableLighting</code>, and
    * <code>dynamicAtmosphereLighting</code> are <code>true</code>.
    *
-   * @type {Number}
+   * @type {number}
    * @default 10000000.0
    */
   this.nightFadeOutDistance = 1.0e7;
@@ -220,7 +220,7 @@ function Globe(ellipsoid) {
    * This only takes effect when <code>showGroundAtmosphere</code>, <code>enableLighting</code>, and
    * <code>dynamicAtmosphereLighting</code> are <code>true</code>.
    *
-   * @type {Number}
+   * @type {number}
    * @default 50000000.0
    */
   this.nightFadeInDistance = 5.0e7;
@@ -261,7 +261,7 @@ function Globe(ellipsoid) {
   /**
    * The hue shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A hue shift of 1.0 indicates a complete rotation of the hues available.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.atmosphereHueShift = 0.0;
@@ -269,7 +269,7 @@ function Globe(ellipsoid) {
   /**
    * The saturation shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A saturation shift of -1.0 is monochrome.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.atmosphereSaturationShift = 0.0;
@@ -277,7 +277,7 @@ function Globe(ellipsoid) {
   /**
    * The brightness shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A brightness shift of -1.0 is complete darkness, which will let space show through.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.atmosphereBrightnessShift = 0.0;

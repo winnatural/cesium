@@ -23,10 +23,10 @@ var defaultCredit = new Credit(
  * @param {String} [options.accessToken] The public access token for the imagery.
  * @param {String} [options.format='png'] The format of the image request.
  * @param {Ellipsoid} [options.ellipsoid] The ellipsoid.  If not specified, the WGS84 ellipsoid is used.
- * @param {Number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.  Take care when specifying
+ * @param {number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.  Take care when specifying
  *                 this that the number of tiles at the minimum level is small, such as four or less.  A larger number is likely
  *                 to result in rendering problems.
- * @param {Number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
+ * @param {number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
  * @param {Rectangle} [options.rectangle=Rectangle.MAX_VALUE] The rectangle, in radians, covered by the image.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.
  *
@@ -153,7 +153,7 @@ Object.defineProperties(MapboxImageryProvider.prototype, {
    * Gets the width of each tile, in pixels.  This function should
    * not be called before {@link MapboxImageryProvider#ready} returns true.
    * @memberof MapboxImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileWidth: {
@@ -166,7 +166,7 @@ Object.defineProperties(MapboxImageryProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link MapboxImageryProvider#ready} returns true.
    * @memberof MapboxImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileHeight: {
@@ -179,7 +179,7 @@ Object.defineProperties(MapboxImageryProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested.  This function should
    * not be called before {@link MapboxImageryProvider#ready} returns true.
    * @memberof MapboxImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumLevel: {
@@ -196,7 +196,7 @@ Object.defineProperties(MapboxImageryProvider.prototype, {
    * provider with more than a few tiles at the minimum level will lead to
    * rendering problems.
    * @memberof MapboxImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   minimumLevel: {
@@ -293,9 +293,9 @@ Object.defineProperties(MapboxImageryProvider.prototype, {
 /**
  * Gets the credits to be displayed when a given tile is displayed.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -310,9 +310,9 @@ MapboxImageryProvider.prototype.getTileCredits = function (x, y, level) {
  * Requests the image for a given tile.  This function should
  * not be called before {@link MapboxImageryProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -331,11 +331,11 @@ MapboxImageryProvider.prototype.requestImage = function (x, y, level, request) {
  * This function is optional, so it may not exist on all ImageryProviders.
  *
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
- * @param {Number} longitude The longitude at which to pick features.
- * @param {Number} latitude  The latitude at which to pick features.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
+ * @param {number} longitude The longitude at which to pick features.
+ * @param {number} latitude  The latitude at which to pick features.
  * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
  *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
  *                   instances.  The array may be empty if no features are found at the given location.

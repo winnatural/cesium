@@ -10,13 +10,13 @@ import formatError from "./formatError.js";
  *
  * @param {ImageryProvider|TerrainProvider} provider The imagery or terrain provider that experienced the error.
  * @param {String} message A message describing the error.
- * @param {Number} [x] The X coordinate of the tile that experienced the error, or undefined if the error
+ * @param {number} [x] The X coordinate of the tile that experienced the error, or undefined if the error
  *        is not specific to a particular tile.
- * @param {Number} [y] The Y coordinate of the tile that experienced the error, or undefined if the error
+ * @param {number} [y] The Y coordinate of the tile that experienced the error, or undefined if the error
  *        is not specific to a particular tile.
- * @param {Number} [level] The level of the tile that experienced the error, or undefined if the error
+ * @param {number} [level] The level of the tile that experienced the error, or undefined if the error
  *        is not specific to a particular tile.
- * @param {Number} [timesRetried=0] The number of times this operation has been retried.
+ * @param {number} [timesRetried=0] The number of times this operation has been retried.
  * @param {Error} [error] The error or exception that occurred, if any.
  */
 function TileProviderError(
@@ -43,27 +43,27 @@ function TileProviderError(
   /**
    * The X coordinate of the tile that experienced the error.  If the error is not specific
    * to a particular tile, this property will be undefined.
-   * @type {Number}
+   * @type {number}
    */
   this.x = x;
 
   /**
    * The Y coordinate of the tile that experienced the error.  If the error is not specific
    * to a particular tile, this property will be undefined.
-   * @type {Number}
+   * @type {number}
    */
   this.y = y;
 
   /**
    * The level-of-detail of the tile that experienced the error.  If the error is not specific
    * to a particular tile, this property will be undefined.
-   * @type {Number}
+   * @type {number}
    */
   this.level = level;
 
   /**
    * The number of times this operation has been retried.
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   this.timesRetried = defaultValue(timesRetried, 0);
@@ -96,11 +96,11 @@ function TileProviderError(
  * @param {ImageryProvider|TerrainProvider} provider The imagery or terrain provider that encountered the error.
  * @param {Event} event The event to raise to inform listeners of the error.
  * @param {String} message The message describing the error.
- * @param {Number} x The X coordinate of the tile that experienced the error, or undefined if the
+ * @param {number} x The X coordinate of the tile that experienced the error, or undefined if the
  *        error is not specific to a particular tile.
- * @param {Number} y The Y coordinate of the tile that experienced the error, or undefined if the
+ * @param {number} y The Y coordinate of the tile that experienced the error, or undefined if the
  *        error is not specific to a particular tile.
- * @param {Number} level The level-of-detail of the tile that experienced the error, or undefined if the
+ * @param {number} level The level-of-detail of the tile that experienced the error, or undefined if the
  *        error is not specific to a particular tile.
  * @param {TileProviderError.RetryFunction} retryFunction The function to call to retry the operation.  If undefined, the
  *        operation will not be retried.

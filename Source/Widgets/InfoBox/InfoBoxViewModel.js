@@ -18,7 +18,7 @@ function InfoBoxViewModel() {
 
   /**
    * Gets or sets the maximum height of the info box in pixels.  This property is observable.
-   * @type {Number}
+   * @type {number}
    */
   this.maxHeight = 500;
 
@@ -86,7 +86,7 @@ function InfoBoxViewModel() {
 
 /**
  * Gets the maximum height of sections within the info box, minus an offset, in CSS-ready form.
- * @param {Number} offset The offset in pixels.
+ * @param {number} offset The offset in pixels.
  * @returns {String}
  */
 InfoBoxViewModel.prototype.maxHeightOffset = function (offset) {

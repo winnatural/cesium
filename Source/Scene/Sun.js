@@ -89,7 +89,7 @@ Object.defineProperties(Sun.prototype, {
    * Use larger values for a more pronounced flare around the Sun.
    *
    * @memberof Sun.prototype
-   * @type {Number}
+   * @type {number}
    * @default 1.0
    */
   glowFactor: {

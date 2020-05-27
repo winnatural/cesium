@@ -16,7 +16,7 @@ import SampledProperty from "./SampledProperty.js";
  * @constructor
  *
  * @param {ReferenceFrame} [referenceFrame=ReferenceFrame.FIXED] The reference frame in which the position is defined.
- * @param {Number} [numberOfDerivatives=0] The number of derivatives that accompany each position; i.e. velocity, acceleration, etc...
+ * @param {number} [numberOfDerivatives=0] The number of derivatives that accompany each position; i.e. velocity, acceleration, etc...
  */
 function SampledPositionProperty(referenceFrame, numberOfDerivatives) {
   numberOfDerivatives = defaultValue(numberOfDerivatives, 0);
@@ -82,7 +82,7 @@ Object.defineProperties(SampledPositionProperty.prototype, {
    * Gets the degree of interpolation to perform when retrieving a value. Call <code>setInterpolationOptions</code> to set this.
    * @memberof SampledPositionProperty.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default 1
    * @readonly
    */
@@ -135,7 +135,7 @@ Object.defineProperties(SampledPositionProperty.prototype, {
    * Gets or sets the amount of time to extrapolate forward before
    * the property becomes undefined.  A value of 0 will extrapolate forever.
    * @memberof SampledPositionProperty.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   forwardExtrapolationDuration: {
@@ -165,7 +165,7 @@ Object.defineProperties(SampledPositionProperty.prototype, {
    * Gets or sets the amount of time to extrapolate backward
    * before the property becomes undefined.  A value of 0 will extrapolate forever.
    * @memberof SampledPositionProperty.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0
    */
   backwardExtrapolationDuration: {
@@ -225,7 +225,7 @@ SampledPositionProperty.prototype.getValueInReferenceFrame = function (
  *
  * @param {Object} [options] Object with the following properties:
  * @param {InterpolationAlgorithm} [options.interpolationAlgorithm] The new interpolation algorithm.  If undefined, the existing property will be unchanged.
- * @param {Number} [options.interpolationDegree] The new interpolation degree.  If undefined, the existing property will be unchanged.
+ * @param {number} [options.interpolationDegree] The new interpolation degree.  If undefined, the existing property will be unchanged.
  */
 SampledPositionProperty.prototype.setInterpolationOptions = function (options) {
   this._property.setInterpolationOptions(options);
@@ -278,7 +278,7 @@ SampledPositionProperty.prototype.addSamples = function (
  * Adds samples as a single packed array where each new sample is represented as a date,
  * followed by the packed representation of the corresponding value and derivatives.
  *
- * @param {Number[]} packedSamples The array of packed samples.
+ * @param {number[]} packedSamples The array of packed samples.
  * @param {JulianDate} [epoch] If any of the dates in packedSamples are numbers, they are considered an offset from this epoch, in seconds.
  */
 SampledPositionProperty.prototype.addSamplesPackedArray = function (

@@ -150,7 +150,7 @@ Object.defineProperties(ModelAnimation.prototype, {
    *
    * @memberof ModelAnimation.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @default undefined
@@ -187,7 +187,7 @@ Object.defineProperties(ModelAnimation.prototype, {
    *
    * @memberof ModelAnimation.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @default 1.0

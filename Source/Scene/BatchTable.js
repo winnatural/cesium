@@ -22,7 +22,7 @@ import Texture from "../Renderer/Texture.js";
  * @param {Context} context The context in which the batch table is created.
  * @param {Object[]} attributes An array of objects describing a per instance attribute. Each object contains a datatype, components per attributes, whether it is normalized and a function name
  *     to retrieve the value in the vertex shader.
- * @param {Number} numberOfInstances The number of instances in a batch table.
+ * @param {number} numberOfInstances The number of instances in a batch table.
  *
  * @example
  * // create the batch table
@@ -142,7 +142,7 @@ Object.defineProperties(BatchTable.prototype, {
   /**
    * The number of instances.
    * @memberOf BatchTable.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   numberOfInstances: {
@@ -247,8 +247,8 @@ var scratchGetAttributeCartesian4 = new Cartesian4();
 /**
  * Gets the value of an attribute in the table.
  *
- * @param {Number} instanceIndex The index of the instance.
- * @param {Number} attributeIndex The index of the attribute.
+ * @param {number} instanceIndex The index of the instance.
+ * @param {number} attributeIndex The index of the attribute.
  * @param {undefined|Cartesian2|Cartesian3|Cartesian4} [result] The object onto which to store the result. The type is dependent on the attribute's number of components.
  * @returns {Number|Cartesian2|Cartesian3|Cartesian4} The attribute value stored for the instance.
  *
@@ -315,8 +315,8 @@ var setAttributeScratchCartesian4 = new Cartesian4();
 /**
  * Sets the value of an attribute in the table.
  *
- * @param {Number} instanceIndex The index of the instance.
- * @param {Number} attributeIndex The index of the attribute.
+ * @param {number} instanceIndex The index of the instance.
+ * @param {number} attributeIndex The index of the attribute.
  * @param {Number|Cartesian2|Cartesian3|Cartesian4} value The value to be stored in the table. The type of value will depend on the number of components of the attribute.
  *
  * @exception {DeveloperError} instanceIndex is out of range.

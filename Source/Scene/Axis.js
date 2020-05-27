@@ -6,14 +6,14 @@ import Matrix4 from "../Core/Matrix4.js";
 /**
  * An enum describing the x, y, and z axes and helper conversion functions.
  *
- * @enum {Number}
+ * @enum {number}
  * @private
  */
 var Axis = {
   /**
    * Denotes the x-axis.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   X: 0,
@@ -21,7 +21,7 @@ var Axis = {
   /**
    * Denotes the y-axis.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   Y: 1,
@@ -29,7 +29,7 @@ var Axis = {
   /**
    * Denotes the z-axis.
    *
-   * @type {Number}
+   * @type {number}
    * @constant
    */
   Z: 2,
@@ -98,7 +98,7 @@ var Axis = {
    * Gets the axis by name
    *
    * @param {String} name The name of the axis.
-   * @returns {Number} The axis enum.
+   * @returns {number} The axis enum.
    */
   fromName: function (name) {
     //>>includeStart('debug', pragmas.debug);

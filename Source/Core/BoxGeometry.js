@@ -142,7 +142,7 @@ BoxGeometry.fromAxisAlignedBoundingBox = function (boundingBox) {
 
 /**
  * The number of elements used to pack the object into an array.
- * @type {Number}
+ * @type {number}
  */
 BoxGeometry.packedLength =
   2 * Cartesian3.packedLength + VertexFormat.packedLength + 1;
@@ -151,10 +151,10 @@ BoxGeometry.packedLength =
  * Stores the provided instance into the provided array.
  *
  * @param {BoxGeometry} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 BoxGeometry.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -195,8 +195,8 @@ var scratchOptions = {
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {BoxGeometry} [result] The object into which to store the result.
  * @returns {BoxGeometry} The modified result parameter or a new BoxGeometry instance if one was not provided.
  */

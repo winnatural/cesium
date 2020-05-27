@@ -62,8 +62,8 @@ PolygonPipeline.computeWindingOrder2D = function (positions) {
  * Triangulate a polygon.
  *
  * @param {Cartesian2[]} positions Cartesian2 array containing the vertices of the polygon
- * @param {Number[]} [holes] An array of the staring indices of the holes.
- * @returns {Number[]} Index array representing triangles that fill the polygon
+ * @param {number[]} [holes] An array of the staring indices of the holes.
+ * @returns {number[]} Index array representing triangles that fill the polygon
  */
 PolygonPipeline.triangulate = function (positions, holes) {
   //>>includeStart('debug', pragmas.debug);
@@ -87,8 +87,8 @@ var subdivisionMidScratch = new Cartesian3();
  *
  * @param {Ellipsoid} ellipsoid The ellipsoid the polygon in on.
  * @param {Cartesian3[]} positions An array of {@link Cartesian3} positions of the polygon.
- * @param {Number[]} indices An array of indices that determines the triangles in the polygon.
- * @param {Number} [granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
+ * @param {number[]} indices An array of indices that determines the triangles in the polygon.
+ * @param {number} [granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
  *
  * @exception {DeveloperError} At least three indices are required.
  * @exception {DeveloperError} The number of indices must be divisable by three.
@@ -262,8 +262,8 @@ var subdivisionCartographicScratch = new Cartographic();
  *
  * @param {Ellipsoid} ellipsoid The ellipsoid the polygon in on.
  * @param {Cartesian3[]} positions An array of {@link Cartesian3} positions of the polygon.
- * @param {Number[]} indices An array of indices that determines the triangles in the polygon.
- * @param {Number} [granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
+ * @param {number[]} indices An array of indices that determines the triangles in the polygon.
+ * @param {number} [granularity=CesiumMath.RADIANS_PER_DEGREE] The distance, in radians, between each latitude and longitude. Determines the number of positions in the buffer.
  *
  * @exception {DeveloperError} At least three indices are required.
  * @exception {DeveloperError} The number of indices must be divisable by three.
@@ -461,11 +461,11 @@ PolygonPipeline.computeRhumbLineSubdivision = function (
 /**
  * Scales each position of a geometry's position attribute to a height, in place.
  *
- * @param {Number[]} positions The array of numbers representing the positions to be scaled
- * @param {Number} [height=0.0] The desired height to add to the positions
+ * @param {number[]} positions The array of numbers representing the positions to be scaled
+ * @param {number} [height=0.0] The desired height to add to the positions
  * @param {Ellipsoid} [ellipsoid=Ellipsoid.WGS84] The ellipsoid on which the positions lie.
  * @param {Boolean} [scaleToSurface=true] <code>true</code> if the positions need to be scaled to the surface before the height is added.
- * @returns {Number[]} The input array of positions, scaled to height
+ * @returns {number[]} The input array of positions, scaled to height
  */
 PolygonPipeline.scaleToGeodeticHeight = function (
   positions,

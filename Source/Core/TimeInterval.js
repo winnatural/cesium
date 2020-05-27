@@ -175,7 +175,7 @@ TimeInterval.fromIso8601 = function (options, result) {
  * Creates an ISO8601 representation of the provided interval.
  *
  * @param {TimeInterval} timeInterval The interval to be converted.
- * @param {Number} [precision] The number of fractional digits used to represent the seconds component.  By default, the most precise representation is used.
+ * @param {number} [precision] The number of fractional digits used to represent the seconds component.  By default, the most precise representation is used.
  * @returns {String} The ISO8601 representation of the provided interval.
  */
 TimeInterval.toIso8601 = function (timeInterval, precision) {
@@ -243,7 +243,7 @@ TimeInterval.equals = function (left, right, dataComparer) {
  *
  * @param {TimeInterval} [left] The first instance.
  * @param {TimeInterval} [right] The second instance.
- * @param {Number} [epsilon=0] The maximum number of seconds that should separate the two instances.
+ * @param {number} [epsilon=0] The maximum number of seconds that should separate the two instances.
  * @param {TimeInterval.DataComparer} [dataComparer] A function which compares the data of the two intervals.  If omitted, reference equality is used.
  * @returns {Boolean} <code>true</code> if the two dates are within <code>epsilon</code> seconds of each other; otherwise <code>false</code>.
  */
@@ -385,7 +385,7 @@ TimeInterval.prototype.equals = function (right, dataComparer) {
  * <code>false</code> otherwise.
  *
  * @param {TimeInterval} [right] The right hand side interval.
- * @param {Number} [epsilon=0] The epsilon to use for equality testing.
+ * @param {number} [epsilon=0] The epsilon to use for equality testing.
  * @param {TimeInterval.DataComparer} [dataComparer] A function which compares the data of the two intervals.  If omitted, reference equality is used.
  * @returns {Boolean} <code>true</code> if they are within the provided epsilon, <code>false</code> otherwise.
  */

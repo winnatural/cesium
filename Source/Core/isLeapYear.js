@@ -5,7 +5,7 @@ import DeveloperError from "./DeveloperError.js";
  *
  * @function isLeapYear
  *
- * @param {Number} year The year to be tested.
+ * @param {number} year The year to be tested.
  * @returns {Boolean} True if <code>year</code> is a leap year.
  *
  * @example

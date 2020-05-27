@@ -14,7 +14,7 @@ import RequestType from "./RequestType.js";
  * @param {Request.RequestCallback} [options.requestFunction] The function that makes the actual data request.
  * @param {Request.CancelCallback} [options.cancelFunction] The function that is called when the request is cancelled.
  * @param {Request.PriorityCallback} [options.priorityFunction] The function that is called to update the request's priority, which occurs once per frame.
- * @param {Number} [options.priority=0.0] The initial priority of the request.
+ * @param {number} [options.priority=0.0] The initial priority of the request.
  * @param {Boolean} [options.throttle=false] Whether to throttle and prioritize the request. If false, the request will be sent immediately. If true, the request will be throttled and sent based on priority.
  * @param {Boolean} [options.throttleByServer=false] Whether to throttle the request by server.
  * @param {RequestType} [options.type=RequestType.OTHER] The type of request.
@@ -60,7 +60,7 @@ function Request(options) {
    *
    * If priorityFunction is defined, this value is updated every frame with the result of that call.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.priority = defaultValue(options.priority, 0.0);
@@ -187,6 +187,6 @@ Request.prototype.clone = function (result) {
 /**
  * The function that is called to update the request's priority, which occurs once per frame.
  * @callback Request.PriorityCallback
- * @returns {Number} The updated priority value.
+ * @returns {number} The updated priority value.
  */
 export default Request;

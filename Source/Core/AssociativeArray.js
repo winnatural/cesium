@@ -17,7 +17,7 @@ Object.defineProperties(AssociativeArray.prototype, {
    * Gets the number of items in the collection.
    * @memberof AssociativeArray.prototype
    *
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {

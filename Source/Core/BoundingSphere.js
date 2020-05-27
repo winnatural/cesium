@@ -18,7 +18,7 @@ import Rectangle from "./Rectangle.js";
  * @constructor
  *
  * @param {Cartesian3} [center=Cartesian3.ZERO] The center of the bounding sphere.
- * @param {Number} [radius=0.0] The radius of the bounding sphere.
+ * @param {number} [radius=0.0] The radius of the bounding sphere.
  *
  * @see AxisAlignedBoundingBox
  * @see BoundingRectangle
@@ -34,7 +34,7 @@ function BoundingSphere(center, radius) {
 
   /**
    * The radius of the sphere.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.radius = defaultValue(radius, 0.0);
@@ -253,8 +253,8 @@ BoundingSphere.fromRectangle2D = function (rectangle, projection, result) {
  *
  * @param {Rectangle} [rectangle] The rectangle around which to create a bounding sphere.
  * @param {Object} [projection=GeographicProjection] The projection used to project the rectangle into 2D.
- * @param {Number} [minimumHeight=0.0] The minimum height over the rectangle.
- * @param {Number} [maximumHeight=0.0] The maximum height over the rectangle.
+ * @param {number} [minimumHeight=0.0] The minimum height over the rectangle.
+ * @param {number} [maximumHeight=0.0] The maximum height over the rectangle.
  * @param {BoundingSphere} [result] The object onto which to store the result.
  * @returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if none was provided.
  */
@@ -312,7 +312,7 @@ var fromRectangle3DScratch = [];
  *
  * @param {Rectangle} [rectangle] The valid rectangle used to create a bounding sphere.
  * @param {Ellipsoid} [ellipsoid=Ellipsoid.WGS84] The ellipsoid used to determine positions of the rectangle.
- * @param {Number} [surfaceHeight=0.0] The height above the surface of the ellipsoid.
+ * @param {number} [surfaceHeight=0.0] The height above the surface of the ellipsoid.
  * @param {BoundingSphere} [result] The object onto which to store the result.
  * @returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if none was provided.
  */
@@ -350,12 +350,12 @@ BoundingSphere.fromRectangle3D = function (
  * algorithms, a naive algorithm and Ritter's algorithm. The smaller of the two spheres is used to
  * ensure a tight fit.
  *
- * @param {Number[]} [positions] An array of points that the bounding sphere will enclose.  Each point
+ * @param {number[]} [positions] An array of points that the bounding sphere will enclose.  Each point
  *        is formed from three elements in the array in the order X, Y, Z.
  * @param {Cartesian3} [center=Cartesian3.ZERO] The position to which the positions are relative, which need not be the
  *        origin of the coordinate system.  This is useful when the positions are to be used for
  *        relative-to-center (RTC) rendering.
- * @param {Number} [stride=3] The number of array elements per vertex.  It must be at least 3, but it may
+ * @param {number} [stride=3] The number of array elements per vertex.  It must be at least 3, but it may
  *        be higher.  Regardless of the value of this parameter, the X coordinate of the first position
  *        is at array index 0, the Y coordinate is at array index 1, and the Z coordinate is at array index
  *        2.  When stride is 3, the X coordinate of the next position then begins at array index 3.  If
@@ -555,9 +555,9 @@ BoundingSphere.fromVertices = function (positions, center, stride, result) {
  * algorithms, a naive algorithm and Ritter's algorithm. The smaller of the two spheres is used to
  * ensure a tight fit.
  *
- * @param {Number[]} [positionsHigh] An array of high bits of the encoded cartesians that the bounding sphere will enclose.  Each point
+ * @param {number[]} [positionsHigh] An array of high bits of the encoded cartesians that the bounding sphere will enclose.  Each point
  *        is formed from three elements in the array in the order X, Y, Z.
- * @param {Number[]} [positionsLow] An array of low bits of the encoded cartesians that the bounding sphere will enclose.  Each point
+ * @param {number[]} [positionsLow] An array of low bits of the encoded cartesians that the bounding sphere will enclose.  Each point
  *        is formed from three elements in the array in the order X, Y, Z.
  * @param {BoundingSphere} [result] The object onto which to store the result.
  * @returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if one was not provided.
@@ -902,7 +902,7 @@ BoundingSphere.clone = function (sphere, result) {
 
 /**
  * The number of elements used to pack the object into an array.
- * @type {Number}
+ * @type {number}
  */
 BoundingSphere.packedLength = 4;
 
@@ -910,10 +910,10 @@ BoundingSphere.packedLength = 4;
  * Stores the provided instance into the provided array.
  *
  * @param {BoundingSphere} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 BoundingSphere.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -935,8 +935,8 @@ BoundingSphere.pack = function (value, array, startingIndex) {
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {BoundingSphere} [result] The object into which to store the result.
  * @returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if one was not provided.
  */
@@ -1113,7 +1113,7 @@ var distanceSquaredToScratch = new Cartesian3();
  *
  * @param {BoundingSphere} sphere The sphere.
  * @param {Cartesian3} cartesian The point
- * @returns {Number} The estimated distance squared from the bounding sphere to the point.
+ * @returns {number} The estimated distance squared from the bounding sphere to the point.
  *
  * @example
  * // Sort bounding spheres from back to front
@@ -1386,7 +1386,7 @@ BoundingSphere.prototype.intersectPlane = function (plane) {
  * Computes the estimated distance squared from the closest point on a bounding sphere to a point.
  *
  * @param {Cartesian3} cartesian The point
- * @returns {Number} The estimated distance squared from the bounding sphere to the point.
+ * @returns {number} The estimated distance squared from the bounding sphere to the point.
  *
  * @example
  * // Sort bounding spheres from back to front
@@ -1456,7 +1456,7 @@ BoundingSphere.prototype.clone = function (result) {
 
 /**
  * Computes the radius of the BoundingSphere.
- * @returns {Number} The radius of the BoundingSphere.
+ * @returns {number} The radius of the BoundingSphere.
  */
 BoundingSphere.prototype.volume = function () {
   var radius = this.radius;

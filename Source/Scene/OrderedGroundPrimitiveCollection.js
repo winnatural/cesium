@@ -23,7 +23,7 @@ Object.defineProperties(OrderedGroundPrimitiveCollection.prototype, {
    *
    * @memberof OrderedGroundPrimitiveCollection.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -37,7 +37,7 @@ Object.defineProperties(OrderedGroundPrimitiveCollection.prototype, {
  * Adds a primitive to the collection.
  *
  * @param {GroundPrimitive} primitive The primitive to add.
- * @param {Number} [zIndex = 0] The index of the primitive
+ * @param {number} [zIndex = 0] The index of the primitive
  * @returns {GroundPrimitive} The primitive added to the collection.
  */
 OrderedGroundPrimitiveCollection.prototype.add = function (primitive, zIndex) {
@@ -72,7 +72,7 @@ OrderedGroundPrimitiveCollection.prototype.add = function (primitive, zIndex) {
 /**
  * Adjusts the z-index
  * @param {GroundPrimitive} primitive
- * @param {Number} zIndex
+ * @param {number} zIndex
  */
 OrderedGroundPrimitiveCollection.prototype.set = function (primitive, zIndex) {
   //>>includeStart('debug', pragmas.debug);

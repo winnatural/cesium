@@ -222,7 +222,7 @@ Object.defineProperties(PointPrimitiveCollection.prototype, {
    * {@link PointPrimitiveCollection#get} to iterate over all the points
    * in the collection.
    * @memberof PointPrimitiveCollection.prototype
-   * @type {Number}
+   * @type {number}
    */
   length: {
     get: function () {
@@ -401,7 +401,7 @@ PointPrimitiveCollection.prototype.contains = function (pointPrimitive) {
  * {@link PointPrimitiveCollection#length} to iterate over all the points
  * in the collection.
  *
- * @param {Number} index The zero-based index of the point.
+ * @param {number} index The zero-based index of the point.
  * @returns {PointPrimitive} The point at the specified index.
  *
  * @performance Expected constant time.  If points were removed from the collection and

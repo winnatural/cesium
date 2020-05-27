@@ -284,7 +284,7 @@ Object.defineProperties(PointPrimitive.prototype, {
   /**
    * Gets or sets the inner size of the point in pixels.
    * @memberof PointPrimitive.prototype
-   * @type {Number}
+   * @type {number}
    */
   pixelSize: {
     get: function () {
@@ -367,7 +367,7 @@ Object.defineProperties(PointPrimitive.prototype, {
    * Gets or sets the outline width in pixels.  This width adds to pixelSize,
    * increasing the total size of the point.
    * @memberof PointPrimitive.prototype
-   * @type {Number}
+   * @type {number}
    */
   outlineWidth: {
     get: function () {
@@ -419,7 +419,7 @@ Object.defineProperties(PointPrimitive.prototype, {
    * Gets or sets the distance from the camera at which to disable the depth test to, for example, prevent clipping against terrain.
    * When set to zero, the depth test is always applied. When set to Number.POSITIVE_INFINITY, the depth test is never applied.
    * @memberof PointPrimitive.prototype
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   disableDepthTestDistance: {

@@ -195,7 +195,7 @@ function getWebAssemblyLoaderConfig(processor, wasmOptions) {
  *
  * @param {String} workerName The name of the worker.  This is expected to be a script
  *                            in the Workers folder.
- * @param {Number} [maximumActiveTasks=5] The maximum number of active tasks.  Once exceeded,
+ * @param {number} [maximumActiveTasks=5] The maximum number of active tasks.  Once exceeded,
  *                                        scheduleTask will not queue any more tasks, allowing
  *                                        work to be rescheduled in future frames.
  */

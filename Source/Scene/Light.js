@@ -24,7 +24,7 @@ Object.defineProperties(Light.prototype, {
   /**
    * The intensity of the light.
    * @memberof Light.prototype
-   * @type {Number}
+   * @type {number}
    */
   intensity: {
     get: DeveloperError.throwInstantiationError,

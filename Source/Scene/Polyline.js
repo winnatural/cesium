@@ -19,7 +19,7 @@ import Material from "./Material.js";
  *
  * @param {Object} options Object with the following properties:
  * @param {Boolean} [options.show=true] <code>true</code> if this polyline will be shown; otherwise, <code>false</code>.
- * @param {Number} [options.width=1.0] The width of the polyline in pixels.
+ * @param {number} [options.width=1.0] The width of the polyline in pixels.
  * @param {Boolean} [options.loop=false] Whether a line segment will be added between the last and first line positions to make this line a loop.
  * @param {Material} [options.material=Material.ColorType] The material.
  * @param {Cartesian3[]} [options.positions] The positions.
@@ -217,7 +217,7 @@ Object.defineProperties(Polyline.prototype, {
   /**
    * Gets or sets the width of the polyline.
    * @memberof Polyline.prototype
-   * @type {Number}
+   * @type {number}
    */
   width: {
     get: function () {

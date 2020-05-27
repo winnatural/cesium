@@ -11,12 +11,12 @@ var terrainBitmask = 0x80;
 /**
  * Contains information about each tile from a Google Earth Enterprise server
  *
- * @param {Number} bits Bitmask that contains the type of data and available children for each tile.
- * @param {Number} cnodeVersion Version of the request for subtree metadata.
- * @param {Number} imageryVersion Version of the request for imagery tile.
- * @param {Number} terrainVersion Version of the request for terrain tile.
- * @param {Number} imageryProvider Id of imagery provider.
- * @param {Number} terrainProvider Id of terrain provider.
+ * @param {number} bits Bitmask that contains the type of data and available children for each tile.
+ * @param {number} cnodeVersion Version of the request for subtree metadata.
+ * @param {number} imageryVersion Version of the request for imagery tile.
+ * @param {number} terrainVersion Version of the request for terrain tile.
+ * @param {number} imageryProvider Id of imagery provider.
+ * @param {number} terrainProvider Id of terrain provider.
  *
  * @private
  */
@@ -117,7 +117,7 @@ GoogleEarthEnterpriseTileInformation.prototype.hasChildren = function () {
 /**
  * Gets whether a specified child is available
  *
- * @param {Number} index Index of child tile
+ * @param {number} index Index of child tile
  *
  * @returns {Boolean} true if child is available, false otherwise
  */
@@ -128,7 +128,7 @@ GoogleEarthEnterpriseTileInformation.prototype.hasChild = function (index) {
 /**
  * Gets bitmask containing children
  *
- * @returns {Number} Children bitmask
+ * @returns {number} Children bitmask
  */
 GoogleEarthEnterpriseTileInformation.prototype.getChildBitmask = function () {
   return this._bits & anyChildBitmask;

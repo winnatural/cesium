@@ -937,8 +937,8 @@ function ScreenSpaceEventHandler(element) {
  * Set a function to be executed on an input event.
  *
  * @param {Function} action Function to be executed when the input event occurs.
- * @param {Number} type The ScreenSpaceEventType of input event.
- * @param {Number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
+ * @param {number} type The ScreenSpaceEventType of input event.
+ * @param {number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
  * event occurs.
  *
  * @see ScreenSpaceEventHandler#getInputAction
@@ -965,8 +965,8 @@ ScreenSpaceEventHandler.prototype.setInputAction = function (
 /**
  * Returns the function to be executed on an input event.
  *
- * @param {Number} type The ScreenSpaceEventType of input event.
- * @param {Number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
+ * @param {number} type The ScreenSpaceEventType of input event.
+ * @param {number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
  * event occurs.
  *
  * @see ScreenSpaceEventHandler#setInputAction
@@ -986,8 +986,8 @@ ScreenSpaceEventHandler.prototype.getInputAction = function (type, modifier) {
 /**
  * Removes the function to be executed on an input event.
  *
- * @param {Number} type The ScreenSpaceEventType of input event.
- * @param {Number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
+ * @param {number} type The ScreenSpaceEventType of input event.
+ * @param {number} [modifier] A KeyboardEventModifier key that is held when a <code>type</code>
  * event occurs.
  *
  * @see ScreenSpaceEventHandler#getInputAction
@@ -1045,7 +1045,7 @@ ScreenSpaceEventHandler.prototype.destroy = function () {
 /**
  * The amount of time, in milliseconds, that mouse events will be disabled after
  * receiving any touch events, such that any emulated mouse events will be ignored.
- * @type {Number}
+ * @type {number}
  * @default 800
  */
 ScreenSpaceEventHandler.mouseEmulationIgnoreMilliseconds = 800;
@@ -1053,7 +1053,7 @@ ScreenSpaceEventHandler.mouseEmulationIgnoreMilliseconds = 800;
 /**
  * The amount of time, in milliseconds, before a touch on the screen becomes a
  * touch and hold.
- * @type {Number}
+ * @type {number}
  * @default 1500
  */
 ScreenSpaceEventHandler.touchHoldDelayMilliseconds = 1500;

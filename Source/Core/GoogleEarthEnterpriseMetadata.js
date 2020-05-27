@@ -85,14 +85,14 @@ function GoogleEarthEnterpriseMetadata(resourceOrUrl) {
 
   /**
    * Exponent used to compute constant to calculate negative height values.
-   * @type {Number}
+   * @type {number}
    * @default 32
    */
   this.negativeAltitudeExponentBias = 32;
 
   /**
    * Threshold where any numbers smaller are actually negative values. They are multiplied by -2^negativeAltitudeExponentBias.
-   * @type {Number}
+   * @type {number}
    * @default EPSILON12
    */
   this.negativeAltitudeThreshold = CesiumMath.EPSILON12;
@@ -186,9 +186,9 @@ Object.defineProperties(GoogleEarthEnterpriseMetadata.prototype, {
  * Converts a tiles (x, y, level) position into a quadkey used to request an image
  * from a Google Earth Enterprise server.
  *
- * @param {Number} x The tile's x coordinate.
- * @param {Number} y The tile's y coordinate.
- * @param {Number} level The tile's zoom level.
+ * @param {number} x The tile's x coordinate.
+ * @param {number} y The tile's y coordinate.
+ * @param {number} level The tile's zoom level.
  *
  * @see GoogleEarthEnterpriseMetadata#quadKeyToTileXY
  */
@@ -300,7 +300,7 @@ var taskProcessor = new TaskProcessor(
  * Retrieves a Google Earth Enterprise quadtree packet.
  *
  * @param {String} [quadKey=''] The quadkey to retrieve the packet for.
- * @param {Number} [version=1] The cnode version to be used in the request.
+ * @param {number} [version=1] The cnode version to be used in the request.
  * @param {Request} [request] The request object. Intended for internal use only.
  *
  * @private
@@ -378,9 +378,9 @@ GoogleEarthEnterpriseMetadata.prototype.getQuadTreePacket = function (
 /**
  * Populates the metadata subtree down to the specified tile.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  *
  * @returns {Promise<GoogleEarthEnterpriseTileInformation>} A promise that resolves to the tile info for the requested quad key
@@ -465,9 +465,9 @@ function populateSubtree(that, quadKey, request) {
 /**
  * Gets information about a tile
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @returns {GoogleEarthEnterpriseTileInformation|undefined} Information about the tile or undefined if it isn't loaded.
  *
  * @private

@@ -91,7 +91,7 @@ Check.typeOf.number = function (name, test) {
  *
  * @param {String} name The name of the variable being tested
  * @param {*} test The value to test
- * @param {Number} limit The limit value to compare against
+ * @param {number} limit The limit value to compare against
  * @exception {DeveloperError} test must be typeof 'number' and less than limit
  */
 Check.typeOf.number.lessThan = function (name, test, limit) {
@@ -113,7 +113,7 @@ Check.typeOf.number.lessThan = function (name, test, limit) {
  *
  * @param {String} name The name of the variable being tested
  * @param {*} test The value to test
- * @param {Number} limit The limit value to compare against
+ * @param {number} limit The limit value to compare against
  * @exception {DeveloperError} test must be typeof 'number' and less than or equal to limit
  */
 Check.typeOf.number.lessThanOrEquals = function (name, test, limit) {
@@ -135,7 +135,7 @@ Check.typeOf.number.lessThanOrEquals = function (name, test, limit) {
  *
  * @param {String} name The name of the variable being tested
  * @param {*} test The value to test
- * @param {Number} limit The limit value to compare against
+ * @param {number} limit The limit value to compare against
  * @exception {DeveloperError} test must be typeof 'number' and greater than limit
  */
 Check.typeOf.number.greaterThan = function (name, test, limit) {
@@ -157,7 +157,7 @@ Check.typeOf.number.greaterThan = function (name, test, limit) {
  *
  * @param {String} name The name of the variable being tested
  * @param {*} test The value to test
- * @param {Number} limit The limit value to compare against
+ * @param {number} limit The limit value to compare against
  * @exception {DeveloperError} test must be typeof 'number' and greater than or equal to limit
  */
 Check.typeOf.number.greaterThanOrEquals = function (name, test, limit) {

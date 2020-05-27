@@ -6,7 +6,7 @@ import EasingFunction from "../Core/EasingFunction.js";
  * @alias KmlTourFlyTo
  * @constructor
  *
- * @param {Number} duration entry duration
+ * @param {number} duration entry duration
  * @param {String} flyToMode KML fly to mode: bounce, smooth, etc
  * @param {KmlCamera|KmlLookAt} view KmlCamera or KmlLookAt
  */

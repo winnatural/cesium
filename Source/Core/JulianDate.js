@@ -200,20 +200,20 @@ var iso8601ErrorMessage = "Invalid ISO 8601 date.";
  * @alias JulianDate
  * @constructor
  *
- * @param {Number} [julianDayNumber=0.0] The Julian Day Number representing the number of whole days.  Fractional days will also be handled correctly.
- * @param {Number} [secondsOfDay=0.0] The number of seconds into the current Julian Day Number.  Fractional seconds, negative seconds and seconds greater than a day will be handled correctly.
+ * @param {number} [julianDayNumber=0.0] The Julian Day Number representing the number of whole days.  Fractional days will also be handled correctly.
+ * @param {number} [secondsOfDay=0.0] The number of seconds into the current Julian Day Number.  Fractional seconds, negative seconds and seconds greater than a day will be handled correctly.
  * @param {TimeStandard} [timeStandard=TimeStandard.UTC] The time standard in which the first two parameters are defined.
  */
 function JulianDate(julianDayNumber, secondsOfDay, timeStandard) {
   /**
    * Gets or sets the number of whole days.
-   * @type {Number}
+   * @type {number}
    */
   this.dayNumber = undefined;
 
   /**
    * Gets or sets the number of seconds into the current day.
-   * @type {Number}
+   * @type {number}
    */
   this.secondsOfDay = undefined;
 
@@ -746,7 +746,7 @@ JulianDate.toDate = function (julianDate) {
  * Creates an ISO8601 representation of the provided date.
  *
  * @param {JulianDate} julianDate The date to be converted.
- * @param {Number} [precision] The number of fractional digits used to represent the seconds component.  By default, the most precise representation is used.
+ * @param {number} [precision] The number of fractional digits used to represent the seconds component.  By default, the most precise representation is used.
  * @returns {String} The ISO8601 representation of the provided date.
  */
 JulianDate.toIso8601 = function (julianDate, precision) {
@@ -857,7 +857,7 @@ JulianDate.clone = function (julianDate, result) {
  *
  * @param {JulianDate} left The first instance.
  * @param {JulianDate} right The second instance.
- * @returns {Number} A negative value if left is less than right, a positive value if left is greater than right, or zero if left and right are equal.
+ * @returns {number} A negative value if left is less than right, a positive value if left is greater than right, or zero if left and right are equal.
  */
 JulianDate.compare = function (left, right) {
   //>>includeStart('debug', pragmas.debug);
@@ -901,7 +901,7 @@ JulianDate.equals = function (left, right) {
  *
  * @param {JulianDate} [left] The first instance.
  * @param {JulianDate} [right] The second instance.
- * @param {Number} [epsilon=0] The maximum number of seconds that should separate the two instances.
+ * @param {number} [epsilon=0] The maximum number of seconds that should separate the two instances.
  * @returns {Boolean} <code>true</code> if the two dates are within <code>epsilon</code> seconds of each other; otherwise <code>false</code>.
  */
 JulianDate.equalsEpsilon = function (left, right, epsilon) {
@@ -919,7 +919,7 @@ JulianDate.equalsEpsilon = function (left, right, epsilon) {
  * Computes the total number of whole and fractional days represented by the provided instance.
  *
  * @param {JulianDate} julianDate The date.
- * @returns {Number} The Julian date as single floating point number.
+ * @returns {number} The Julian date as single floating point number.
  */
 JulianDate.totalDays = function (julianDate) {
   //>>includeStart('debug', pragmas.debug);
@@ -938,7 +938,7 @@ JulianDate.totalDays = function (julianDate) {
  *
  * @param {JulianDate} left The first instance.
  * @param {JulianDate} right The second instance.
- * @returns {Number} The difference, in seconds, when subtracting <code>right</code> from <code>left</code>.
+ * @returns {number} The difference, in seconds, when subtracting <code>right</code> from <code>left</code>.
  */
 JulianDate.secondsDifference = function (left, right) {
   //>>includeStart('debug', pragmas.debug);
@@ -960,7 +960,7 @@ JulianDate.secondsDifference = function (left, right) {
  *
  * @param {JulianDate} left The first instance.
  * @param {JulianDate} right The second instance.
- * @returns {Number} The difference, in days, when subtracting <code>right</code> from <code>left</code>.
+ * @returns {number} The difference, in days, when subtracting <code>right</code> from <code>left</code>.
  */
 JulianDate.daysDifference = function (left, right) {
   //>>includeStart('debug', pragmas.debug);
@@ -982,7 +982,7 @@ JulianDate.daysDifference = function (left, right) {
  * Computes the number of seconds the provided instance is ahead of UTC.
  *
  * @param {JulianDate} julianDate The date.
- * @returns {Number} The number of seconds the provided instance is ahead of UTC
+ * @returns {number} The number of seconds the provided instance is ahead of UTC
  */
 JulianDate.computeTaiMinusUtc = function (julianDate) {
   binarySearchScratchLeapSecond.julianDate = julianDate;
@@ -1006,7 +1006,7 @@ JulianDate.computeTaiMinusUtc = function (julianDate) {
  * Adds the provided number of seconds to the provided date instance.
  *
  * @param {JulianDate} julianDate The date.
- * @param {Number} seconds The number of seconds to add or subtract.
+ * @param {number} seconds The number of seconds to add or subtract.
  * @param {JulianDate} result An existing instance to use for the result.
  * @returns {JulianDate} The modified result parameter.
  */
@@ -1034,7 +1034,7 @@ JulianDate.addSeconds = function (julianDate, seconds, result) {
  * Adds the provided number of minutes to the provided date instance.
  *
  * @param {JulianDate} julianDate The date.
- * @param {Number} minutes The number of minutes to add or subtract.
+ * @param {number} minutes The number of minutes to add or subtract.
  * @param {JulianDate} result An existing instance to use for the result.
  * @returns {JulianDate} The modified result parameter.
  */
@@ -1060,7 +1060,7 @@ JulianDate.addMinutes = function (julianDate, minutes, result) {
  * Adds the provided number of hours to the provided date instance.
  *
  * @param {JulianDate} julianDate The date.
- * @param {Number} hours The number of hours to add or subtract.
+ * @param {number} hours The number of hours to add or subtract.
  * @param {JulianDate} result An existing instance to use for the result.
  * @returns {JulianDate} The modified result parameter.
  */
@@ -1086,7 +1086,7 @@ JulianDate.addHours = function (julianDate, hours, result) {
  * Adds the provided number of days to the provided date instance.
  *
  * @param {JulianDate} julianDate The date.
- * @param {Number} days The number of days to add or subtract.
+ * @param {number} days The number of days to add or subtract.
  * @param {JulianDate} result An existing instance to use for the result.
  * @returns {JulianDate} The modified result parameter.
  */
@@ -1178,7 +1178,7 @@ JulianDate.prototype.equals = function (right) {
  * seconds, must be less than <code>epsilon</code>.
  *
  * @param {JulianDate} [right] The second instance.
- * @param {Number} [epsilon=0] The maximum number of seconds that should separate the two instances.
+ * @param {number} [epsilon=0] The maximum number of seconds that should separate the two instances.
  * @returns {Boolean} <code>true</code> if the two dates are within <code>epsilon</code> seconds of each other; otherwise <code>false</code>.
  */
 JulianDate.prototype.equalsEpsilon = function (right, epsilon) {

@@ -11,10 +11,10 @@ import CesiumMath from "./Math.js";
  * @alias Rectangle
  * @constructor
  *
- * @param {Number} [west=0.0] The westernmost longitude, in radians, in the range [-Pi, Pi].
- * @param {Number} [south=0.0] The southernmost latitude, in radians, in the range [-Pi/2, Pi/2].
- * @param {Number} [east=0.0] The easternmost longitude, in radians, in the range [-Pi, Pi].
- * @param {Number} [north=0.0] The northernmost latitude, in radians, in the range [-Pi/2, Pi/2].
+ * @param {number} [west=0.0] The westernmost longitude, in radians, in the range [-Pi, Pi].
+ * @param {number} [south=0.0] The southernmost latitude, in radians, in the range [-Pi/2, Pi/2].
+ * @param {number} [east=0.0] The easternmost longitude, in radians, in the range [-Pi, Pi].
+ * @param {number} [north=0.0] The northernmost latitude, in radians, in the range [-Pi/2, Pi/2].
  *
  * @see Packable
  */
@@ -22,7 +22,7 @@ function Rectangle(west, south, east, north) {
   /**
    * The westernmost longitude in radians in the range [-Pi, Pi].
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.west = defaultValue(west, 0.0);
@@ -30,7 +30,7 @@ function Rectangle(west, south, east, north) {
   /**
    * The southernmost latitude in radians in the range [-Pi/2, Pi/2].
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.south = defaultValue(south, 0.0);
@@ -38,7 +38,7 @@ function Rectangle(west, south, east, north) {
   /**
    * The easternmost longitude in radians in the range [-Pi, Pi].
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.east = defaultValue(east, 0.0);
@@ -46,7 +46,7 @@ function Rectangle(west, south, east, north) {
   /**
    * The northernmost latitude in radians in the range [-Pi/2, Pi/2].
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.north = defaultValue(north, 0.0);
@@ -56,7 +56,7 @@ Object.defineProperties(Rectangle.prototype, {
   /**
    * Gets the width of the rectangle in radians.
    * @memberof Rectangle.prototype
-   * @type {Number}
+   * @type {number}
    */
   width: {
     get: function () {
@@ -67,7 +67,7 @@ Object.defineProperties(Rectangle.prototype, {
   /**
    * Gets the height of the rectangle in radians.
    * @memberof Rectangle.prototype
-   * @type {Number}
+   * @type {number}
    */
   height: {
     get: function () {
@@ -78,7 +78,7 @@ Object.defineProperties(Rectangle.prototype, {
 
 /**
  * The number of elements used to pack the object into an array.
- * @type {Number}
+ * @type {number}
  */
 Rectangle.packedLength = 4;
 
@@ -86,10 +86,10 @@ Rectangle.packedLength = 4;
  * Stores the provided instance into the provided array.
  *
  * @param {Rectangle} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 Rectangle.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -110,8 +110,8 @@ Rectangle.pack = function (value, array, startingIndex) {
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {Rectangle} [result] The object into which to store the result.
  * @returns {Rectangle} The modified result parameter or a new Rectangle instance if one was not provided.
  */
@@ -136,7 +136,7 @@ Rectangle.unpack = function (array, startingIndex, result) {
 /**
  * Computes the width of a rectangle in radians.
  * @param {Rectangle} rectangle The rectangle to compute the width of.
- * @returns {Number} The width.
+ * @returns {number} The width.
  */
 Rectangle.computeWidth = function (rectangle) {
   //>>includeStart('debug', pragmas.debug);
@@ -153,7 +153,7 @@ Rectangle.computeWidth = function (rectangle) {
 /**
  * Computes the height of a rectangle in radians.
  * @param {Rectangle} rectangle The rectangle to compute the height of.
- * @returns {Number} The height.
+ * @returns {number} The height.
  */
 Rectangle.computeHeight = function (rectangle) {
   //>>includeStart('debug', pragmas.debug);
@@ -165,10 +165,10 @@ Rectangle.computeHeight = function (rectangle) {
 /**
  * Creates a rectangle given the boundary longitude and latitude in degrees.
  *
- * @param {Number} [west=0.0] The westernmost longitude in degrees in the range [-180.0, 180.0].
- * @param {Number} [south=0.0] The southernmost latitude in degrees in the range [-90.0, 90.0].
- * @param {Number} [east=0.0] The easternmost longitude in degrees in the range [-180.0, 180.0].
- * @param {Number} [north=0.0] The northernmost latitude in degrees in the range [-90.0, 90.0].
+ * @param {number} [west=0.0] The westernmost longitude in degrees in the range [-180.0, 180.0].
+ * @param {number} [south=0.0] The southernmost latitude in degrees in the range [-90.0, 90.0].
+ * @param {number} [east=0.0] The easternmost longitude in degrees in the range [-180.0, 180.0].
+ * @param {number} [north=0.0] The northernmost latitude in degrees in the range [-90.0, 90.0].
  * @param {Rectangle} [result] The object onto which to store the result, or undefined if a new instance should be created.
  * @returns {Rectangle} The modified result parameter or a new Rectangle instance if none was provided.
  *
@@ -196,10 +196,10 @@ Rectangle.fromDegrees = function (west, south, east, north, result) {
 /**
  * Creates a rectangle given the boundary longitude and latitude in radians.
  *
- * @param {Number} [west=0.0] The westernmost longitude in radians in the range [-Math.PI, Math.PI].
- * @param {Number} [south=0.0] The southernmost latitude in radians in the range [-Math.PI/2, Math.PI/2].
- * @param {Number} [east=0.0] The easternmost longitude in radians in the range [-Math.PI, Math.PI].
- * @param {Number} [north=0.0] The northernmost latitude in radians in the range [-Math.PI/2, Math.PI/2].
+ * @param {number} [west=0.0] The westernmost longitude in radians in the range [-Math.PI, Math.PI].
+ * @param {number} [south=0.0] The southernmost latitude in radians in the range [-Math.PI/2, Math.PI/2].
+ * @param {number} [east=0.0] The easternmost longitude in radians in the range [-Math.PI, Math.PI].
+ * @param {number} [north=0.0] The northernmost latitude in radians in the range [-Math.PI/2, Math.PI/2].
  * @param {Rectangle} [result] The object onto which to store the result, or undefined if a new instance should be created.
  * @returns {Rectangle} The modified result parameter or a new Rectangle instance if none was provided.
  *
@@ -370,7 +370,7 @@ Rectangle.clone = function (rectangle, result) {
  *
  * @param {Rectangle} [left] The first Rectangle.
  * @param {Rectangle} [right] The second Rectangle.
- * @param {Number} [absoluteEpsilon=0] The absolute epsilon tolerance to use for equality testing.
+ * @param {number} [absoluteEpsilon=0] The absolute epsilon tolerance to use for equality testing.
  * @returns {Boolean} <code>true</code> if left and right are within the provided epsilon, <code>false</code> otherwise.
  */
 Rectangle.equalsEpsilon = function (left, right, absoluteEpsilon) {
@@ -434,7 +434,7 @@ Rectangle.equals = function (left, right) {
  * <code>false</code> otherwise.
  *
  * @param {Rectangle} [other] The Rectangle to compare.
- * @param {Number} [epsilon=0] The epsilon to use for equality testing.
+ * @param {number} [epsilon=0] The epsilon to use for equality testing.
  * @returns {Boolean} <code>true</code> if the Rectangles are within the provided epsilon, <code>false</code> otherwise.
  */
 Rectangle.prototype.equalsEpsilon = function (other, epsilon) {
@@ -822,7 +822,7 @@ var subsampleLlaScratch = new Cartographic();
  *
  * @param {Rectangle} rectangle The rectangle to subsample.
  * @param {Ellipsoid} [ellipsoid=Ellipsoid.WGS84] The ellipsoid to use.
- * @param {Number} [surfaceHeight=0.0] The height of the rectangle above the ellipsoid.
+ * @param {number} [surfaceHeight=0.0] The height of the rectangle above the ellipsoid.
  * @param {Cartesian3[]} [result] The array of Cartesians onto which to store the result.
  * @returns {Cartesian3[]} The modified result parameter or a new Array of Cartesians instances if none was provided.
  */

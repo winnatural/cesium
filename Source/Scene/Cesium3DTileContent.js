@@ -35,7 +35,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   featuresLength: {
@@ -56,7 +56,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   pointsLength: {
@@ -71,7 +71,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   trianglesLength: {
@@ -86,7 +86,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   geometryByteLength: {
@@ -101,7 +101,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   texturesByteLength: {
@@ -116,7 +116,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
    *
    * @memberof Cesium3DTileContent.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   batchTableByteLength: {
@@ -227,7 +227,7 @@ Object.defineProperties(Cesium3DTileContent.prototype, {
  * Determines if the tile's batch table has a property.  If it does, each feature in
  * the tile will have the property.
  *
- * @param {Number} batchId The batchId for the feature.
+ * @param {number} batchId The batchId for the feature.
  * @param {String} name The case-sensitive name of the property.
  * @returns {Boolean} <code>true</code> if the property exists; otherwise, <code>false</code>.
  */
@@ -245,7 +245,7 @@ Cesium3DTileContent.prototype.hasProperty = function (batchId, name) {
  *
  * @see {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/TileFormats/BatchTable}.
  *
- * @param {Number} batchId The batchId for the feature.
+ * @param {number} batchId The batchId for the feature.
  * @returns {Cesium3DTileFeature} The corresponding {@link Cesium3DTileFeature} object.
  *
  * @exception {DeveloperError} batchId must be between zero and {@link Cesium3DTileContent#featuresLength} - 1.

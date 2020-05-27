@@ -601,11 +601,11 @@ function GeoJsonDataSource(name) {
  * @param {Resource|String|Object} data A url, GeoJSON object, or TopoJSON object to be loaded.
  * @param {Object} [options] An object with the following properties:
  * @param {String} [options.sourceUri] Overrides the url to use for resolving relative links.
- * @param {Number} [options.markerSize=GeoJsonDataSource.markerSize] The default size of the map pin created for each point, in pixels.
+ * @param {number} [options.markerSize=GeoJsonDataSource.markerSize] The default size of the map pin created for each point, in pixels.
  * @param {String} [options.markerSymbol=GeoJsonDataSource.markerSymbol] The default symbol of the map pin created for each point.
  * @param {Color} [options.markerColor=GeoJsonDataSource.markerColor] The default color of the map pin created for each point.
  * @param {Color} [options.stroke=GeoJsonDataSource.stroke] The default color of polylines and polygon outlines.
- * @param {Number} [options.strokeWidth=GeoJsonDataSource.strokeWidth] The default width of polylines and polygon outlines.
+ * @param {number} [options.strokeWidth=GeoJsonDataSource.strokeWidth] The default width of polylines and polygon outlines.
  * @param {Color} [options.fill=GeoJsonDataSource.fill] The default color for polygon interiors.
  * @param {Boolean} [options.clampToGround=GeoJsonDataSource.clampToGround] true if we want the geometry features (polygons or linestrings) clamped to the ground.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.
@@ -620,7 +620,7 @@ Object.defineProperties(GeoJsonDataSource, {
   /**
    * Gets or sets the default size of the map pin created for each point, in pixels.
    * @memberof GeoJsonDataSource
-   * @type {Number}
+   * @type {number}
    * @default 48
    */
   markerSize: {
@@ -677,7 +677,7 @@ Object.defineProperties(GeoJsonDataSource, {
   /**
    * Gets or sets the default width of polylines and polygon outlines.
    * @memberof GeoJsonDataSource
-   * @type {Number}
+   * @type {number}
    * @default 2.0
    */
   strokeWidth: {
@@ -890,11 +890,11 @@ Object.defineProperties(GeoJsonDataSource.prototype, {
  * @param {String} [options.sourceUri] Overrides the url to use for resolving relative links.
  * @param {GeoJsonDataSource.describe} [options.describe=GeoJsonDataSource.defaultDescribeProperty] A function which returns a Property object (or just a string),
  *                                                                                which converts the properties into an html description.
- * @param {Number} [options.markerSize=GeoJsonDataSource.markerSize] The default size of the map pin created for each point, in pixels.
+ * @param {number} [options.markerSize=GeoJsonDataSource.markerSize] The default size of the map pin created for each point, in pixels.
  * @param {String} [options.markerSymbol=GeoJsonDataSource.markerSymbol] The default symbol of the map pin created for each point.
  * @param {Color} [options.markerColor=GeoJsonDataSource.markerColor] The default color of the map pin created for each point.
  * @param {Color} [options.stroke=GeoJsonDataSource.stroke] The default color of polylines and polygon outlines.
- * @param {Number} [options.strokeWidth=GeoJsonDataSource.strokeWidth] The default width of polylines and polygon outlines.
+ * @param {number} [options.strokeWidth=GeoJsonDataSource.strokeWidth] The default width of polylines and polygon outlines.
  * @param {Color} [options.fill=GeoJsonDataSource.fill] The default color for polygon interiors.
  * @param {Boolean} [options.clampToGround=GeoJsonDataSource.clampToGround] true if we want the features clamped to the ground.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.

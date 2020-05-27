@@ -71,7 +71,7 @@ Object.defineProperties(OctahedralProjectedCubeMap.prototype, {
   /**
    * The maximum number of mip levels.
    * @memberOf OctahedralProjectedCubeMap.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumMipmapLevel: {

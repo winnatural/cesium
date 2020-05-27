@@ -35,7 +35,7 @@ import ShadowMode from "./ShadowMode.js";
  * @param {Boolean} [options.show=true] Determines if the point cloud will be shown.
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] A 4x4 transformation matrix that transforms the point cloud.
  * @param {ShadowMode} [options.shadows=ShadowMode.ENABLED] Determines whether the point cloud casts or receives shadows from light sources.
- * @param {Number} [options.maximumMemoryUsage=256] The maximum amount of memory in MB that can be used by the point cloud.
+ * @param {number} [options.maximumMemoryUsage=256] The maximum amount of memory in MB that can be used by the point cloud.
  * @param {Object} [options.shading] Options for constructing a {@link PointCloudShading} object to control point attenuation and eye dome lighting.
  * @param {Cesium3DTileStyle} [options.style] The style, defined using the {@link https://github.com/CesiumGS/3d-tiles/tree/master/specification/Styling|3D Tiles Styling language}, applied to each point in the point cloud.
  * @param {ClippingPlaneCollection} [options.clippingPlanes] The {@link ClippingPlaneCollection} used to selectively disable rendering the point cloud.
@@ -89,7 +89,7 @@ function TimeDynamicPointCloud(options) {
    * If decreasing this value results in unloading tiles, the tiles are unloaded the next frame.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 256
    *
    * @see TimeDynamicPointCloud#totalMemoryUsageInBytes
@@ -215,7 +215,7 @@ Object.defineProperties(TimeDynamicPointCloud.prototype, {
    *
    * @memberof TimeDynamicPointCloud.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @see TimeDynamicPointCloud#maximumMemoryUsage

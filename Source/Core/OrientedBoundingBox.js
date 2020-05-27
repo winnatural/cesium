@@ -54,7 +54,7 @@ function OrientedBoundingBox(center, halfAxes) {
 
 /**
  * The number of elements used to pack the object into an array.
- * @type {Number}
+ * @type {number}
  */
 OrientedBoundingBox.packedLength =
   Cartesian3.packedLength + Matrix3.packedLength;
@@ -63,10 +63,10 @@ OrientedBoundingBox.packedLength =
  * Stores the provided instance into the provided array.
  *
  * @param {OrientedBoundingBox} value The value to pack.
- * @param {Number[]} array The array to pack into.
- * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
+ * @param {number[]} array The array to pack into.
+ * @param {number} [startingIndex=0] The index into the array at which to start packing the elements.
  *
- * @returns {Number[]} The array that was packed into
+ * @returns {number[]} The array that was packed into
  */
 OrientedBoundingBox.pack = function (value, array, startingIndex) {
   //>>includeStart('debug', pragmas.debug);
@@ -85,8 +85,8 @@ OrientedBoundingBox.pack = function (value, array, startingIndex) {
 /**
  * Retrieves an instance from a packed array.
  *
- * @param {Number[]} array The packed array.
- * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
+ * @param {number[]} array The packed array.
+ * @param {number} [startingIndex=0] The starting index of the element to be unpacked.
  * @param {OrientedBoundingBox} [result] The object into which to store the result.
  * @returns {OrientedBoundingBox} The modified result parameter or a new OrientedBoundingBox instance if one was not provided.
  */
@@ -327,8 +327,8 @@ var scratchPlane = new Plane(Cartesian3.UNIT_X, 0.0);
  * There are no guarantees about the orientation of the bounding box.
  *
  * @param {Rectangle} rectangle The cartographic rectangle on the surface of the ellipsoid.
- * @param {Number} [minimumHeight=0.0] The minimum height (elevation) within the tile.
- * @param {Number} [maximumHeight=0.0] The maximum height (elevation) within the tile.
+ * @param {number} [minimumHeight=0.0] The minimum height (elevation) within the tile.
+ * @param {number} [maximumHeight=0.0] The maximum height (elevation) within the tile.
  * @param {Ellipsoid} [ellipsoid=Ellipsoid.WGS84] The ellipsoid on which the rectangle is defined.
  * @param {OrientedBoundingBox} [result] The object onto which to store the result.
  * @returns {OrientedBoundingBox} The modified result parameter or a new OrientedBoundingBox instance if none was provided.
@@ -691,7 +691,7 @@ var scratchPPrime = new Cartesian3();
  *
  * @param {OrientedBoundingBox} box The box.
  * @param {Cartesian3} cartesian The point
- * @returns {Number} The estimated distance squared from the bounding sphere to the point.
+ * @returns {number} The estimated distance squared from the bounding sphere to the point.
  *
  * @example
  * // Sort bounding boxes from back to front
@@ -947,7 +947,7 @@ OrientedBoundingBox.prototype.intersectPlane = function (plane) {
  * Computes the estimated distance squared from the closest point on a bounding box to a point.
  *
  * @param {Cartesian3} cartesian The point
- * @returns {Number} The estimated distance squared from the bounding sphere to the point.
+ * @returns {number} The estimated distance squared from the bounding sphere to the point.
  *
  * @example
  * // Sort bounding boxes from back to front

@@ -66,7 +66,7 @@ Object.defineProperties(ShowGeometryInstanceAttribute.prototype, {
    *
    * @memberof ShowGeometryInstanceAttribute.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @default 1

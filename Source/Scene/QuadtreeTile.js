@@ -11,9 +11,9 @@ import TileSelectionResult from "./TileSelectionResult.js";
  * @constructor
  * @private
  *
- * @param {Number} options.level The level of the tile in the quadtree.
- * @param {Number} options.x The X coordinate of the tile in the quadtree.  0 is the westernmost tile.
- * @param {Number} options.y The Y coordinate of the tile in the quadtree.  0 is the northernmost tile.
+ * @param {number} options.level The level of the tile in the quadtree.
+ * @param {number} options.x The X coordinate of the tile in the quadtree.  0 is the westernmost tile.
+ * @param {number} options.y The Y coordinate of the tile in the quadtree.  0 is the northernmost tile.
  * @param {TilingScheme} options.tilingScheme The tiling scheme in which this tile exists.
  * @param {QuadtreeTile} [options.parent] This tile's parent, or undefined if this is a root tile.
  */
@@ -204,7 +204,7 @@ Object.defineProperties(QuadtreeTile.prototype, {
   /**
    * Gets the tile X coordinate.
    * @memberof QuadtreeTile.prototype
-   * @type {Number}
+   * @type {number}
    */
   x: {
     get: function () {
@@ -215,7 +215,7 @@ Object.defineProperties(QuadtreeTile.prototype, {
   /**
    * Gets the tile Y coordinate.
    * @memberof QuadtreeTile.prototype
-   * @type {Number}
+   * @type {number}
    */
   y: {
     get: function () {
@@ -226,7 +226,7 @@ Object.defineProperties(QuadtreeTile.prototype, {
   /**
    * Gets the level-of-detail, where zero is the coarsest, least-detailed.
    * @memberof QuadtreeTile.prototype
-   * @type {Number}
+   * @type {number}
    */
   level: {
     get: function () {

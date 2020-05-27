@@ -18,7 +18,7 @@ import Matrix4 from "./Matrix4.js";
  * @constructor
  *
  * @param {Cartesian3} normal The plane's normal (normalized).
- * @param {Number} distance The shortest distance from the origin to the plane.  The sign of
+ * @param {number} distance The shortest distance from the origin to the plane.  The sign of
  * <code>distance</code> determines which side of the plane the origin
  * is on.  If <code>distance</code> is positive, the origin is in the half-space
  * in the direction of the normal; if negative, the origin is in the half-space
@@ -59,7 +59,7 @@ function Plane(normal, distance) {
    * in the direction of the normal; if negative, the origin is in the half-space
    * opposite to the normal; if zero, the plane passes through the origin.
    *
-   * @type {Number}
+   * @type {number}
    */
   this.distance = distance;
 }
@@ -152,7 +152,7 @@ Plane.fromCartesian4 = function (coefficients, result) {
  *
  * @param {Plane} plane The plane.
  * @param {Cartesian3} point The point.
- * @returns {Number} The signed shortest distance of the point to the plane.
+ * @returns {number} The signed shortest distance of the point to the plane.
  */
 Plane.getPointDistance = function (plane, point) {
   //>>includeStart('debug', pragmas.debug);

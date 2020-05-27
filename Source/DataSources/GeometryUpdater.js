@@ -186,7 +186,7 @@ Object.defineProperties(GeometryUpdater.prototype, {
    * This value is only valid if isDynamic is false.
    * @memberof GeometryUpdater.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   outlineWidth: {

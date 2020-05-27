@@ -42,7 +42,7 @@ var defaultInitialSize = new Cartesian2(16.0, 16.0);
  * @param {Object} options Object with the following properties:
  * @param {Scene} options.context The context in which the texture gets created.
  * @param {PixelFormat} [options.pixelFormat=PixelFormat.RGBA] The pixel format of the texture.
- * @param {Number} [options.borderWidthInPixels=1] The amount of spacing between adjacent images in pixels.
+ * @param {number} [options.borderWidthInPixels=1] The amount of spacing between adjacent images in pixels.
  * @param {Cartesian2} [options.initialSize=new Cartesian2(16.0, 16.0)] The initial side lengths of the texture.
  *
  * @exception {DeveloperError} borderWidthInPixels must be greater than or equal to zero.
@@ -84,7 +84,7 @@ Object.defineProperties(TextureAtlas.prototype, {
   /**
    * The amount of spacing between adjacent images in pixels.
    * @memberof TextureAtlas.prototype
-   * @type {Number}
+   * @type {number}
    */
   borderWidthInPixels: {
     get: function () {
@@ -130,7 +130,7 @@ Object.defineProperties(TextureAtlas.prototype, {
    * Texture coordinates are subject to change if the texture atlas resizes, so it is
    * important to check {@link TextureAtlas#getGUID} before using old values.
    * @memberof TextureAtlas.prototype
-   * @type {Number}
+   * @type {number}
    */
   numberOfImages: {
     get: function () {

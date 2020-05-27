@@ -6,8 +6,8 @@ import defined from "./defined.js";
  * @constructor
  *
  * @param {PixelFormat} internalFormat The pixel format of the compressed texture.
- * @param {Number} width The width of the texture.
- * @param {Number} height The height of the texture.
+ * @param {number} width The width of the texture.
+ * @param {number} height The height of the texture.
  * @param {Uint8Array} buffer The compressed texture buffer.
  */
 function CompressedTextureBuffer(internalFormat, width, height, buffer) {

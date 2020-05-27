@@ -107,7 +107,7 @@ Object.defineProperties(Vector3DTileGeometry.prototype, {
    *
    * @memberof Vector3DTileGeometry.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   trianglesLength: {
@@ -124,7 +124,7 @@ Object.defineProperties(Vector3DTileGeometry.prototype, {
    *
    * @memberof Vector3DTileGeometry.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   geometryByteLength: {
@@ -420,7 +420,7 @@ Vector3DTileGeometry.prototype.applyStyle = function (style, features) {
  * Call when updating the color of a geometry with batchId changes color. The geometries will need to be re-batched
  * on the next update.
  *
- * @param {Number} batchId The batch id of the geometries whose color has changed.
+ * @param {number} batchId The batch id of the geometries whose color has changed.
  * @param {Color} color The new polygon color.
  */
 Vector3DTileGeometry.prototype.updateCommands = function (batchId, color) {

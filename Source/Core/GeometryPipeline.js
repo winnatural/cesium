@@ -156,7 +156,7 @@ GeometryPipeline.toWireframe = function (geometry) {
  *
  * @param {Geometry} geometry The <code>Geometry</code> instance with the attribute.
  * @param {String} [attributeName='normal'] The name of the attribute.
- * @param {Number} [length=10000.0] The length of each line segment in meters.  This can be negative to point the vector in the opposite direction.
+ * @param {number} [length=10000.0] The length of each line segment in meters.  This can be negative to point the vector in the opposite direction.
  * @returns {Geometry} A new <code>Geometry</code> instance with line segments for the vector.
  *
  * @exception {DeveloperError} geometry.attributes must have an attribute with the same name as the attributeName parameter.
@@ -396,7 +396,7 @@ GeometryPipeline.reorderForPreVertexCache = function (geometry) {
  * is not <code>TRIANGLES</code> or the geometry does not have an <code>indices</code>, this function has no effect.
  *
  * @param {Geometry} geometry The geometry to modify.
- * @param {Number} [cacheCapacity=24] The number of vertices that can be held in the GPU's vertex cache.
+ * @param {number} [cacheCapacity=24] The number of vertices that can be held in the GPU's vertex cache.
  * @returns {Geometry} The modified <code>geometry</code> argument, with its indices reordered for the post-vertex-shader cache.
  *
  * @exception {DeveloperError} cacheCapacity must be greater than two.

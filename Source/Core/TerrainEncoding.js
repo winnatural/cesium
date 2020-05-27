@@ -24,8 +24,8 @@ var SHIFT_LEFT_12 = Math.pow(2.0, 12.0);
  * @constructor
  *
  * @param {AxisAlignedBoundingBox} axisAlignedBoundingBox The bounds of the tile in the east-north-up coordinates at the tiles center.
- * @param {Number} minimumHeight The minimum height.
- * @param {Number} maximumHeight The maximum height.
+ * @param {number} minimumHeight The minimum height.
+ * @param {number} maximumHeight The maximum height.
  * @param {Matrix4} fromENU The east-north-up to fixed frame matrix at the center of the terrain mesh.
  * @param {Boolean} hasVertexNormals If the mesh has vertex normals.
  * @param {Boolean} [hasWebMercatorT=false] true if the terrain data includes a Web Mercator texture coordinate; otherwise, false.
@@ -105,13 +105,13 @@ function TerrainEncoding(
 
   /**
    * The minimum height of the tile including the skirts.
-   * @type {Number}
+   * @type {number}
    */
   this.minimumHeight = minimumHeight;
 
   /**
    * The maximum height of the tile.
-   * @type {Number}
+   * @type {number}
    */
   this.maximumHeight = maximumHeight;
 

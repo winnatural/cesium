@@ -28,8 +28,8 @@ import Vector3DTilePrimitive from "./Vector3DTilePrimitive.js";
  * @param {Uint32Array} options.indices The indices of the triangulated polygons. The indices must be contiguous so that
  * the indices for polygon n are in [i, i + indexCounts[n]] where i = sum{indexCounts[0], indexCounts[n - 1]}.
  * @param {Uint32Array} options.indexCounts The number of indices for each polygon.
- * @param {Number} options.minimumHeight The minimum height of the terrain covered by the tile.
- * @param {Number} options.maximumHeight The maximum height of the terrain covered by the tile.
+ * @param {number} options.minimumHeight The minimum height of the terrain covered by the tile.
+ * @param {number} options.maximumHeight The maximum height of the terrain covered by the tile.
  * @param {Float32Array} [options.polygonMinimumHeights] An array containing the minimum heights for each polygon.
  * @param {Float32Array} [options.polygonMaximumHeights] An array containing the maximum heights for each polygon.
  * @param {Rectangle} options.rectangle The rectangle containing the tile.
@@ -111,7 +111,7 @@ Object.defineProperties(Vector3DTilePolygons.prototype, {
    *
    * @memberof Vector3DTilePolygons.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   trianglesLength: {
@@ -128,7 +128,7 @@ Object.defineProperties(Vector3DTilePolygons.prototype, {
    *
    * @memberof Vector3DTilePolygons.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   geometryByteLength: {
@@ -403,7 +403,7 @@ Vector3DTilePolygons.prototype.applyStyle = function (style, features) {
  * Call when updating the color of a polygon with batchId changes color. The polygons will need to be re-batched
  * on the next update.
  *
- * @param {Number} batchId The batch id of the polygon whose color has changed.
+ * @param {number} batchId The batch id of the polygon whose color has changed.
  * @param {Color} color The new polygon color.
  */
 Vector3DTilePolygons.prototype.updateCommands = function (batchId, color) {

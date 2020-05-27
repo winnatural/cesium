@@ -27,22 +27,22 @@ import TerrainMesh from "./TerrainMesh.js";
  * @param {Uint16Array} options.quantizedVertices The buffer containing the quantized mesh.
  * @param {Uint16Array|Uint32Array} options.indices The indices specifying how the quantized vertices are linked
  *                      together into triangles.  Each three indices specifies one triangle.
- * @param {Number} options.minimumHeight The minimum terrain height within the tile, in meters above the ellipsoid.
- * @param {Number} options.maximumHeight The maximum terrain height within the tile, in meters above the ellipsoid.
+ * @param {number} options.minimumHeight The minimum terrain height within the tile, in meters above the ellipsoid.
+ * @param {number} options.maximumHeight The maximum terrain height within the tile, in meters above the ellipsoid.
  * @param {BoundingSphere} options.boundingSphere A sphere bounding all of the vertices in the mesh.
  * @param {OrientedBoundingBox} [options.orientedBoundingBox] An OrientedBoundingBox bounding all of the vertices in the mesh.
  * @param {Cartesian3} options.horizonOcclusionPoint The horizon occlusion point of the mesh.  If this point
  *                      is below the horizon, the entire tile is assumed to be below the horizon as well.
  *                      The point is expressed in ellipsoid-scaled coordinates.
- * @param {Number[]} options.westIndices The indices of the vertices on the western edge of the tile.
- * @param {Number[]} options.southIndices The indices of the vertices on the southern edge of the tile.
- * @param {Number[]} options.eastIndices The indices of the vertices on the eastern edge of the tile.
- * @param {Number[]} options.northIndices The indices of the vertices on the northern edge of the tile.
- * @param {Number} options.westSkirtHeight The height of the skirt to add on the western edge of the tile.
- * @param {Number} options.southSkirtHeight The height of the skirt to add on the southern edge of the tile.
- * @param {Number} options.eastSkirtHeight The height of the skirt to add on the eastern edge of the tile.
- * @param {Number} options.northSkirtHeight The height of the skirt to add on the northern edge of the tile.
- * @param {Number} [options.childTileMask=15] A bit mask indicating which of this tile's four children exist.
+ * @param {number[]} options.westIndices The indices of the vertices on the western edge of the tile.
+ * @param {number[]} options.southIndices The indices of the vertices on the southern edge of the tile.
+ * @param {number[]} options.eastIndices The indices of the vertices on the eastern edge of the tile.
+ * @param {number[]} options.northIndices The indices of the vertices on the northern edge of the tile.
+ * @param {number} options.westSkirtHeight The height of the skirt to add on the western edge of the tile.
+ * @param {number} options.southSkirtHeight The height of the skirt to add on the southern edge of the tile.
+ * @param {number} options.eastSkirtHeight The height of the skirt to add on the eastern edge of the tile.
+ * @param {number} options.northSkirtHeight The height of the skirt to add on the northern edge of the tile.
+ * @param {number} [options.childTileMask=15] A bit mask indicating which of this tile's four children exist.
  *                 If a child's bit is set, geometry will be requested for that tile as well when it
  *                 is needed.  If the bit is cleared, the child tile is not requested and geometry is
  *                 instead upsampled from the parent.  The bit values are as follows:
@@ -272,10 +272,10 @@ var createMeshTaskProcessor = new TaskProcessor(
  * @private
  *
  * @param {TilingScheme} tilingScheme The tiling scheme to which this tile belongs.
- * @param {Number} x The X coordinate of the tile for which to create the terrain data.
- * @param {Number} y The Y coordinate of the tile for which to create the terrain data.
- * @param {Number} level The level of the tile for which to create the terrain data.
- * @param {Number} [exaggeration=1.0] The scale used to exaggerate the terrain.
+ * @param {number} x The X coordinate of the tile for which to create the terrain data.
+ * @param {number} y The Y coordinate of the tile for which to create the terrain data.
+ * @param {number} level The level of the tile for which to create the terrain data.
+ * @param {number} [exaggeration=1.0] The scale used to exaggerate the terrain.
  * @returns {Promise.<TerrainMesh>|undefined} A promise for the terrain mesh, or undefined if too many
  *          asynchronous mesh creations are already in progress and the operation should
  *          be retried later.
@@ -412,12 +412,12 @@ var upsampleTaskProcessor = new TaskProcessor("upsampleQuantizedTerrainMesh");
  * vertices in this instance, interpolated if necessary.
  *
  * @param {TilingScheme} tilingScheme The tiling scheme of this terrain data.
- * @param {Number} thisX The X coordinate of this tile in the tiling scheme.
- * @param {Number} thisY The Y coordinate of this tile in the tiling scheme.
- * @param {Number} thisLevel The level of this tile in the tiling scheme.
- * @param {Number} descendantX The X coordinate within the tiling scheme of the descendant tile for which we are upsampling.
- * @param {Number} descendantY The Y coordinate within the tiling scheme of the descendant tile for which we are upsampling.
- * @param {Number} descendantLevel The level within the tiling scheme of the descendant tile for which we are upsampling.
+ * @param {number} thisX The X coordinate of this tile in the tiling scheme.
+ * @param {number} thisY The Y coordinate of this tile in the tiling scheme.
+ * @param {number} thisLevel The level of this tile in the tiling scheme.
+ * @param {number} descendantX The X coordinate within the tiling scheme of the descendant tile for which we are upsampling.
+ * @param {number} descendantY The Y coordinate within the tiling scheme of the descendant tile for which we are upsampling.
+ * @param {number} descendantLevel The level within the tiling scheme of the descendant tile for which we are upsampling.
  * @returns {Promise.<QuantizedMeshTerrainData>|undefined} A promise for upsampled heightmap terrain data for the descendant tile,
  *          or undefined if too many asynchronous upsample operations are in progress and the request has been
  *          deferred.
@@ -558,9 +558,9 @@ var barycentricCoordinateScratch = new Cartesian3();
  * Computes the terrain height at a specified longitude and latitude.
  *
  * @param {Rectangle} rectangle The rectangle covered by this terrain data.
- * @param {Number} longitude The longitude in radians.
- * @param {Number} latitude The latitude in radians.
- * @returns {Number} The terrain height at the specified position.  The position is clamped to
+ * @param {number} longitude The longitude in radians.
+ * @param {number} latitude The latitude in radians.
+ * @returns {number} The terrain height at the specified position.  The position is clamped to
  *          the rectangle, so expect incorrect results for positions far outside the rectangle.
  */
 QuantizedMeshTerrainData.prototype.interpolateHeight = function (
@@ -703,10 +703,10 @@ function interpolateHeight(terrainData, u, v) {
  * to be one of the four children of this tile.  If non-child tile coordinates are
  * given, the availability of the southeast child tile is returned.
  *
- * @param {Number} thisX The tile X coordinate of this (the parent) tile.
- * @param {Number} thisY The tile Y coordinate of this (the parent) tile.
- * @param {Number} childX The tile X coordinate of the child tile to check for availability.
- * @param {Number} childY The tile Y coordinate of the child tile to check for availability.
+ * @param {number} thisX The tile X coordinate of this (the parent) tile.
+ * @param {number} thisY The tile Y coordinate of this (the parent) tile.
+ * @param {number} childX The tile X coordinate of the child tile to check for availability.
+ * @param {number} childY The tile Y coordinate of the child tile to check for availability.
  * @returns {Boolean} True if the child tile is available; otherwise, false.
  */
 QuantizedMeshTerrainData.prototype.isChildAvailable = function (

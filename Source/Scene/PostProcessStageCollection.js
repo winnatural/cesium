@@ -232,7 +232,7 @@ Object.defineProperties(PostProcessStageCollection.prototype, {
    * The number of post-process stages in this collection.
    *
    * @memberof PostProcessStageCollection.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   length: {
@@ -503,7 +503,7 @@ PostProcessStageCollection.prototype.contains = function (stage) {
 /**
  * Gets the post-process stage at <code>index</code>.
  *
- * @param {Number} index The index of the post-process stage.
+ * @param {number} index The index of the post-process stage.
  * @return {PostProcessStage|PostProcessStageComposite} The post-process stage at index.
  */
 PostProcessStageCollection.prototype.get = function (index) {

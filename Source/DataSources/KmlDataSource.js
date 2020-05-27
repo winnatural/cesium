@@ -4010,7 +4010,7 @@ function KmlFeatureData() {
    * @type {Object}
    * @property {String} name Gets the name.
    * @property {String} uri Gets the URI.
-   * @property {Number} age Gets the email.
+   * @property {number} age Gets the email.
    */
 
   /**

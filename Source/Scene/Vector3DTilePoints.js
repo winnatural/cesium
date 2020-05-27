@@ -26,8 +26,8 @@ import VerticalOrigin from "./VerticalOrigin.js";
  *
  * @param {Object} options An object with following properties:
  * @param {Uint16Array} options.positions The positions of the polygons.
- * @param {Number} options.minimumHeight The minimum height of the terrain covered by the tile.
- * @param {Number} options.maximumHeight The maximum height of the terrain covered by the tile.
+ * @param {number} options.minimumHeight The minimum height of the terrain covered by the tile.
+ * @param {number} options.maximumHeight The maximum height of the terrain covered by the tile.
  * @param {Rectangle} options.rectangle The rectangle containing the tile.
  * @param {Cesium3DTileBatchTable} options.batchTable The batch table for the tile containing the batched polygons.
  * @param {Uint16Array} options.batchIds The batch ids for each polygon.
@@ -63,7 +63,7 @@ Object.defineProperties(Vector3DTilePoints.prototype, {
    *
    * @memberof Vector3DTilePoints.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   pointsLength: {
@@ -77,7 +77,7 @@ Object.defineProperties(Vector3DTilePoints.prototype, {
    *
    * @memberof Vector3DTilePoints.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   texturesByteLength: {

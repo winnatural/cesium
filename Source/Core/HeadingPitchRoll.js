@@ -10,9 +10,9 @@ import CesiumMath from "./Math.js";
  * @alias HeadingPitchRoll
  * @constructor
  *
- * @param {Number} [heading=0.0] The heading component in radians.
- * @param {Number} [pitch=0.0] The pitch component in radians.
- * @param {Number} [roll=0.0] The roll component in radians.
+ * @param {number} [heading=0.0] The heading component in radians.
+ * @param {number} [pitch=0.0] The pitch component in radians.
+ * @param {number} [roll=0.0] The roll component in radians.
  */
 function HeadingPitchRoll(heading, pitch, roll) {
   this.heading = defaultValue(heading, 0.0);
@@ -54,9 +54,9 @@ HeadingPitchRoll.fromQuaternion = function (quaternion, result) {
 /**
  * Returns a new HeadingPitchRoll instance from angles given in degrees.
  *
- * @param {Number} heading the heading in degrees
- * @param {Number} pitch the pitch in degrees
- * @param {Number} roll the heading in degrees
+ * @param {number} heading the heading in degrees
+ * @param {number} pitch the pitch in degrees
+ * @param {number} roll the heading in degrees
  * @param {HeadingPitchRoll} [result] The object in which to store the result. If not provided, a new instance is created and returned.
  * @returns {HeadingPitchRoll} A new HeadingPitchRoll instance
  */
@@ -131,8 +131,8 @@ HeadingPitchRoll.equals = function (left, right) {
  *
  * @param {HeadingPitchRoll} [left] The first HeadingPitchRoll.
  * @param {HeadingPitchRoll} [right] The second HeadingPitchRoll.
- * @param {Number} [relativeEpsilon=0] The relative epsilon tolerance to use for equality testing.
- * @param {Number} [absoluteEpsilon=relativeEpsilon] The absolute epsilon tolerance to use for equality testing.
+ * @param {number} [relativeEpsilon=0] The relative epsilon tolerance to use for equality testing.
+ * @param {number} [absoluteEpsilon=relativeEpsilon] The absolute epsilon tolerance to use for equality testing.
  * @returns {Boolean} <code>true</code> if left and right are within the provided epsilon, <code>false</code> otherwise.
  */
 HeadingPitchRoll.equalsEpsilon = function (
@@ -193,8 +193,8 @@ HeadingPitchRoll.prototype.equals = function (right) {
  * <code>false</code> otherwise.
  *
  * @param {HeadingPitchRoll} [right] The right hand side HeadingPitchRoll.
- * @param {Number} [relativeEpsilon=0] The relative epsilon tolerance to use for equality testing.
- * @param {Number} [absoluteEpsilon=relativeEpsilon] The absolute epsilon tolerance to use for equality testing.
+ * @param {number} [relativeEpsilon=0] The relative epsilon tolerance to use for equality testing.
+ * @param {number} [absoluteEpsilon=relativeEpsilon] The absolute epsilon tolerance to use for equality testing.
  * @returns {Boolean} <code>true</code> if they are within the provided epsilon, <code>false</code> otherwise.
  */
 HeadingPitchRoll.prototype.equalsEpsilon = function (

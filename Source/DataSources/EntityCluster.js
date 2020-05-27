@@ -20,8 +20,8 @@ import kdbush from "../ThirdParty/kdbush.js";
  *
  * @param {Object} [options] An object with the following properties:
  * @param {Boolean} [options.enabled=false] Whether or not to enable clustering.
- * @param {Number} [options.pixelRange=80] The pixel range to extend the screen space bounding box.
- * @param {Number} [options.minimumClusterSize=2] The minimum number of screen space objects that can be clustered.
+ * @param {number} [options.pixelRange=80] The pixel range to extend the screen space bounding box.
+ * @param {number} [options.minimumClusterSize=2] The minimum number of screen space objects that can be clustered.
  * @param {Boolean} [options.clusterBillboards=true] Whether or not to cluster the billboards of an entity.
  * @param {Boolean} [options.clusterLabels=true] Whether or not to cluster the labels of an entity.
  * @param {Boolean} [options.clusterPoints=true] Whether or not to cluster the points of an entity.
@@ -520,7 +520,7 @@ Object.defineProperties(EntityCluster.prototype, {
   /**
    * Gets or sets the pixel range to extend the screen space bounding box.
    * @memberof EntityCluster.prototype
-   * @type {Number}
+   * @type {number}
    */
   pixelRange: {
     get: function () {
@@ -534,7 +534,7 @@ Object.defineProperties(EntityCluster.prototype, {
   /**
    * Gets or sets the minimum number of screen space objects that can be clustered.
    * @memberof EntityCluster.prototype
-   * @type {Number}
+   * @type {number}
    */
   minimumClusterSize: {
     get: function () {

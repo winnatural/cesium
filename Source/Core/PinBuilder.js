@@ -26,7 +26,7 @@ function PinBuilder() {
  * Creates an empty pin of the specified color and size.
  *
  * @param {Color} color The color of the pin.
- * @param {Number} size The size of the pin, in pixels.
+ * @param {number} size The size of the pin, in pixels.
  * @returns {HTMLCanvasElement} The canvas element that represents the generated pin.
  */
 PinBuilder.prototype.fromColor = function (color, size) {
@@ -46,7 +46,7 @@ PinBuilder.prototype.fromColor = function (color, size) {
  *
  * @param {Resource|String} url The url of the image to be stamped onto the pin.
  * @param {Color} color The color of the pin.
- * @param {Number} size The size of the pin, in pixels.
+ * @param {number} size The size of the pin, in pixels.
  * @returns {HTMLCanvasElement|Promise.<HTMLCanvasElement>} The canvas element or a Promise to the canvas element that represents the generated pin.
  */
 PinBuilder.prototype.fromUrl = function (url, color, size) {
@@ -69,7 +69,7 @@ PinBuilder.prototype.fromUrl = function (url, color, size) {
  *
  * @param {String} id The id of the maki icon to be stamped onto the pin.
  * @param {Color} color The color of the pin.
- * @param {Number} size The size of the pin, in pixels.
+ * @param {number} size The size of the pin, in pixels.
  * @returns {HTMLCanvasElement|Promise.<HTMLCanvasElement>} The canvas element or a Promise to the canvas element that represents the generated pin.
  */
 PinBuilder.prototype.fromMakiIconId = function (id, color, size) {
@@ -99,7 +99,7 @@ PinBuilder.prototype.fromMakiIconId = function (id, color, size) {
  *
  * @param {String} text The text to be stamped onto the pin.
  * @param {Color} color The color of the pin.
- * @param {Number} size The size of the pin, in pixels.
+ * @param {number} size The size of the pin, in pixels.
  * @returns {HTMLCanvasElement} The canvas element that represents the generated pin.
  */
 PinBuilder.prototype.fromText = function (text, color, size) {

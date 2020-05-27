@@ -315,7 +315,7 @@ Object.defineProperties(PolylineGeometryUpdater.prototype, {
 
   /**
    * Gets the zindex
-   * @type {Number}
+   * @type {number}
    * @memberof PolylineGeometryUpdater.prototype
    * @readonly
    */

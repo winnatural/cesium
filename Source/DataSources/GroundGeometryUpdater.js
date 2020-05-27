@@ -39,7 +39,7 @@ if (defined(Object.create)) {
 Object.defineProperties(GroundGeometryUpdater.prototype, {
   /**
    * Gets the zindex
-   * @type {Number}
+   * @type {number}
    * @memberof GroundGeometryUpdater.prototype
    * @readonly
    */

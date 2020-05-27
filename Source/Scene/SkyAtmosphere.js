@@ -85,7 +85,7 @@ function SkyAtmosphere(ellipsoid) {
   /**
    * The hue shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A hue shift of 1.0 indicates a complete rotation of the hues available.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.hueShift = 0.0;
@@ -93,7 +93,7 @@ function SkyAtmosphere(ellipsoid) {
   /**
    * The saturation shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A saturation shift of -1.0 is monochrome.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.saturationShift = 0.0;
@@ -101,7 +101,7 @@ function SkyAtmosphere(ellipsoid) {
   /**
    * The brightness shift to apply to the atmosphere. Defaults to 0.0 (no shift).
    * A brightness shift of -1.0 is complete darkness, which will let space show through.
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   this.brightnessShift = 0.0;

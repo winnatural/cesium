@@ -34,12 +34,12 @@ var defaultParameters = Object.freeze({
  * @param {Clock} [options.clock] A Clock instance that is used when determining the value for the time dimension. Required when options.times is specified.
  * @param {TimeIntervalCollection} [options.times] TimeIntervalCollection with its <code>data</code> property being an object containing time dynamic dimension and their values.
  * @param {Object} [options.dimensions] A object containing static dimensions and their values.
- * @param {Number} [options.tileWidth=256] The tile width in pixels.
- * @param {Number} [options.tileHeight=256] The tile height in pixels.
+ * @param {number} [options.tileWidth=256] The tile width in pixels.
+ * @param {number} [options.tileHeight=256] The tile height in pixels.
  * @param {TilingScheme} [options.tilingScheme] The tiling scheme corresponding to the organization of the tiles in the TileMatrixSet.
  * @param {Rectangle} [options.rectangle=Rectangle.MAX_VALUE] The rectangle covered by the layer.
- * @param {Number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.
- * @param {Number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
+ * @param {number} [options.minimumLevel=0] The minimum level-of-detail supported by the imagery provider.
+ * @param {number} [options.maximumLevel] The maximum level-of-detail supported by the imagery provider, or undefined if there is no limit.
  * @param {Ellipsoid} [options.ellipsoid] The ellipsoid.  If not specified, the WGS84 ellipsoid is used.
  * @param {Credit|String} [options.credit] A credit for the data source, which is displayed on the canvas.
  * @param {String|String[]} [options.subdomains='abc'] The subdomains to use for the <code>{s}</code> placeholder in the URL template.
@@ -313,7 +313,7 @@ Object.defineProperties(WebMapTileServiceImageryProvider.prototype, {
    * Gets the width of each tile, in pixels. This function should
    * not be called before {@link WebMapTileServiceImageryProvider#ready} returns true.
    * @memberof WebMapTileServiceImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileWidth: {
@@ -326,7 +326,7 @@ Object.defineProperties(WebMapTileServiceImageryProvider.prototype, {
    * Gets the height of each tile, in pixels.  This function should
    * not be called before {@link WebMapTileServiceImageryProvider#ready} returns true.
    * @memberof WebMapTileServiceImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   tileHeight: {
@@ -339,7 +339,7 @@ Object.defineProperties(WebMapTileServiceImageryProvider.prototype, {
    * Gets the maximum level-of-detail that can be requested.  This function should
    * not be called before {@link WebMapTileServiceImageryProvider#ready} returns true.
    * @memberof WebMapTileServiceImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   maximumLevel: {
@@ -352,7 +352,7 @@ Object.defineProperties(WebMapTileServiceImageryProvider.prototype, {
    * Gets the minimum level-of-detail that can be requested.  This function should
    * not be called before {@link WebMapTileServiceImageryProvider#ready} returns true.
    * @memberof WebMapTileServiceImageryProvider.prototype
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   minimumLevel: {
@@ -529,9 +529,9 @@ Object.defineProperties(WebMapTileServiceImageryProvider.prototype, {
 /**
  * Gets the credits to be displayed when a given tile is displayed.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level;
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level;
  * @returns {Credit[]} The credits to be displayed when the tile is displayed.
  *
  * @exception {DeveloperError} <code>getTileCredits</code> must not be called before the imagery provider is ready.
@@ -548,9 +548,9 @@ WebMapTileServiceImageryProvider.prototype.getTileCredits = function (
  * Requests the image for a given tile.  This function should
  * not be called before {@link WebMapTileServiceImageryProvider#ready} returns true.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
  * @param {Request} [request] The request object. Intended for internal use only.
  * @returns {Promise.<HTMLImageElement|HTMLCanvasElement>|undefined} A promise for the image that will resolve when the image is available, or
  *          undefined if there are too many active requests to the server, and the request
@@ -592,11 +592,11 @@ WebMapTileServiceImageryProvider.prototype.requestImage = function (
  * Picking features is not currently supported by this imagery provider, so this function simply returns
  * undefined.
  *
- * @param {Number} x The tile X coordinate.
- * @param {Number} y The tile Y coordinate.
- * @param {Number} level The tile level.
- * @param {Number} longitude The longitude at which to pick features.
- * @param {Number} latitude  The latitude at which to pick features.
+ * @param {number} x The tile X coordinate.
+ * @param {number} y The tile Y coordinate.
+ * @param {number} level The tile level.
+ * @param {number} longitude The longitude at which to pick features.
+ * @param {number} latitude  The latitude at which to pick features.
  * @return {Promise.<ImageryLayerFeatureInfo[]>|undefined} A promise for the picked features that will resolve when the asynchronous
  *                   picking completes.  The resolved value is an array of {@link ImageryLayerFeatureInfo}
  *                   instances.  The array may be empty if no features are found at the given location.

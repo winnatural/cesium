@@ -56,28 +56,28 @@ import TileOrientedBoundingBox from "./TileOrientedBoundingBox.js";
  * @param {Boolean} [options.show=true] Determines if the tileset will be shown.
  * @param {Matrix4} [options.modelMatrix=Matrix4.IDENTITY] A 4x4 transformation matrix that transforms the tileset's root tile.
  * @param {ShadowMode} [options.shadows=ShadowMode.ENABLED] Determines whether the tileset casts or receives shadows from light sources.
- * @param {Number} [options.maximumScreenSpaceError=16] The maximum screen space error used to drive level of detail refinement.
- * @param {Number} [options.maximumMemoryUsage=512] The maximum amount of memory in MB that can be used by the tileset.
+ * @param {number} [options.maximumScreenSpaceError=16] The maximum screen space error used to drive level of detail refinement.
+ * @param {number} [options.maximumMemoryUsage=512] The maximum amount of memory in MB that can be used by the tileset.
  * @param {Boolean} [options.cullWithChildrenBounds=true] Optimization option. Whether to cull tiles using the union of their children bounding volumes.
  * @param {Boolean} [options.cullRequestsWhileMoving=true] Optimization option. Don't request tiles that will likely be unused when they come back because of the camera's movement. This optimization only applies to stationary tilesets.
- * @param {Number} [options.cullRequestsWhileMovingMultiplier=60.0] Optimization option. Multiplier used in culling requests while moving. Larger is more aggressive culling, smaller less aggressive culling.
+ * @param {number} [options.cullRequestsWhileMovingMultiplier=60.0] Optimization option. Multiplier used in culling requests while moving. Larger is more aggressive culling, smaller less aggressive culling.
  * @param {Boolean} [options.preloadWhenHidden=false] Preload tiles when <code>tileset.show</code> is <code>false</code>. Loads tiles as if the tileset is visible but does not render them.
  * @param {Boolean} [options.preloadFlightDestinations=true] Optimization option. Preload tiles at the camera's flight destination while the camera is in flight.
  * @param {Boolean} [options.preferLeaves=false] Optimization option. Prefer loading of leaves first.
  * @param {Boolean} [options.dynamicScreenSpaceError=false] Optimization option. Reduce the screen space error for tiles that are further away from the camera.
- * @param {Number} [options.dynamicScreenSpaceErrorDensity=0.00278] Density used to adjust the dynamic screen space error, similar to fog density.
- * @param {Number} [options.dynamicScreenSpaceErrorFactor=4.0] A factor used to increase the computed dynamic screen space error.
- * @param {Number} [options.dynamicScreenSpaceErrorHeightFalloff=0.25] A ratio of the tileset's height at which the density starts to falloff.
- * @param {Number} [options.progressiveResolutionHeightFraction=0.3] Optimization option. If between (0.0, 0.5], tiles at or above the screen space error for the reduced screen resolution of <code>progressiveResolutionHeightFraction*screenHeight</code> will be prioritized first. This can help get a quick layer of tiles down while full resolution tiles continue to load.
+ * @param {number} [options.dynamicScreenSpaceErrorDensity=0.00278] Density used to adjust the dynamic screen space error, similar to fog density.
+ * @param {number} [options.dynamicScreenSpaceErrorFactor=4.0] A factor used to increase the computed dynamic screen space error.
+ * @param {number} [options.dynamicScreenSpaceErrorHeightFalloff=0.25] A ratio of the tileset's height at which the density starts to falloff.
+ * @param {number} [options.progressiveResolutionHeightFraction=0.3] Optimization option. If between (0.0, 0.5], tiles at or above the screen space error for the reduced screen resolution of <code>progressiveResolutionHeightFraction*screenHeight</code> will be prioritized first. This can help get a quick layer of tiles down while full resolution tiles continue to load.
  * @param {Boolean} [options.foveatedScreenSpaceError=true] Optimization option. Prioritize loading tiles in the center of the screen by temporarily raising the screen space error for tiles around the edge of the screen. Screen space error returns to normal once all the tiles in the center of the screen as determined by the {@link Cesium3DTileset#foveatedConeSize} are loaded.
- * @param {Number} [options.foveatedConeSize=0.1] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control the cone size that determines which tiles are deferred. Tiles that are inside this cone are loaded immediately. Tiles outside the cone are potentially deferred based on how far outside the cone they are and their screen space error. This is controlled by {@link Cesium3DTileset#foveatedInterpolationCallback} and {@link Cesium3DTileset#foveatedMinimumScreenSpaceErrorRelaxation}. Setting this to 0.0 means the cone will be the line formed by the camera position and its view direction. Setting this to 1.0 means the cone encompasses the entire field of view of the camera, disabling the effect.
- * @param {Number} [options.foveatedMinimumScreenSpaceErrorRelaxation=0.0] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control the starting screen space error relaxation for tiles outside the foveated cone. The screen space error will be raised starting with tileset value up to {@link Cesium3DTileset#maximumScreenSpaceError} based on the provided {@link Cesium3DTileset#foveatedInterpolationCallback}.
+ * @param {number} [options.foveatedConeSize=0.1] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control the cone size that determines which tiles are deferred. Tiles that are inside this cone are loaded immediately. Tiles outside the cone are potentially deferred based on how far outside the cone they are and their screen space error. This is controlled by {@link Cesium3DTileset#foveatedInterpolationCallback} and {@link Cesium3DTileset#foveatedMinimumScreenSpaceErrorRelaxation}. Setting this to 0.0 means the cone will be the line formed by the camera position and its view direction. Setting this to 1.0 means the cone encompasses the entire field of view of the camera, disabling the effect.
+ * @param {number} [options.foveatedMinimumScreenSpaceErrorRelaxation=0.0] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control the starting screen space error relaxation for tiles outside the foveated cone. The screen space error will be raised starting with tileset value up to {@link Cesium3DTileset#maximumScreenSpaceError} based on the provided {@link Cesium3DTileset#foveatedInterpolationCallback}.
  * @param {Cesium3DTileset.foveatedInterpolationCallback} [options.foveatedInterpolationCallback=Math.lerp] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control how much to raise the screen space error for tiles outside the foveated cone, interpolating between {@link Cesium3DTileset#foveatedMinimumScreenSpaceErrorRelaxation} and {@link Cesium3DTileset#maximumScreenSpaceError}
- * @param {Number} [options.foveatedTimeDelay=0.2] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control how long in seconds to wait after the camera stops moving before deferred tiles start loading in. This time delay prevents requesting tiles around the edges of the screen when the camera is moving. Setting this to 0.0 will immediately request all tiles in any given view.
+ * @param {number} [options.foveatedTimeDelay=0.2] Optimization option. Used when {@link Cesium3DTileset#foveatedScreenSpaceError} is true to control how long in seconds to wait after the camera stops moving before deferred tiles start loading in. This time delay prevents requesting tiles around the edges of the screen when the camera is moving. Setting this to 0.0 will immediately request all tiles in any given view.
  * @param {Boolean} [options.skipLevelOfDetail=false] Optimization option. Determines if level of detail skipping should be applied during the traversal.
- * @param {Number} [options.baseScreenSpaceError=1024] When <code>skipLevelOfDetail</code> is <code>true</code>, the screen space error that must be reached before skipping levels of detail.
- * @param {Number} [options.skipScreenSpaceErrorFactor=16] When <code>skipLevelOfDetail</code> is <code>true</code>, a multiplier defining the minimum screen space error to skip. Used in conjunction with <code>skipLevels</code> to determine which tiles to load.
- * @param {Number} [options.skipLevels=1] When <code>skipLevelOfDetail</code> is <code>true</code>, a constant defining the minimum number of levels to skip when loading tiles. When it is 0, no levels are skipped. Used in conjunction with <code>skipScreenSpaceErrorFactor</code> to determine which tiles to load.
+ * @param {number} [options.baseScreenSpaceError=1024] When <code>skipLevelOfDetail</code> is <code>true</code>, the screen space error that must be reached before skipping levels of detail.
+ * @param {number} [options.skipScreenSpaceErrorFactor=16] When <code>skipLevelOfDetail</code> is <code>true</code>, a multiplier defining the minimum screen space error to skip. Used in conjunction with <code>skipLevels</code> to determine which tiles to load.
+ * @param {number} [options.skipLevels=1] When <code>skipLevelOfDetail</code> is <code>true</code>, a constant defining the minimum number of levels to skip when loading tiles. When it is 0, no levels are skipped. Used in conjunction with <code>skipScreenSpaceErrorFactor</code> to determine which tiles to load.
  * @param {Boolean} [options.immediatelyLoadDesiredLevelOfDetail=false] When <code>skipLevelOfDetail</code> is <code>true</code>, only tiles that meet the maximum screen space error will ever be downloaded. Skipping factors are ignored and just the desired tiles are loaded.
  * @param {Boolean} [options.loadSiblings=false] When <code>skipLevelOfDetail</code> is <code>true</code>, determines whether siblings of visible tiles are always downloaded during traversal.
  * @param {ClippingPlaneCollection} [options.clippingPlanes] The {@link ClippingPlaneCollection} used to selectively disable rendering the tileset.
@@ -86,7 +86,7 @@ import TileOrientedBoundingBox from "./TileOrientedBoundingBox.js";
  * @param {Object} [options.pointCloudShading] Options for constructing a {@link PointCloudShading} object to control point attenuation based on geometric error and lighting.
  * @param {Cartesian2} [options.imageBasedLightingFactor=new Cartesian2(1.0, 1.0)] Scales the diffuse and specular image-based lighting from the earth, sky, atmosphere and star skybox.
  * @param {Cartesian3} [options.lightColor] The light color when shading models. When <code>undefined</code> the scene's light color is used instead.
- * @param {Number} [options.luminanceAtZenith=0.2] The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
+ * @param {number} [options.luminanceAtZenith=0.2] The sun's luminance at the zenith in kilo candela per meter squared to use for this model's procedural environment map.
  * @param {Cartesian3[]} [options.sphericalHarmonicCoefficients] The third order spherical harmonic coefficients used for the diffuse color of image-based lighting.
  * @param {String} [options.specularEnvironmentMaps] A URL to a KTX file that contains a cube map of the specular lighting and the convoluted specular mipmaps.
  * @param {String} [options.debugHeatmapTilePropertyName] The tile variable to colorize as a heatmap. All rendered tiles will be colorized relative to each other's specified variable value.
@@ -228,7 +228,7 @@ function Cesium3DTileset(options) {
   /**
    * Optimization option. Multiplier used in culling requests while moving. Larger is more aggressive culling, smaller less aggressive culling.
    *
-   * @type {Number}
+   * @type {number}
    * @default 60.0
    */
   this.cullRequestsWhileMovingMultiplier = defaultValue(
@@ -239,7 +239,7 @@ function Cesium3DTileset(options) {
   /**
    * Optimization option. If between (0.0, 0.5], tiles at or above the screen space error for the reduced screen resolution of <code>progressiveResolutionHeightFraction*screenHeight</code> will be prioritized first. This can help get a quick layer of tiles down while full resolution tiles continue to load.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.3
    */
   this.progressiveResolutionHeightFraction = CesiumMath.clamp(
@@ -341,7 +341,7 @@ function Cesium3DTileset(options) {
    * This time delay prevents requesting tiles around the edges of the screen when the camera is moving.
    * Setting this to 0.0 will immediately request all tiles in any given view.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.2
    */
   this.foveatedTimeDelay = defaultValue(options.foveatedTimeDelay, 0.2);
@@ -361,7 +361,7 @@ function Cesium3DTileset(options) {
    * It is analogous to moving fog closer to the camera.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.00278
    */
   this.dynamicScreenSpaceErrorDensity = 0.00278;
@@ -370,7 +370,7 @@ function Cesium3DTileset(options) {
    * A factor used to increase the screen space error of tiles for dynamic screen space error. As this value increases less tiles
    * are requested for rendering and tiles in the distance will have lower detail. If set to zero, the feature will be disabled.
    *
-   * @type {Number}
+   * @type {number}
    * @default 4.0
    */
   this.dynamicScreenSpaceErrorFactor = 4.0;
@@ -383,7 +383,7 @@ function Cesium3DTileset(options) {
    * Valid values are between 0.0 and 1.0.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.25
    */
   this.dynamicScreenSpaceErrorHeightFalloff = 0.25;
@@ -426,7 +426,7 @@ function Cesium3DTileset(options) {
    * A value of 0.0 results in the source color while a value of 1.0 results in the feature color, with any value in-between
    * resulting in a mix of the source color and feature color.
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.5
    */
   this.colorBlendAmount = 0.5;
@@ -631,7 +631,7 @@ function Cesium3DTileset(options) {
    * Only used when {@link Cesium3DTileset#skipLevelOfDetail} is <code>true</code>.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 1024
    */
   this.baseScreenSpaceError = defaultValue(options.baseScreenSpaceError, 1024);
@@ -644,7 +644,7 @@ function Cesium3DTileset(options) {
    * Only used when {@link Cesium3DTileset#skipLevelOfDetail} is <code>true</code>.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 16
    */
   this.skipScreenSpaceErrorFactor = defaultValue(
@@ -659,7 +659,7 @@ function Cesium3DTileset(options) {
    * Only used when {@link Cesium3DTileset#skipLevelOfDetail} is <code>true</code>.
    * </p>
    *
-   * @type {Number}
+   * @type {number}
    * @default 1
    */
   this.skipLevels = defaultValue(options.skipLevels, 1);
@@ -1248,7 +1248,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default 16
    *
    * @exception {DeveloperError} <code>maximumScreenSpaceError</code> must be greater than or equal to zero.
@@ -1291,7 +1291,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default 512
    *
    * @exception {DeveloperError} <code>maximumMemoryUsage</code> must be greater than or equal to zero.
@@ -1401,7 +1401,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    */
   timeSinceLoad: {
@@ -1417,7 +1417,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @readonly
    *
    * @see Cesium3DTileset#maximumMemoryUsage
@@ -1527,7 +1527,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.3
    */
   foveatedConeSize: {
@@ -1550,7 +1550,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    *
    * @memberof Cesium3DTileset.prototype
    *
-   * @type {Number}
+   * @type {number}
    * @default 0.0
    */
   foveatedMinimumScreenSpaceErrorRelaxation: {
@@ -2622,9 +2622,9 @@ Cesium3DTileset.prototype.destroy = function () {
  * @callback Cesium3DTileset.foveatedInterpolationCallback
  * @default Math.lerp
  *
- * @param {Number} p The start value to interpolate.
- * @param {Number} q The end value to interpolate.
- * @param {Number} time The time of interpolation generally in the range <code>[0.0, 1.0]</code>.
- * @returns {Number} The interpolated value.
+ * @param {number} p The start value to interpolate.
+ * @param {number} q The end value to interpolate.
+ * @param {number} time The time of interpolation generally in the range <code>[0.0, 1.0]</code>.
+ * @returns {number} The interpolated value.
  */
 export default Cesium3DTileset;
