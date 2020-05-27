@@ -1177,7 +1177,16 @@ function getZoomDistanceUnderground(controller, ray, height) {
   return distance;
 }
 
-function getDistanceFromClosestSurface(controller, height) {
+var scratchCartographic = new Cartographic();
+
+function getDistanceFromClosestSurface(controller, position) {
+  var ellipsoid = controller._ellipsoid;
+  var cartographic = ellipsoid.cartesianToCartographic(
+    position,
+    scratchCartographic
+  );
+  var height = cartographic.height;
+
   var globeHeight = defaultValue(controller._globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
@@ -1792,24 +1801,11 @@ var scratchRadii = new Cartesian3();
 var scratchEllipsoid = new Ellipsoid();
 var scratchIntersectionPoint = new Cartesian3();
 
-function getRotateStartPositionUnderground(
-  controller,
-  ray,
-  surfaceNormal,
-  pickedPosition,
-  result
-) {
+function getClosestPickDistance(controller, ray, pickedPosition) {
   var ellipsoid = controller._ellipsoid;
   var origin = ray.origin;
 
-  var cartographic = ellipsoid.cartesianToCartographic(
-    origin,
-    scratchCartographic
-  );
-  var height = cartographic.height;
-
-  var finalPosition = result;
-  var magnitude = Cartesian3.magnitude(pickedPosition);
+  var distance = Cartesian3.distance(origin, pickedPosition);
 
   var heightDelta = controller.undergroundSurfaceHeight;
   var innerRadii = Cartesian3.fromElements(
@@ -1823,38 +1819,33 @@ function getRotateStartPositionUnderground(
   var innerEllipsoid = Ellipsoid.fromCartesian3(innerRadii, scratchEllipsoid);
   var intersection = IntersectionTests.rayEllipsoid(ray, innerEllipsoid);
   if (defined(intersection)) {
-    if (intersection.start > 0.0) {
+    if (intersection.start === 0.0) {
+      // Inside ellipsoid
+      distance = Math.min(distance, intersection.stop);
+    } else {
       // Outside ellipsoid
-      var intersectionPoint = Ray.getPoint(
-        ray,
-        intersection.start,
-        scratchIntersectionPoint
-      );
-      var intersectionPointMagnitude = Cartesian3.magnitude(intersectionPoint);
-      if (intersectionPointMagnitude < magnitude) {
-        Cartesian3.clone(intersectionPoint, finalPosition);
-      }
+      distance = Math.min(distance, intersection.start);
     }
   }
 
-  var angle = Math.abs(
-    Cartesian3.dot(surfaceNormal, controller._scene.camera.direction)
-  );
-  var distanceWeight = Math.max(angle, 0.2);
-  var distance = Cartesian3.distance(ray.origin, finalPosition);
-  var maximumDistance = controller._maximumUndergroundPickDistance;
-  if (distance > maximumDistance * distanceWeight) {
-    var distanceFromClosestSurface = getDistanceFromClosestSurface(
-      controller,
-      height
-    );
-    var direction = Cartesian3.normalize(ray.origin, scratchIntersectionPoint);
-    var scalar =
-      Cartesian3.magnitude(ray.origin) - distanceFromClosestSurface * angle;
-    Cartesian3.multiplyByScalar(direction, scalar, finalPosition);
-  }
+  return distance;
+}
 
-  return finalPosition;
+function getStrafeStartPositionUnderground(
+  controller,
+  ray,
+  pickedPosition,
+  result
+) {
+  var distance = getClosestPickDistance(controller, ray, pickedPosition);
+  if (distance > controller._maximumUndergroundPickDistance) {
+    // If the picked position is too far away set the strafe speed based on the
+    // camera's height from the closest surface (closest surface being either
+    // the globe surface or the underground invisible surface)
+    distance = getDistanceFromClosestSurface(controller, ray.origin);
+    Ray.getPoint(ray, distance, result);
+  }
+  return result;
 }
 
 var spin3DPick = new Cartesian3();
@@ -1928,17 +1919,8 @@ function spin3D(controller, startPosition, movement) {
 
       if (cameraUnderground) {
         ray = camera.getPickRay(movement.startPosition, pickGlobeScratchRay);
-        if (Cartesian3.dot(up, ray.direction) > 0.0) {
-          strafing = true;
-        } else {
-          getRotateStartPositionUnderground(
-            controller,
-            ray,
-            up,
-            mousePos,
-            mousePos
-          );
-        }
+        strafing = true;
+        getStrafeStartPositionUnderground(controller, ray, mousePos, mousePos);
       } else {
         strafing =
           Cartesian3.magnitude(camera.position) <
@@ -2362,36 +2344,9 @@ function tilt3DOnEllipsoid(controller, startPosition, movement) {
 }
 
 function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
-  var ellipsoid = controller._ellipsoid;
-  var origin = ray.origin;
-
-  var height = ellipsoid.cartesianToCartographic(origin, tilt3DCart).height;
-  var distance = Cartesian3.distance(origin, pickedPosition);
-
-  var heightDelta = controller.undergroundSurfaceHeight;
-  var innerRadii = Cartesian3.fromElements(
-    ellipsoid.radii.x + heightDelta,
-    ellipsoid.radii.y + heightDelta,
-    ellipsoid.radii.z + heightDelta,
-    scratchRadii
-  );
-
-  // Use the distance from the underground surface if it is closer
-  var innerEllipsoid = Ellipsoid.fromCartesian3(innerRadii, scratchEllipsoid);
-  var intersection = IntersectionTests.rayEllipsoid(ray, innerEllipsoid);
-  if (defined(intersection)) {
-    if (intersection.start === 0.0) {
-      // Inside ellipsoid
-      distance = Math.min(distance, intersection.stop);
-    } else {
-      // Outside ellipsoid
-      distance = Math.min(distance, intersection.start);
-    }
-  }
-
   var distanceFromClosestSurface = getDistanceFromClosestSurface(
     controller,
-    height
+    ray.origin
   );
 
   var maximumDistance = CesiumMath.clamp(
@@ -2400,10 +2355,15 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
     controller._maximumUndergroundPickDistance
   );
 
+  var distance = getClosestPickDistance(controller, ray, pickedPosition);
   if (distance > maximumDistance) {
     // If the distance is too far away use closest surface as the distance
-    distance = Math.min(distance, distanceFromClosestSurface);
+    // The further away away camera is from the closest surface the wider
+    // radius the camera will use to tilt around
+    distance = Math.min(distance, distanceFromClosestSurface / 5.0);
   }
+
+  console.log(distance);
 
   return Ray.getPoint(ray, distance, result);
 }
