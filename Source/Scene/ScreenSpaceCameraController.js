@@ -1179,14 +1179,29 @@ function getZoomDistanceUnderground(controller, ray, height) {
 
 var scratchCartographic = new Cartographic();
 
-function getDistanceFromClosestSurface(controller, position) {
+function getHeight(controller) {
   var ellipsoid = controller._ellipsoid;
-  var cartographic = ellipsoid.cartesianToCartographic(
-    position,
-    scratchCartographic
-  );
-  var height = cartographic.height;
+  var scene = controller._scene;
+  var camera = scene.camera;
+  var mode = scene.mode;
 
+  var height = 0.0;
+  if (mode === SceneMode.SCENE3D) {
+    var cartographic = ellipsoid.cartesianToCartographic(
+      camera.position,
+      scratchCartographic
+    );
+    if (defined(cartographic)) {
+      height = cartographic.height;
+    }
+  } else {
+    height = camera.position.z;
+  }
+  return height;
+}
+
+function getDistanceFromClosestSurface(controller) {
+  var height = getHeight(controller);
   var globeHeight = defaultValue(controller._globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   var distanceFromUndergroundSurface = Math.abs(
@@ -1243,6 +1258,7 @@ function translateCV(controller, startPosition, movement) {
 
   var scene = controller._scene;
   var camera = scene.camera;
+  var cameraUnderground = controller._cameraUnderground;
   var startMouse = Cartesian2.clone(
     movement.startPosition,
     translateCVStartMouse
@@ -1261,10 +1277,22 @@ function translateCV(controller, startPosition, movement) {
     }
   }
 
-  if (origin.x > camera.position.z && defined(globePos)) {
+  if (
+    cameraUnderground ||
+    (origin.x > camera.position.z && defined(globePos))
+  ) {
+    var pickPosition = globePos;
+    if (cameraUnderground) {
+      pickPosition = getStrafeStartPositionUnderground(
+        controller,
+        startRay,
+        globePos,
+        translateCVStartPos
+      );
+    }
     Cartesian2.clone(startPosition, controller._strafeMousePosition);
     Cartesian2.clone(startPosition, controller._strafeEndMousePosition);
-    Cartesian3.clone(globePos, controller._strafeStartPosition);
+    Cartesian3.clone(pickPosition, controller._strafeStartPosition);
     controller._strafing = true;
     strafe(controller, movement, controller._strafeStartPosition);
     return;
@@ -1420,6 +1448,7 @@ function rotateCVOnPlane(controller, startPosition, movement) {
 function rotateCVOnTerrain(controller, startPosition, movement) {
   var scene = controller._scene;
   var camera = scene.camera;
+  var cameraUnderground = controller._cameraUnderground;
 
   var center;
   var ray;
@@ -1452,6 +1481,13 @@ function rotateCVOnTerrain(controller, startPosition, movement) {
 
       center = Cartesian3.multiplyByScalar(direction, scalar, rotateCVCenter);
       Cartesian3.add(position, center, center);
+    }
+
+    if (controller._cameraUnderground) {
+      if (!defined(ray)) {
+        ray = camera.getPickRay(startPosition, rotateCVWindowRay);
+      }
+      getTiltCenterUnderground(controller, ray, center, center);
     }
 
     Cartesian2.clone(startPosition, controller._tiltCenterMousePosition);
@@ -1531,7 +1567,11 @@ function rotateCVOnTerrain(controller, startPosition, movement) {
 
   camera._setTransform(verticalTransform);
   if (dot < 0.0) {
-    if (movement.startPosition.y > movement.endPosition.y) {
+    var movementDelta = movement.startPosition.y - movement.endPosition.y;
+    if (
+      (cameraUnderground && movementDelta < 0.0) ||
+      (!cameraUnderground && movementDelta > 0.0)
+    ) {
       constrainedAxis = undefined;
     }
 
@@ -1654,10 +1694,6 @@ function zoomCV(controller, startPosition, movement) {
   var distance;
   if (defined(intersection)) {
     distance = Cartesian3.distance(position, intersection);
-  } else {
-    var normal = Cartesian3.UNIT_X;
-    distance =
-      -Cartesian3.dot(normal, position) / Cartesian3.dot(normal, direction);
   }
 
   if (cameraUnderground) {
@@ -1666,7 +1702,17 @@ function zoomCV(controller, startPosition, movement) {
       ray,
       height
     );
-    distance = Math.min(distance, distanceUnderground);
+    if (defined(distance)) {
+      distance = Math.min(distance, distanceUnderground);
+    } else {
+      distance = distanceUnderground;
+    }
+  }
+
+  if (!defined(distance)) {
+    var normal = Cartesian3.UNIT_X;
+    distance =
+      -Cartesian3.dot(normal, position) / Cartesian3.dot(normal, direction);
   }
 
   handleZoom(
@@ -1796,17 +1842,18 @@ function strafe(controller, movement, strafeStartPosition) {
   Cartesian3.add(camera.position, direction, camera.position);
 }
 
-var scratchCartographic = new Cartographic();
 var scratchRadii = new Cartesian3();
 var scratchEllipsoid = new Ellipsoid();
-var scratchIntersectionPoint = new Cartesian3();
 
 function getClosestPickDistance(controller, ray, pickedPosition) {
-  var ellipsoid = controller._ellipsoid;
   var origin = ray.origin;
-
   var distance = Cartesian3.distance(origin, pickedPosition);
 
+  if (controller._scene.mode !== SceneMode.SCENE3D) {
+    return distance;
+  }
+
+  var ellipsoid = controller._ellipsoid;
   var heightDelta = controller.undergroundSurfaceHeight;
   var innerRadii = Cartesian3.fromElements(
     ellipsoid.radii.x + heightDelta,
@@ -1837,13 +1884,19 @@ function getStrafeStartPositionUnderground(
   pickedPosition,
   result
 ) {
-  var distance = getClosestPickDistance(controller, ray, pickedPosition);
-  if (distance > controller._maximumUndergroundPickDistance) {
-    // If the picked position is too far away set the strafe speed based on the
-    // camera's height from the closest surface (closest surface being either
-    // the globe surface or the underground invisible surface)
-    distance = getDistanceFromClosestSurface(controller, ray.origin);
+  var distance;
+  if (!defined(pickedPosition)) {
+    distance = getDistanceFromClosestSurface(controller);
+  } else {
+    distance = getClosestPickDistance(controller, ray, pickedPosition);
+    if (distance > controller._maximumUndergroundPickDistance) {
+      // If the picked position is too far away set the strafe speed based on the
+      // camera's height from the closest surface (closest surface being either
+      // the globe surface or the underground invisible surface)
+      distance = getDistanceFromClosestSurface(controller);
+    }
   }
+
   return Ray.getPoint(ray, distance, result);
 }
 
@@ -2179,8 +2232,6 @@ function zoom3D(controller, startPosition, movement) {
   var distance;
   if (defined(intersection)) {
     distance = Cartesian3.distance(ray.origin, intersection);
-  } else {
-    distance = height;
   }
 
   if (cameraUnderground) {
@@ -2189,7 +2240,15 @@ function zoom3D(controller, startPosition, movement) {
       ray,
       height
     );
-    distance = Math.min(distance, distanceUnderground);
+    if (defined(distance)) {
+      distance = Math.min(distance, distanceUnderground);
+    } else {
+      distance = distanceUnderground;
+    }
+  }
+
+  if (!defined(distance)) {
+    distance = height;
   }
 
   var unitPosition = Cartesian3.normalize(camera.position, zoom3DUnitPosition);
@@ -2343,10 +2402,7 @@ function tilt3DOnEllipsoid(controller, startPosition, movement) {
 }
 
 function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
-  var distanceFromClosestSurface = getDistanceFromClosestSurface(
-    controller,
-    ray.origin
-  );
+  var distanceFromClosestSurface = getDistanceFromClosestSurface(controller);
 
   var maximumDistance = CesiumMath.clamp(
     distanceFromClosestSurface * 5.0,
@@ -2402,7 +2458,7 @@ function tilt3DOnTerrain(controller, startPosition, movement) {
       center = Ray.getPoint(ray, intersection.start, tilt3DCenter);
     }
 
-    if (controller._cameraUnderground) {
+    if (cameraUnderground) {
       if (!defined(ray)) {
         ray = camera.getPickRay(startPosition, tilt3DRay);
       }
