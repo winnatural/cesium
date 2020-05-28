@@ -294,16 +294,6 @@ function ScreenSpaceCameraController(scene) {
   this._maximumZoomRate = 5906376272000.0; // distance from the Sun to Pluto in meters.
   this._minimumUndergroundPickDistance = 2000.0;
   this._maximumUndergroundPickDistance = 10000.0;
-
-  /**
-   * The height of an invisible surface that the camera uses for underground navigation.
-   * For best results the height should be set just below the height of underground entities in the scene.
-   * Note that the camera can still zoom below this height if {@link minimumZoomDistance} is greater than 0.0.
-   * @type {Number}
-   * @default -20000.0
-   * @private
-   */
-  this._undergroundSurfaceHeight = -20000.0;
 }
 
 function decay(time, coefficient) {
@@ -1107,15 +1097,6 @@ function pickGlobe(controller, mousePosition, result) {
   return Cartesian3.clone(rayIntersection, result);
 }
 
-function delerp(a, b, t) {
-  return (t - a) / (b - a);
-}
-
-function remap(a0, b0, a1, b1, t) {
-  var t1 = CesiumMath.clamp(delerp(a0, b0, t), 0.0, 1.0);
-  return CesiumMath.lerp(a1, b1, t1);
-}
-
 var scratchSurfaceNormal = new Cartesian3();
 
 function getZoomDistanceUnderground(controller, ray, height) {
@@ -1123,50 +1104,18 @@ function getZoomDistanceUnderground(controller, ray, height) {
   var direction = ray.direction;
   var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
-  var distanceFromUndergroundSurface = Math.abs(
-    height - controller._undergroundSurfaceHeight
-  );
-
-  // Geocentric normal is accurate enough for these purposes
-  var surfaceNormal = Cartesian3.normalize(origin, scratchSurfaceNormal);
 
   // Weight zoom distance based on how strongly the pick ray is pointing inward.
-  // When the ray is aligned with the inverse surface normal (pointing inward) the distance from the underground surface is used.
-  // When the ray is aligned with the surface normal (pointing outward) the distance from the surface is used.
-  // Any angle between 60 and 300 degrees uses a linear interpolation of the two distances.
-  // Note that distanceWeightedByAngle does not take into account the direction of movement (zooming in vs. out)
-  var angleLerp = Cartesian3.dot(surfaceNormal, direction);
-  angleLerp = remap(-0.5, 0.5, 0.0, 1.0, angleLerp);
-  var distanceWeightedByAngle = CesiumMath.lerp(
-    distanceFromUndergroundSurface,
-    distanceFromSurface,
-    angleLerp
-  );
-
-  // Compute the closeness to the nearest surface and use this to weight the final distance.
-  // An exponent weakens the closeness factor except when the camera is very close to a surface.
-  var closerDistance = Math.min(
-    distanceFromUndergroundSurface,
-    distanceFromSurface
-  );
-  var furtherDistance = Math.max(
-    distanceFromUndergroundSurface,
-    distanceFromSurface
-  );
-  var closenessFactor = Math.exp(-(closerDistance / furtherDistance));
-
-  var distance = CesiumMath.lerp(
-    distanceWeightedByAngle,
-    closerDistance,
-    closenessFactor
-  );
-
-  return distance;
+  // Geocentric normal is accurate enough for these purposes
+  var surfaceNormal = Cartesian3.normalize(origin, scratchSurfaceNormal);
+  var strength = Math.abs(Cartesian3.dot(surfaceNormal, direction));
+  strength = Math.max(strength, 0.5);
+  return distanceFromSurface * strength * 2.0;
 }
 
 var scratchCartographic = new Cartographic();
 
-function getHeight(controller) {
+function getDistanceFromSurface(controller) {
   var ellipsoid = controller._ellipsoid;
   var scene = controller._scene;
   var camera = scene.camera;
@@ -1184,17 +1133,9 @@ function getHeight(controller) {
   } else {
     height = camera.position.z;
   }
-  return height;
-}
-
-function getDistanceFromClosestSurface(controller) {
-  var height = getHeight(controller);
   var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
-  var distanceFromUndergroundSurface = Math.abs(
-    height - controller._undergroundSurfaceHeight
-  );
-  return Math.min(distanceFromUndergroundSurface, distanceFromSurface);
+  return distanceFromSurface;
 }
 
 var scratchInertialDelta = new Cartesian2();
@@ -1832,39 +1773,6 @@ function strafe(controller, movement, strafeStartPosition) {
 var scratchRadii = new Cartesian3();
 var scratchEllipsoid = new Ellipsoid();
 
-function getClosestPickDistance(controller, ray, pickedPosition) {
-  var origin = ray.origin;
-  var distance = Cartesian3.distance(origin, pickedPosition);
-
-  if (controller._scene.mode !== SceneMode.SCENE3D) {
-    return distance;
-  }
-
-  var ellipsoid = controller._ellipsoid;
-  var heightDelta = controller._undergroundSurfaceHeight;
-  var innerRadii = Cartesian3.fromElements(
-    ellipsoid.radii.x + heightDelta,
-    ellipsoid.radii.y + heightDelta,
-    ellipsoid.radii.z + heightDelta,
-    scratchRadii
-  );
-
-  // Use the distance from the underground surface if it is closer
-  var innerEllipsoid = Ellipsoid.fromCartesian3(innerRadii, scratchEllipsoid);
-  var intersection = IntersectionTests.rayEllipsoid(ray, innerEllipsoid);
-  if (defined(intersection)) {
-    if (intersection.start === 0.0) {
-      // Inside ellipsoid
-      distance = Math.min(distance, intersection.stop);
-    } else {
-      // Outside ellipsoid
-      distance = Math.min(distance, intersection.start);
-    }
-  }
-
-  return distance;
-}
-
 function getStrafeStartPositionUnderground(
   controller,
   ray,
@@ -1873,14 +1781,14 @@ function getStrafeStartPositionUnderground(
 ) {
   var distance;
   if (!defined(pickedPosition)) {
-    distance = getDistanceFromClosestSurface(controller);
+    distance = getDistanceFromSurface(controller);
   } else {
-    distance = getClosestPickDistance(controller, ray, pickedPosition);
+    distance = Cartesian3.distance(ray.origin, pickedPosition);
     if (distance > controller._maximumUndergroundPickDistance) {
       // If the picked position is too far away set the strafe speed based on the
       // camera's height from the closest surface (closest surface being either
       // the globe surface or the underground invisible surface)
-      distance = getDistanceFromClosestSurface(controller);
+      distance = getDistanceFromSurface(controller);
     }
   }
 
@@ -2389,20 +2297,20 @@ function tilt3DOnEllipsoid(controller, startPosition, movement) {
 }
 
 function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
-  var distanceFromClosestSurface = getDistanceFromClosestSurface(controller);
+  var distanceFromSurface = getDistanceFromSurface(controller);
 
   var maximumDistance = CesiumMath.clamp(
-    distanceFromClosestSurface * 5.0,
+    distanceFromSurface * 5.0,
     controller._minimumUndergroundPickDistance,
     controller._maximumUndergroundPickDistance
   );
 
-  var distance = getClosestPickDistance(controller, ray, pickedPosition);
+  var distance = Cartesian3.distance(ray.origin, pickedPosition);
   if (distance > maximumDistance) {
     // If the distance is too far away use closest surface as the distance.
     // The further away away camera is from the closest surface the wider
     // radius the camera will use to tilt around.
-    distance = Math.min(distance, distanceFromClosestSurface / 5.0);
+    distance = Math.min(distance, distanceFromSurface / 5.0);
   }
 
   return Ray.getPoint(ray, distance, result);
