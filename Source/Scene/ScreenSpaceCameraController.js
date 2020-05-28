@@ -1063,9 +1063,7 @@ function pickGlobe(controller, mousePosition, result) {
   }
 
   var translucent = scene.globeTranslucencyState.translucent;
-  var cullBackFaces =
-    !controller._cameraUnderground ||
-    (globe.depthTestAgainstTerrain && !translucent);
+  var cullBackFaces = !controller._cameraUnderground && !translucent;
 
   var depthIntersection;
   if (scene.pickPositionSupported) {
