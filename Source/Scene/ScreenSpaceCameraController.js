@@ -1846,6 +1846,12 @@ function spin3D(controller, startPosition, movement) {
     } else if (controller._strafing) {
       continueStrafing(controller, movement);
     } else {
+      if (
+        Cartesian3.magnitude(camera.position) <
+        Cartesian3.magnitude(controller._rotateStartPosition)
+      ) {
+        return;
+      }
       magnitude = Cartesian3.magnitude(controller._rotateStartPosition);
       radii = scratchRadii;
       radii.x = radii.y = radii.z = magnitude;
