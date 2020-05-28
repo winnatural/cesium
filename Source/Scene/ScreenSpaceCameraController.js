@@ -2124,6 +2124,7 @@ function zoom3D(controller, startPosition, movement) {
 
   var distance;
   if (defined(intersection)) {
+    // TODO: camera is not underground but it picks the opposite side of the globe
     distance = Cartesian3.distance(ray.origin, intersection);
   }
 
@@ -2295,20 +2296,18 @@ function tilt3DOnEllipsoid(controller, startPosition, movement) {
 }
 
 function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
+  var distance = Cartesian3.distance(ray.origin, pickedPosition);
   var distanceFromSurface = getDistanceFromSurface(controller);
 
-  var maximumDistance = CesiumMath.clamp(
-    distanceFromSurface * 5.0,
-    controller._minimumUndergroundPickDistance,
-    controller._maximumUndergroundPickDistance
+  var ratio = Math.min(
+    (distanceFromSurface * 5.0) / controller._maximumUndergroundPickDistance,
+    1.0
   );
 
-  var distance = Cartesian3.distance(ray.origin, pickedPosition);
+  var maximumDistance = controller._maximumUndergroundPickDistance * ratio;
+
   if (distance > maximumDistance) {
-    // If the distance is too far away use closest surface as the distance.
-    // The further away away camera is from the closest surface the wider
-    // radius the camera will use to tilt around.
-    distance = Math.min(distance, distanceFromSurface / 5.0);
+    distance = 10.0;
   }
 
   return Ray.getPoint(ray, distance, result);
