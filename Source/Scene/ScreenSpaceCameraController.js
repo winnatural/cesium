@@ -1194,7 +1194,6 @@ function getStrafeStartPositionUnderground(
   pickedPosition,
   result
 ) {
-  debugger;
   var distance;
   if (!defined(pickedPosition)) {
     distance = getDistanceFromSurface(controller);
