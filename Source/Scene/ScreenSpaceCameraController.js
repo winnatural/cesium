@@ -256,6 +256,12 @@ function ScreenSpaceCameraController(scene) {
   this._lastInertiaTranslateMovement = undefined;
   this._lastInertiaTiltMovement = undefined;
 
+  // Zoom and tilt disable spin inertia
+  this._inertiaDisablers = {
+    _lastInertiaZoomMovement: ["_lastInertiaSpinMovement"],
+    _lastInertiaTiltMovement: ["_lastInertiaSpinMovement"],
+  };
+
   this._tweens = new TweenCollection();
   this._tween = undefined;
 
@@ -334,7 +340,7 @@ function maintainInertia(
       startPosition: new Cartesian2(),
       endPosition: new Cartesian2(),
       motion: new Cartesian2(),
-      active: false,
+      inertiaEnabled: true,
     };
   }
 
@@ -348,33 +354,35 @@ function maintainInertia(
   if (ts && tr && threshold < inertiaMaxClickTimeThreshold) {
     var d = decay(fromNow, decayCoef);
 
-    if (!movementState.active) {
-      var lastMovement = aggregator.getLastMovement(type, modifier);
-      if (!defined(lastMovement) || sameMousePosition(lastMovement)) {
-        return;
-      }
-
-      movementState.motion.x =
-        (lastMovement.endPosition.x - lastMovement.startPosition.x) * 0.5;
-      movementState.motion.y =
-        (lastMovement.endPosition.y - lastMovement.startPosition.y) * 0.5;
-
-      movementState.startPosition = Cartesian2.clone(
-        lastMovement.startPosition,
-        movementState.startPosition
-      );
-
-      movementState.endPosition = Cartesian2.multiplyByScalar(
-        movementState.motion,
-        d,
-        movementState.endPosition
-      );
-      movementState.endPosition = Cartesian2.add(
-        movementState.startPosition,
-        movementState.endPosition,
-        movementState.endPosition
-      );
+    var lastMovement = aggregator.getLastMovement(type, modifier);
+    if (
+      !defined(lastMovement) ||
+      sameMousePosition(lastMovement) ||
+      !movementState.inertiaEnabled
+    ) {
+      return;
     }
+
+    movementState.motion.x =
+      (lastMovement.endPosition.x - lastMovement.startPosition.x) * 0.5;
+    movementState.motion.y =
+      (lastMovement.endPosition.y - lastMovement.startPosition.y) * 0.5;
+
+    movementState.startPosition = Cartesian2.clone(
+      lastMovement.startPosition,
+      movementState.startPosition
+    );
+
+    movementState.endPosition = Cartesian2.multiplyByScalar(
+      movementState.motion,
+      d,
+      movementState.endPosition
+    );
+    movementState.endPosition = Cartesian2.add(
+      movementState.startPosition,
+      movementState.endPosition,
+      movementState.endPosition
+    );
 
     // If value from the decreasing exponential function is close to zero,
     // the end coordinates may be NaN.
@@ -386,7 +394,6 @@ function maintainInertia(
         movementState.endPosition
       ) < 0.5
     ) {
-      movementState.active = false;
       return;
     }
 
@@ -394,8 +401,27 @@ function maintainInertia(
       var startPosition = aggregator.getStartMousePosition(type, modifier);
       action(object, startPosition, movementState);
     }
-  } else {
-    movementState.active = false;
+  }
+}
+
+function activateInertia(controller, inertiaStateName) {
+  if (defined(inertiaStateName)) {
+    // Re-enable inertia if it was disabled
+    var movementState = controller[inertiaStateName];
+    if (defined(movementState)) {
+      movementState.inertiaEnabled = true;
+    }
+    // Disable inertia on other movements
+    var inertiasToDisable = controller._inertiaDisablers[inertiaStateName];
+    if (defined(inertiasToDisable)) {
+      var length = inertiasToDisable.length;
+      for (var i = 0; i < length; ++i) {
+        movementState = controller[inertiasToDisable[i]];
+        if (defined(movementState)) {
+          movementState.inertiaEnabled = false;
+        }
+      }
+    }
   }
 }
 
@@ -434,6 +460,7 @@ function reactToInput(
     if (controller.enableInputs && enabled) {
       if (movement) {
         action(controller, startPosition, movement);
+        activateInertia(controller, inertiaStateName);
       } else if (inertiaConstant < 1.0) {
         maintainInertia(
           aggregator,
@@ -1711,10 +1738,6 @@ function updateCV(controller) {
 
     if (
       !controller._aggregator.anyButtonDown &&
-      (!defined(controller._lastInertiaZoomMovement) ||
-        !controller._lastInertiaZoomMovement.active) &&
-      (!defined(controller._lastInertiaTranslateMovement) ||
-        !controller._lastInertiaTranslateMovement.active) &&
       !tweens.contains(controller._tween)
     ) {
       var tween = camera.createCorrectPositionTween(
