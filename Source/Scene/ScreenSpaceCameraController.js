@@ -237,7 +237,6 @@ function ScreenSpaceCameraController(scene) {
    */
   this.minimumTrackBallHeight = 7500000.0;
   this._minimumTrackBallHeight = this.minimumTrackBallHeight;
-
   /**
    * Enables or disables camera collision detection with terrain.
    * @type {Boolean}
@@ -256,13 +255,18 @@ function ScreenSpaceCameraController(scene) {
   this._lastInertiaTranslateMovement = undefined;
   this._lastInertiaTiltMovement = undefined;
 
-  // Zoom and tilt disable spin inertia
+  // Zoom disables tilt, spin, and translate inertia
+  // Tilt disables spin and translate inertia
   this._inertiaDisablers = {
     _lastInertiaZoomMovement: [
       "_lastInertiaSpinMovement",
+      "_lastInertiaTranslateMovement",
       "_lastInertiaTiltMovement",
     ],
-    _lastInertiaTiltMovement: ["_lastInertiaSpinMovement"],
+    _lastInertiaTiltMovement: [
+      "_lastInertiaSpinMovement",
+      "_lastInertiaTranslateMovement",
+    ],
   };
 
   this._tweens = new TweenCollection();
@@ -275,6 +279,7 @@ function ScreenSpaceCameraController(scene) {
   this._rotateMousePosition = new Cartesian2(-1.0, -1.0);
   this._rotateStartPosition = new Cartesian3();
   this._strafeStartPosition = new Cartesian3();
+  this._strafeMousePosition = new Cartesian2();
   this._strafeEndMousePosition = new Cartesian2();
   this._zoomMouseStart = new Cartesian2(-1.0, -1.0);
   this._zoomWorldPosition = new Cartesian3();
@@ -1125,7 +1130,7 @@ function pickGlobe(controller, mousePosition, result) {
   return Cartesian3.clone(rayIntersection, result);
 }
 
-var scratchCartographic = new Cartographic();
+var scratchDistanceCartographic = new Cartographic();
 
 function getDistanceFromSurface(controller) {
   var ellipsoid = controller._ellipsoid;
@@ -1137,7 +1142,7 @@ function getDistanceFromSurface(controller) {
   if (mode === SceneMode.SCENE3D) {
     var cartographic = ellipsoid.cartesianToCartographic(
       camera.position,
-      scratchCartographic
+      scratchDistanceCartographic
     );
     if (defined(cartographic)) {
       height = cartographic.height;
@@ -1146,13 +1151,13 @@ function getDistanceFromSurface(controller) {
     height = camera.position.z;
   }
   var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
-  var distanceFromSurface = Math.abs(height - globeHeight);
+  var distanceFromSurface = Math.abs(globeHeight - height);
   return distanceFromSurface;
 }
 
 var scratchSurfaceNormal = new Cartesian3();
 
-function getZoomDistanceUnderground(controller, ray, height) {
+function getZoomDistanceUnderground(controller, ray) {
   var origin = ray.origin;
   var direction = ray.direction;
   var distanceFromSurface = getDistanceFromSurface(controller);
@@ -1161,8 +1166,48 @@ function getZoomDistanceUnderground(controller, ray, height) {
   // Geocentric normal is accurate enough for these purposes
   var surfaceNormal = Cartesian3.normalize(origin, scratchSurfaceNormal);
   var strength = Math.abs(Cartesian3.dot(surfaceNormal, direction));
-  strength = Math.max(strength, 0.5);
-  return distanceFromSurface * strength * 2.0;
+  strength = Math.max(strength, 0.5) * 2.0;
+  return distanceFromSurface * strength;
+}
+
+function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
+  var distance = Cartesian3.distance(ray.origin, pickedPosition);
+  var distanceFromSurface = getDistanceFromSurface(controller);
+
+  var maximumDistance = CesiumMath.clamp(
+    distanceFromSurface * 5.0,
+    controller._minimumUndergroundPickDistance,
+    controller._maximumUndergroundPickDistance
+  );
+
+  if (distance > maximumDistance) {
+    // Simulate look-at behavior by tilting around a small invisible sphere
+    distance = 100.0;
+  }
+
+  return Ray.getPoint(ray, distance, result);
+}
+
+function getStrafeStartPositionUnderground(
+  controller,
+  ray,
+  pickedPosition,
+  result
+) {
+  debugger;
+  var distance;
+  if (!defined(pickedPosition)) {
+    distance = getDistanceFromSurface(controller);
+  } else {
+    distance = Cartesian3.distance(ray.origin, pickedPosition);
+    if (distance > controller._maximumUndergroundPickDistance) {
+      // If the picked position is too far away set the strafe speed based on the
+      // camera's height from the globe surface
+      distance = getDistanceFromSurface(controller);
+    }
+  }
+
+  return Ray.getPoint(ray, distance, result);
 }
 
 var scratchInertialDelta = new Cartesian2();
@@ -1527,6 +1572,7 @@ function rotateCVOnTerrain(controller, startPosition, movement) {
       (cameraUnderground && movementDelta < 0.0) ||
       (!cameraUnderground && movementDelta > 0.0)
     ) {
+      // Prevent camera from flipping past the up axis
       constrainedAxis = undefined;
     }
 
@@ -1793,31 +1839,10 @@ function strafe(controller, movement, strafeStartPosition) {
   Cartesian3.add(camera.position, direction, camera.position);
 }
 
+var spin3DPick = new Cartesian3();
+var scratchCartographic = new Cartographic();
 var scratchRadii = new Cartesian3();
 var scratchEllipsoid = new Ellipsoid();
-
-function getStrafeStartPositionUnderground(
-  controller,
-  ray,
-  pickedPosition,
-  result
-) {
-  var distance;
-  if (!defined(pickedPosition)) {
-    distance = getDistanceFromSurface(controller);
-  } else {
-    distance = Cartesian3.distance(ray.origin, pickedPosition);
-    if (distance > controller._maximumUndergroundPickDistance) {
-      // If the picked position is too far away set the strafe speed based on the
-      // camera's height from the globe surface
-      distance = getDistanceFromSurface(controller);
-    }
-  }
-
-  return Ray.getPoint(ray, distance, result);
-}
-
-var spin3DPick = new Cartesian3();
 var scratchLookUp = new Cartesian3();
 
 function spin3D(controller, startPosition, movement) {
@@ -1874,6 +1899,7 @@ function spin3D(controller, startPosition, movement) {
         Cartesian3.magnitude(camera.position) <
         Cartesian3.magnitude(controller._rotateStartPosition)
       ) {
+        // Pan action is no longer valid if camera moves below the pan ellipsoid
         return;
       }
       magnitude = Cartesian3.magnitude(controller._rotateStartPosition);
@@ -2324,23 +2350,6 @@ function tilt3DOnEllipsoid(controller, startPosition, movement) {
   controller._rotateRateRangeAdjustment = radius;
 }
 
-function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
-  var distance = Cartesian3.distance(ray.origin, pickedPosition);
-  var distanceFromSurface = getDistanceFromSurface(controller);
-
-  var maximumDistance = CesiumMath.clamp(
-    distanceFromSurface * 5.0,
-    controller._minimumUndergroundPickDistance,
-    controller._maximumUndergroundPickDistance
-  );
-
-  if (distance > maximumDistance) {
-    distance = 100.0;
-  }
-
-  return Ray.getPoint(ray, distance, result);
-}
-
 function tilt3DOnTerrain(controller, startPosition, movement) {
   var ellipsoid = controller._ellipsoid;
   var scene = controller._scene;
@@ -2451,6 +2460,7 @@ function tilt3DOnTerrain(controller, startPosition, movement) {
       (cameraUnderground && movementDelta < 0.0) ||
       (!cameraUnderground && movementDelta > 0.0)
     ) {
+      // Prevent camera from flipping past the up axis
       constrainedAxis = undefined;
     }
 
