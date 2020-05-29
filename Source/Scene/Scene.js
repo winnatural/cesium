@@ -3330,7 +3330,10 @@ Scene.prototype.updateEnvironment = function () {
           environmentState.isReadyForAtmosphere ||
           globe._surface._tilesToRender.length > 0;
       }
-      environmentState.skyAtmosphereCommand = skyAtmosphere.update(frameState);
+      environmentState.skyAtmosphereCommand = skyAtmosphere.update(
+        frameState,
+        globe
+      );
       if (defined(environmentState.skyAtmosphereCommand)) {
         this.updateDerivedCommands(environmentState.skyAtmosphereCommand);
       }
