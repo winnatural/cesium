@@ -1182,8 +1182,11 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
 
   if (distance > maximumDistance) {
     // Simulate look-at behavior by tilting around a small invisible sphere
-    distance = 100.0;
+    distance = Math.min(distance, distanceFromSurface / 5.0);
+    distance = Math.max(distance, 100.0);
   }
+
+  console.log(distance);
 
   return Ray.getPoint(ray, distance, result);
 }
