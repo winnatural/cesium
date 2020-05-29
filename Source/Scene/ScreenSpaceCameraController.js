@@ -1122,22 +1122,6 @@ function pickGlobe(controller, mousePosition, result) {
   return Cartesian3.clone(rayIntersection, result);
 }
 
-var scratchSurfaceNormal = new Cartesian3();
-
-function getZoomDistanceUnderground(controller, ray, height) {
-  var origin = ray.origin;
-  var direction = ray.direction;
-  var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
-  var distanceFromSurface = Math.abs(height - globeHeight);
-
-  // Weight zoom distance based on how strongly the pick ray is pointing inward.
-  // Geocentric normal is accurate enough for these purposes
-  var surfaceNormal = Cartesian3.normalize(origin, scratchSurfaceNormal);
-  var strength = Math.abs(Cartesian3.dot(surfaceNormal, direction));
-  strength = Math.max(strength, 0.5);
-  return distanceFromSurface * strength * 2.0;
-}
-
 var scratchCartographic = new Cartographic();
 
 function getDistanceFromSurface(controller) {
@@ -1161,6 +1145,21 @@ function getDistanceFromSurface(controller) {
   var globeHeight = defaultValue(controller._scene.globeHeight, 0.0);
   var distanceFromSurface = Math.abs(height - globeHeight);
   return distanceFromSurface;
+}
+
+var scratchSurfaceNormal = new Cartesian3();
+
+function getZoomDistanceUnderground(controller, ray, height) {
+  var origin = ray.origin;
+  var direction = ray.direction;
+  var distanceFromSurface = getDistanceFromSurface(controller);
+
+  // Weight zoom distance based on how strongly the pick ray is pointing inward.
+  // Geocentric normal is accurate enough for these purposes
+  var surfaceNormal = Cartesian3.normalize(origin, scratchSurfaceNormal);
+  var strength = Math.abs(Cartesian3.dot(surfaceNormal, direction));
+  strength = Math.max(strength, 0.5);
+  return distanceFromSurface * strength * 2.0;
 }
 
 var scratchInertialDelta = new Cartesian2();
@@ -1807,8 +1806,7 @@ function getStrafeStartPositionUnderground(
     distance = Cartesian3.distance(ray.origin, pickedPosition);
     if (distance > controller._maximumUndergroundPickDistance) {
       // If the picked position is too far away set the strafe speed based on the
-      // camera's height from the closest surface (closest surface being either
-      // the globe surface or the underground invisible surface)
+      // camera's height from the globe surface
       distance = getDistanceFromSurface(controller);
     }
   }
@@ -2153,7 +2151,6 @@ function zoom3D(controller, startPosition, movement) {
 
   var distance;
   if (defined(intersection)) {
-    // TODO: camera is not underground but it picks the opposite side of the globe
     distance = Cartesian3.distance(ray.origin, intersection);
   }
 
