@@ -2328,15 +2328,14 @@ function getTiltCenterUnderground(controller, ray, pickedPosition, result) {
   var distance = Cartesian3.distance(ray.origin, pickedPosition);
   var distanceFromSurface = getDistanceFromSurface(controller);
 
-  var ratio = Math.min(
-    (distanceFromSurface * 5.0) / controller._maximumUndergroundPickDistance,
-    1.0
+  var maximumDistance = CesiumMath.clamp(
+    distanceFromSurface * 5.0,
+    controller._minimumUndergroundPickDistance,
+    controller._maximumUndergroundPickDistance
   );
 
-  var maximumDistance = controller._maximumUndergroundPickDistance * ratio;
-
   if (distance > maximumDistance) {
-    distance = 10.0;
+    distance = 100.0;
   }
 
   return Ray.getPoint(ray, distance, result);
