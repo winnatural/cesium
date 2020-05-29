@@ -36,6 +36,8 @@ describe("Scene/ScreenSpaceCameraController", function () {
     this.terrainExaggeration = 1.0;
     this.screenSpaceCameraController = undefined;
     this.globeTranslucencyState = new GlobeTranslucencyState();
+    this.cameraUnderground = false;
+    this.globeHeight = 0.0;
   }
 
   function MockGlobe(ellipsoid) {
