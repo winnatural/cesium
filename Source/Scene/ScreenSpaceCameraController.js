@@ -258,7 +258,10 @@ function ScreenSpaceCameraController(scene) {
 
   // Zoom and tilt disable spin inertia
   this._inertiaDisablers = {
-    _lastInertiaZoomMovement: ["_lastInertiaSpinMovement"],
+    _lastInertiaZoomMovement: [
+      "_lastInertiaSpinMovement",
+      "_lastInertiaTiltMovement",
+    ],
     _lastInertiaTiltMovement: ["_lastInertiaSpinMovement"],
   };
 
